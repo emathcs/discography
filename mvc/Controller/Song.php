@@ -57,7 +57,7 @@ class SongController extends Controller {
                 $fields = [
                     [ 'name' => 'name', 'format' => '%s' ],
                 ];
-                // Update the record
+                // Update record
                 $this->update($id, $_POST, $fields);
             }
             else {
