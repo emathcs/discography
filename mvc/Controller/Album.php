@@ -63,9 +63,9 @@ class AlbumController extends Controller {
                 [ 'name' => 'image_id', 'format' => '%d' ],
                 [ 'name' => 'post_id',  'format' => '%d' ],
             ];
-            $id = sanitize_text_field($_POST['id']);
-            if ($id) {
-                // Update the record
+            if (isset($_POST['id'])) {
+                $id = sanitize_text_field($_POST['id']);
+                // Update record
                 $this->update($id, $_POST, $fields);
             }
             else {
