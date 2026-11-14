@@ -89,6 +89,28 @@ class AlbumController extends Controller {
     }
 
     /**
+     * Update table
+     *
+     * @param Integer $id     Record id to update
+     * @param Array   $form   Data to insert
+     * @param Array   $fields Name and formats
+     * @return Integer $id Id of the inserted record
+     */
+    public function update($id = 0, $form = [], $fields = []) {
+        if (count($fields)) {
+            $dataFormats = $this->createDataAndFormats($form, $fields);
+            if (count($dataFormats)) {
+                $id = $this->getModel()->updateById(
+                    $id,
+                    $dataFormats['data'],
+                    $dataFormats['formats']
+                );
+            }
+        }
+        return $id;
+    }
+
+    /**
      * View
      *
      * @param Integer $id Album id
@@ -97,8 +119,8 @@ class AlbumController extends Controller {
         // Children model
         $songModel = new SongModel('songs');
         $buttonModel = new ButtonModel('buttons');
-        // This process has been added here to avoid to redirect to this page from save page
-        if (isset($_POST['insert'])) {
+        // This process has been added here to avoid the process to redirect to this page from add or edit page
+        if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
@@ -108,37 +130,14 @@ class AlbumController extends Controller {
                 [ 'name' => 'image_id', 'format' => '%d' ],
                 [ 'name' => 'post_id',  'format' => '%d' ],
             ];
-            $id = $this->insert($_POST, $fields);
-        }
-
-        // This process has been added here to avoid to redirect to this page from edit page
-        if ( isset( $_POST['submit-edit'] ) ) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
+            $id = sanitize_text_field($_POST['id']);
+            if ($id) {
+                // Update the record
+                $this->update($id, $_POST, $fields);
             }
-            $id       = sanitize_text_field($_POST['id']);
-            $name     = sanitize_text_field($_POST['name']);
-            $type_id  = sanitize_text_field($_POST['type-id']);
-            $image_id = sanitize_text_field($_POST['image_id']);
-            $post_id  = sanitize_text_field($_POST['post_id']);
-            if (!(empty($name) || empty($image_id) || empty($post_id))) {
-                $data = [
-                    'name'     => $name,
-                    'type_id'  => $type_id,
-                    'image_id' => $image_id,
-                    'post_id'  => $post_id
-                ];
-                $format_data = [
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d'
-                ];
-                $this->getModel()->updateById(
-                    $id,
-                    $data,
-                    $format_data
-                );
+            else {
+                // Insert a new record
+                $id = $this->insert($_POST, $fields);
             }
         }
         // Delete Button or Song

@@ -115,7 +115,7 @@ class AlbumView extends View {
         echo $input->setLabel('');
         echo $navigation->buttons(
             ['href' => '?page=albums-settings', 'label' => 'Go to the albums', 'class' => 'btn btn-warning'],
-            ['type' => 'submit', 'name' => 'insert', 'value' =>'Save information', 'class' => 'btn btn-primary']
+            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save information', 'class' => 'btn btn-primary']
         );
         echo $form->end();
         echo $this->panelClose();
@@ -287,7 +287,7 @@ class AlbumView extends View {
             echo $input->setLabel('');
             echo $navigation->buttons(
                 ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the album', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit-edit', 'value' =>'Update information', 'class' => 'btn btn-primary']
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update information', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }
