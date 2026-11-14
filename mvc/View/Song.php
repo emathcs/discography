@@ -79,7 +79,7 @@ class SongView extends View {
         echo $input->create([
             'type'     => 'hidden',
             'id'       => 'album-id',
-            'name'     => 'album-id',
+            'name'     => 'album_id',
             'class'    => 'form-control',
             'value'    => $album_id
         ]);
