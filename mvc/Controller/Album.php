@@ -44,25 +44,45 @@ class AlbumController extends Controller {
     }
 
     /**
+     * Create data and their formats
+     *
+     * @param Array $form   Data to insert
+     * @param Array $fields Name and formats
+     * @return Array $dataFormat Data and their formats
+     */
+    public function createDataAndFormats($form = [], $fields = []) {
+        $data = [];
+        $formats = [];
+        $condition = true;
+        $total = count($fields);
+        for ($i = 0; $i < $total; $i++) {
+            $formats[$i] = $fields[$i]['format'];
+            $data[$fields[$i]['name']] = sanitize_text_field($form[$fields[$i]['name']]);
+            $condition = $condition && !empty($data[$fields[$i]['name']]);
+        }
+        $dataFormats = [];
+        if ($condition) {
+            $dataFormats = [
+                'data'    => $data,
+                'formats' => $formats
+            ];
+        }
+        return $dataFormats;
+    }
+
+    /**
      * Insert into table
      *
-     * @param Array $form Data to insert
+     * @param Array $form   Data to insert
      * @param Array $fields Name and formats
      * @return Integer $id Id of the inserted record
      */
     public function insert($form = [], $fields = []) {
         $id = 0;
         if (count($fields)) {
-            $data = [];
-            $condition = true;
-            $total = count($fields);
-            for ($i = 0; $i < $total; $i++) {
-                $data[$fields[$i]['name']] = sanitize_text_field($form[$fields[$i]['name']]);
-                $condition = $condition && !empty($data[$fields[$i]['name']]);
-                $format[$i] = $fields[$i]['format'];
-            }
-            if ($condition) {
-                $id = $this->getModel()->insert($data, $format);
+            $dataFormats = $this->createDataAndFormats($form, $fields);
+            if (count($dataFormats)) {
+                $id = $this->getModel()->insert($dataFormats['data'], $dataFormats['formats']);
             }
         }
         return $id;
