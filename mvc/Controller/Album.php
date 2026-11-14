@@ -44,6 +44,31 @@ class AlbumController extends Controller {
     }
 
     /**
+     * Insert into table
+     *
+     * @param Array $form Data to insert
+     * @param Array $fields Name and formats
+     * @return Integer $id Id of the inserted record
+     */
+    public function insert($form = [], $fields = []) {
+        $id = 0;
+        if (count($fields)) {
+            $data = [];
+            $condition = true;
+            $total = count($fields);
+            for ($i = 0; $i < $total; $i++) {
+                $data[$fields[$i]['name']] = sanitize_text_field($form[$fields[$i]['name']]);
+                $condition = $condition && !empty($data[$fields[$i]['name']]);
+                $format[$i] = $fields[$i]['format'];
+            }
+            if ($condition) {
+                $id = $this->getModel()->insert($data, $format);
+            }
+        }
+        return $id;
+    }
+
+    /**
      * View
      *
      * @param Integer $id Album id
@@ -53,30 +78,19 @@ class AlbumController extends Controller {
         $songModel = new SongModel('songs');
         $buttonModel = new ButtonModel('buttons');
         // This process has been added here to avoid to redirect to this page from save page
-        if ( isset( $_POST['submit'] ) ) {
+        if (isset($_POST['insert'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
-            $name     = sanitize_text_field($_POST['name']);
-            $type_id  = sanitize_text_field($_POST['type-id']);
-            $image_id = sanitize_text_field($_POST['image_id']);
-            $post_id  = sanitize_text_field($_POST['post_id']);
-            if (!(empty($name) || empty($type_id) || empty($image_id) || empty($post_id))) {
-                $data = [
-                    'name'     => $name,
-                    'type_id'  => $type_id,
-                    'image_id' => $image_id,
-                    'post_id'  => $post_id
-                ];
-                $format = [
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d'
-                ];
-                $id = $this->getModel()->insert($data, $format);
-            }
+            $fields = [
+                [ 'name' => 'name',     'format' => '%s' ],
+                [ 'name' => 'type_id',  'format' => '%d' ],
+                [ 'name' => 'image_id', 'format' => '%d' ],
+                [ 'name' => 'post_id',  'format' => '%d' ],
+            ];
+            $id = $this->insert($_POST, $fields);
         }
+
         // This process has been added here to avoid to redirect to this page from edit page
         if ( isset( $_POST['submit-edit'] ) ) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
