@@ -2,6 +2,13 @@
 
 class SongModel extends Model {
     /**
+     * Constructor
+     */
+    public function __construct() {
+        parent::__construct('songs');
+    }
+
+    /**
      * Select by Album id function
      *
      * @param Integer $id Album id

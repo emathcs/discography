@@ -5,7 +5,7 @@ class SongController extends Controller {
      * Constructor
      */
     public function __construct() {
-        $Model = new SongModel('songs');
+        $Model = new SongModel();
         $View  = new SongView();
         // Parent constructor
         parent::__construct($Model, $View);
@@ -46,7 +46,7 @@ class SongController extends Controller {
      */
     public function view($id = 0) {
         // Button Model
-        $buttonModel = new ButtonModel('buttons');
+        $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {

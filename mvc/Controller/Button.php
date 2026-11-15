@@ -5,7 +5,7 @@ class ButtonController extends Controller {
      * Constructor
      */
     public function __construct() {
-        $Model = new ButtonModel('buttons');
+        $Model = new ButtonModel();
         $View  = new ButtonView();
         // ModelChild
         $ChildModel = new PlatformModel();
