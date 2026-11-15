@@ -2,6 +2,13 @@
 
 class ButtonModel extends Model {
     /**
+     * Constructor
+     */
+    public function __construct() {
+        parent::__construct('buttons');
+    }
+
+    /**
      * Select by Album id function
      *
      * @param Integer $id Album id

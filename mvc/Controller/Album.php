@@ -5,7 +5,7 @@ class AlbumController extends Controller {
      * Constructor
      */
     public function __construct() {
-        $Model = new AlbumModel('albums');
+        $Model = new AlbumModel();
         $View  = new AlbumView();
         // ModelChild
         $ChildModel = new TypeModel();
@@ -50,8 +50,8 @@ class AlbumController extends Controller {
      */
     public function view($id = 0) {
         // Children model
-        $songModel = new SongModel('songs');
-        $buttonModel = new ButtonModel('buttons');
+        $songModel = new SongModel();
+        $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
