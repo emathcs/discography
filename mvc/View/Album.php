@@ -265,8 +265,8 @@ class AlbumView extends View {
             echo $select->create(
                 [
                     'type'     => 'text',
-                    'id'       => 'platform-id',
-                    'name'     => 'platform-id',
+                    'id'       => 'type-id',
+                    'name'     => 'type_id',
                     'class'    => 'form-control',
                     'required' => '',
                     'value'    => $record->type_id

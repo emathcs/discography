@@ -47,44 +47,26 @@ class SongController extends Controller {
     public function view($id = 0) {
         // Button Model
         $buttonModel = new ButtonModel('buttons');
-        // This process has been added here to avoid to redirect to this page from add page
-        if ( isset( $_POST['submit'] ) ) {
+        // This process has been added here to avoid the process to redirect to this page from add or edit page
+        if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
-            $name     = sanitize_text_field($_POST['name']);
-            $album_id = sanitize_text_field($_POST['album-id']);
-            if (!(empty($name) || empty($album_id))) {
-                $data = [
-                    'name'     => $name,
-                    'album_id' => $album_id
+            if (isset($_POST['id'])) {
+                $id = sanitize_text_field($_POST['id']);
+                $fields = [
+                    [ 'name' => 'name', 'format' => '%s' ],
                 ];
-                $format = [
-                    '%s',
-                    '%d'
-                ];
-                $id = $this->getModel()->insert($data, $format);
+                // Update record
+                $this->update($id, $_POST, $fields);
             }
-        }
-        // This process has been added here to avoid to redirect to this page from edit page
-        if ( isset( $_POST['submit-edit'] ) ) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
-            $id       = sanitize_text_field($_POST['id']);
-            $name     = sanitize_text_field($_POST['name']);
-            if (!(empty($name))) {
-                $data = [
-                    'name'  => $name
+            else {
+                $fields = [
+                    [ 'name' => 'name',     'format' => '%s' ],
+                    [ 'name' => 'album_id',  'format' => '%d' ],
                 ];
-                $format_data = [
-                    '%s'
-                ];
-                $this->getModel()->updateById(
-                    $id,
-                    $data,
-                    $format_data
-                );
+                // Insert a new record
+                $id = $this->insert($_POST, $fields);
             }
         }
         // Delete Button
