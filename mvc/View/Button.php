@@ -88,28 +88,32 @@ class ButtonView extends View {
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
         // Album id
-        echo $input->create([
-            'type'     => 'hidden',
-            'id'       => 'album-id',
-            'name'     => 'album-id',
-            'class'    => 'form-control',
-            'value'    => $data['album_id']
-        ]);
+        if ($data['album_id']) {
+            echo $input->create([
+                'type'     => 'text',
+                'id'       => 'album-id',
+                'name'     => 'album_id',
+                'class'    => 'form-control',
+                'value'    => $data['album_id']
+            ]);
+        }
         // Song id
-        echo $input->create([
-            'type'     => 'hidden',
-            'id'       => 'song-id',
-            'name'     => 'song-id',
-            'class'    => 'form-control',
-            'value'    => $data['song_id']
-        ]);
+        if ($data['song_id']) {
+            echo $input->create([
+                'type'     => 'text',
+                'id'       => 'song-id',
+                'name'     => 'song_id',
+                'class'    => 'form-control',
+                'value'    => $data['song_id']
+            ]);
+        }
         // Platform
         $select->setLabel('Platform');
         echo $select->create(
             [
                 'type'     => 'text',
                 'id'       => 'platform-id',
-                'name'     => 'platform-id',
+                'name'     => 'platform_id',
                 'class'    => 'form-control',
                 'required' => '',
                 'value'    => ''
@@ -198,19 +202,11 @@ class ButtonView extends View {
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Id
             echo $input->create([
-                'type'     => 'hidden',
+                'type'     => 'text',
                 'id'       => 'id',
                 'name'     => 'id',
                 'class'    => 'form-control',
                 'value'    => $record->id
-            ]);
-            // Album id
-            echo $input->create([
-                'type'     => 'hidden',
-                'id'       => 'album-id',
-                'name'     => 'album-id',
-                'class'    => 'form-control',
-                'value'    => $record->album_id
             ]);
             // Platform
             $select->setLabel('Platform');
@@ -218,7 +214,7 @@ class ButtonView extends View {
                 [
                     'type'     => 'text',
                     'id'       => 'platform-id',
-                    'name'     => 'platform-id',
+                    'name'     => 'platform_id',
                     'class'    => 'form-control',
                     'required' => '',
                     'value'    => $record->platform_id

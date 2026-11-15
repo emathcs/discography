@@ -53,56 +53,31 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function view($id = 0) {
-        // This process has been added here to avoid to redirect to this page from add page
-        if ( isset( $_POST['submit'] ) ) {
+        // This process has been added here to avoid the process to redirect to this page from add or edit page
+        if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
-            $link        = sanitize_text_field($_POST['link']);
-            $song_id     = sanitize_text_field($_POST['song-id']);
-            $album_id    = sanitize_text_field($_POST['album-id']);
-            $platform_id = sanitize_text_field($_POST['platform-id']);
-            // Update the values if they are 0
-            $song_id  = $song_id ? $song_id : null;
-            $album_id = $album_id ? $album_id : null;
-            if (!(empty($link) || empty($platform_id))) {
-                $data = [
-                    'link'        => $link,
-                    'song_id'     => $song_id,
-                    'album_id'    => $album_id,
-                    'platform_id' => $platform_id
-                ];
-                $format = [
-                    '%s',
-                    '%d',
-                    '%d',
-                    '%d'
-                ];
-                $id = $this->getModel()->insert($data, $format);
+            if (isset($_POST['id'])) {
+                $id = sanitize_text_field($_POST['id']);
+                $i = 0;
+                $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
+                $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
+                // Update record
+                $this->update($id, $_POST, $fields);
             }
-        }
-        // This process has been added here to avoid to redirect to this page from edit page
-        if ( isset( $_POST['submit-edit'] ) ) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
-            $id          = sanitize_text_field($_POST['id']);
-            $link        = sanitize_text_field($_POST['link']);
-            $platform_id = sanitize_text_field($_POST['platform-id']);
-            if (!(empty($platform_id) || empty($link))) {
-                $data = [
-                    'link'        => $link,
-                    'platform_id' => $platform_id
-                ];
-                $format_data = [
-                    '%s',
-                    '%d'
-                ];
-                $this->getModel()->updateById(
-                    $id,
-                    $data,
-                    $format_data
-                );
+            else {
+                $i = 0;
+                $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
+                if (isset($_POST['song_id'])) {
+                    $fields[$i++] = [ 'name' => 'song_id', 'format' => '%d' ];
+                }
+                if (isset($_POST['album_id'])) {
+                    $fields[$i++] = [ 'name' => 'album_id', 'format' => '%d' ];
+                }
+                $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
+                // Insert a new record
+                $id = $this->insert($_POST, $fields);
             }
         }
         // Platforms
