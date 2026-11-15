@@ -90,7 +90,7 @@ class ButtonView extends View {
         // Album id
         if ($data['album_id']) {
             echo $input->create([
-                'type'     => 'text',
+                'type'     => 'hidden',
                 'id'       => 'album-id',
                 'name'     => 'album_id',
                 'class'    => 'form-control',
@@ -100,7 +100,7 @@ class ButtonView extends View {
         // Song id
         if ($data['song_id']) {
             echo $input->create([
-                'type'     => 'text',
+                'type'     => 'hidden',
                 'id'       => 'song-id',
                 'name'     => 'song_id',
                 'class'    => 'form-control',
@@ -202,7 +202,7 @@ class ButtonView extends View {
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Id
             echo $input->create([
-                'type'     => 'text',
+                'type'     => 'hidden',
                 'id'       => 'id',
                 'name'     => 'id',
                 'class'    => 'form-control',
