@@ -123,7 +123,7 @@ class Controller {
         $total = count($fields);
         for ($i = 0; $i < $total; $i++) {
             $formats[$i] = $fields[$i]['format'];
-            $data[$fields[$i]['name']] = sanitize_text_field($form[$fields[$i]['name']]);
+            $data[$fields[$i]['name']] = sanitize_text_field(wp_unslash($form[$fields[$i]['name']]));
             $condition = $condition && !empty($data[$fields[$i]['name']]);
         }
         $dataFormats = [];
