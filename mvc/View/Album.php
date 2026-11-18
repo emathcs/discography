@@ -130,7 +130,7 @@ class AlbumView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
 
         // Panel
-        echo $this->panelOpen( 'Album' );
+        echo $this->panelOpen( 'View Album' );
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
@@ -214,7 +214,7 @@ class AlbumView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Edit album');
+        echo $this->panelOpen('Edit Album');
         if ($record) {
             echo $form->init(['action' => "admin.php?page=albums-view-settings&album=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
@@ -286,8 +286,8 @@ class AlbumView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the album', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update information', 'class' => 'btn btn-primary']
+                ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the Album', 'class' => 'btn btn-warning'],
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Album', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }
