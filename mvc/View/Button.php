@@ -48,7 +48,7 @@ class ButtonView extends View {
         // Panel
         echo $this->panelOpen('Buttons');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=buttons-add-settings" class="btn btn-sm btn-primary">Add a new button</a>';
+        echo '    <a href="?page=buttons-add-settings" class="btn btn-sm btn-primary">Add Button</a>';
         echo '</div>';
         echo $this->table($records, $data['platforms']);
         echo $this->panelClose();
@@ -60,7 +60,7 @@ class ButtonView extends View {
      * @param Array $data Data to render
      */
     public function add($data = []) {
-        echo $this->panelOpen('Add a new button');
+        echo $this->panelOpen('Add Button');
         $form  = new Form();
         $input = new Input('mb-3');
         $input->setLabelClass('form-label');
@@ -68,17 +68,17 @@ class ButtonView extends View {
         $select->setLabelClass('form-label');
         $navigation = new Navigation('mb-3');
 
-        // Models for redirection
+        // Navigation
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
         if (isset($data['album_id']) && $data['album_id']) {
-            $goToLabel = 'Go to the album';
+            $goToLabel = 'Go to the Album';
             $parameters = '&model=album&id=' . $data['album_id'];
             $goTo = '?page=albums-view-settings&album=' . $data['album_id'] ;
         }
         if (isset($data['song_id']) && $data['song_id']) {
-            $goToLabel = 'Go to the song';
+            $goToLabel = 'Go to the Song';
             $parameters = '&model=song&id=' . $data['song_id'];
             $goTo = '?page=songs-view-settings&song=' . $data['song_id'] ;
         }
@@ -133,7 +133,7 @@ class ButtonView extends View {
         echo $input->setLabel('');
         echo $navigation->buttons(
             ['href' =>  $goTo, 'label' => $goToLabel, 'class' => 'btn btn-warning'],
-            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save information', 'class' => 'btn btn-primary']
+            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Button', 'class' => 'btn btn-primary']
         );
         echo $form->end();
         echo $this->panelClose();
@@ -146,8 +146,28 @@ class ButtonView extends View {
      */
     public function view($data = []) {
         $record = isset($data['record']) ? $data['record'] : [];
+
+        // Navigation
+        $goTo = '';
+        $goToLabel = '';
+        $parameters = '';
+        if ($record->album_id) {
+            $parameter = 'album';
+            $id = $record->album_id;
+            $goToLabel = 'Go to the Album';
+            $parameters = '&model=album&id=' . $record->album_id;
+            $goTo = '?page=albums-view-settings&album=' . $record->album_id ;
+        }
+        if ($record->song_id) {
+            $parameter = 'song';
+            $id = $record->song_id;
+            $goToLabel = 'Go to the Song';
+            $parameters = '&model=song&id=' . $record->song_id;
+            $goTo = '?page=songs-view-settings&song=' . $record->song_id;
+        }
+
         // Panel
-        echo $this->panelOpen( 'View button' );
+        echo $this->panelOpen( 'View Button' );
         if ($record) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
             echo '    <tbody>';
@@ -162,19 +182,10 @@ class ButtonView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            if ($record->album_id) {
-                echo '<a href="?page=albums-view-settings&album=' . $record->album_id .'" class="btn btn-warning">Go to the album</a> ';
-            }
-            if ($record->song_id) {
-                echo '<a href="?page=songs-view-settings&song=' . $record->song_id .'" class="btn btn-warning">Go to the song</a> ';
-            }
-            echo '<a href="?page=buttons-edit-settings&button=' . $record->id .'" class="btn btn-secondary">Edit button</a> ';
-            if ($record->album_id) {
-                echo '<a href="?page=buttons-add-settings&album=' . $record->album_id . '" class="btn btn-primary">Add a new button</a>';
-            }
-            if ($record->song_id) {
-                echo '<a href="?page=buttons-add-settings&song=' . $record->song_id .'" class="btn btn-primary">Add a new button</a>';
-            }
+            // Navigation buttons
+            echo '<a href="' . $goTo .'" class="btn btn-warning">' . $goToLabel . '</a> ';
+            echo '<a href="?page=buttons-edit-settings&button=' . $record->id .'" class="btn btn-secondary">Edit Button</a> ';
+            echo '<a href="?page=buttons-add-settings&' . $parameter . '=' . $id . '" class="btn btn-primary">Add Button</a>';
             echo '</div>';
         }
         echo $this->panelClose();
@@ -194,8 +205,23 @@ class ButtonView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
         $navigation = new Navigation('mb-3');
 
+        // Navigation
+        $goTo = '';
+        $goToLabel = '';
+        $parameters = '';
+        if ($record->album_id) {
+            $goToLabel = 'Go to the Album';
+            $parameters = '&model=album&id=' . $record->album_id;
+            $goTo = '?page=albums-view-settings&album=' . $record->album_id ;
+        }
+        if ($record->song_id) {
+            $goToLabel = 'Go to the Song';
+            $parameters = '&model=song&id=' . $record->song_id;
+            $goTo = '?page=songs-view-settings&song=' . $record->song_id;
+        }
+
         // Panel
-        echo $this->panelOpen('Edit button');
+        echo $this->panelOpen('Edit Button');
         if ($record) {
             echo $form->init(['action' => "admin.php?page=buttons-view-settings&button=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
@@ -234,8 +260,8 @@ class ButtonView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' =>  '?page=buttons-view-settings&button=' . $record->id, 'label' => 'Go to the button', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update information', 'class' => 'btn btn-primary']
+                ['href' =>  $goTo,   'label' => $goToLabel, 'class' => 'btn btn-warning'],
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Button', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }
