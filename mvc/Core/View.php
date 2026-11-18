@@ -64,4 +64,31 @@ class View {
 
         return $html;
     }
+
+    /**
+     * Delete Model
+     *
+     * @param String $model Model name
+     * @return String $html HTML modal
+     */
+    public function deleteModal($model = '') {
+        $html  = '<div class="modal fade" id="delete' . $model . '" tabindex="-1" aria-labelledby="delete' . $model . 'Label" aria-hidden="true">';
+        $html .= '    <div class="modal-dialog modal-dialog-centered">';
+        $html .= '        <div class="modal-content">';
+        $html .= '            <div class="modal-header">';
+        $html .= '                <h2 class="modal-title fs-5" id="exampleModalLabel">Delete ' . $model . '</h2>';
+        $html .= '                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+        $html .= '            </div>';
+        $html .= '            <div class="modal-body">';
+        $html .= '                Are you sure to delete the ' . $model . '?';
+        $html .= '            </div>';
+        $html .= '            <div class="modal-footer">';
+        $html .= '                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
+        $html .= '                <button type="button" class="btn btn-danger">Delete ' . $model . '</button>';
+        $html .= '            </div>';
+        $html .= '        </div>';
+        $html .= '    </div>';
+        $html .= '</div>';
+        return $html;
+    }
 }
