@@ -39,3 +39,7 @@ body {
 .album-upload-btn {
     cursor: pointer;
 }
+
+.form-label {
+    font-weight: bold;
+}

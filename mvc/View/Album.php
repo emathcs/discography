@@ -13,7 +13,7 @@ class AlbumView extends View {
         // Panel
         echo $this->panelOpen('Albums');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add a new album</a>';
+        echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add Album</a>';
         echo '</div>';
         if ($total) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
@@ -54,7 +54,7 @@ class AlbumView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Add a new album');
+        echo $this->panelOpen('Add Album');
         echo $form->init(['action' => "admin.php?page=albums-view-settings", 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
@@ -114,8 +114,8 @@ class AlbumView extends View {
         // Navigation buttons
         echo $input->setLabel('');
         echo $navigation->buttons(
-            ['href' => '?page=albums-settings', 'label' => 'Go to the albums', 'class' => 'btn btn-warning'],
-            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save information', 'class' => 'btn btn-primary']
+            ['href' => '?page=albums-settings', 'label' => 'Go to Albums', 'class' => 'btn btn-warning'],
+            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Album', 'class' => 'btn btn-primary']
         );
         echo $form->end();
         echo $this->panelClose();
@@ -130,7 +130,7 @@ class AlbumView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
 
         // Panel
-        echo $this->panelOpen( 'View album' );
+        echo $this->panelOpen( 'View Album' );
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
@@ -174,14 +174,14 @@ class AlbumView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            echo '    <a href="?page=albums-settings" class="btn btn-warning">Go to the Albums</a>';
-            echo '    <a href="?page=albums-edit-settings&album=' . $record->id .'" class="btn btn-secondary">Edit album</a>';
-            echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add a new album</a>';
+            echo '    <a href="?page=albums-settings" class="btn btn-warning">Go to Albums</a>';
+            echo '    <a href="?page=albums-edit-settings&album=' . $record->id .'" class="btn btn-secondary">Edit Album</a>';
+            echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add Album</a>';
             echo '</div>';
             // Button view
             echo '<br><hr><br>';
             echo '<h2>Buttons</h2>';
-            echo '<a href="?page=buttons-add-settings&album=' . $record->id . '" class="btn btn-primary">Add a new button</a>';
+            echo '<a href="?page=buttons-add-settings&album=' . $record->id . '" class="btn btn-primary">Add Button</a>';
             echo '<br>';
             if ($buttonsTable) {
                 echo '<br>';
@@ -190,7 +190,7 @@ class AlbumView extends View {
             // Song view
             echo '<br><hr><br>';
             echo '<h2>Songs</h2>';
-            echo '<a href="?page=songs-add-settings&album=' . $record->id . '" class="btn btn-primary">Add a new song</a>';
+            echo '<a href="?page=songs-add-settings&album=' . $record->id . '" class="btn btn-primary">Add Song</a>';
             echo '<br><br>';
             if ($songsTable) {
                 echo $songView->table($data['songs']);
@@ -214,7 +214,7 @@ class AlbumView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Edit album');
+        echo $this->panelOpen('Edit Album');
         if ($record) {
             echo $form->init(['action' => "admin.php?page=albums-view-settings&album=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
@@ -286,8 +286,8 @@ class AlbumView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the album', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update information', 'class' => 'btn btn-primary']
+                ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the Album', 'class' => 'btn btn-warning'],
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Album', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }
