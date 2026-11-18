@@ -60,7 +60,6 @@ class ButtonView extends View {
      * @param Array $data Data to render
      */
     public function add($data = []) {
-        echo $this->panelOpen('Add Button');
         $form  = new Form();
         $input = new Input('mb-3');
         $input->setLabelClass('form-label');
@@ -84,6 +83,7 @@ class ButtonView extends View {
         }
 
         // Panel
+        echo $this->panelOpen('Add Button');
         echo $form->init(['action' => 'admin.php?page=buttons-view-settings' . $parameters, 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
