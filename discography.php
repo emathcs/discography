@@ -52,75 +52,58 @@ function albums_admin_menu() {
         'Discography',                      // Page title
         'Discography',                      // Menu title
         'manage_options',                   // Required user capability
-        'discography-' . $module,           // URL slug
-        'discography_' . $module . '_list', // Function that outputs the HTML page
+        'discography-release',           // URL slug
+        'discography_release_list', // Function that outputs the HTML page
         'dashicons-format-gallery',         // Left menu icon
         '81'                                // The left menu link appears after the Settings link
     );
 
-    // Add
-    add_submenu_page(
-        '',                                // Parent menu slug
-        'Add ' . $label,                   // Page title
-        '',                                // Menu title
-        'manage_options',                  // Capability
-        'discography-' . $module . '-add', // Menu slug
-        'discography_' . $module . '_add'  // Callback function
-    );
+    $module =[
+        [
+            'name'  => 'release',
+            'label' => 'Release',
+        ],
+        [
+            'name'  => 'track',
+            'label' => 'Track',
+        ],
+        [
+            'name'  => 'button',
+            'label' => 'Button',
+        ],
+    ];
+    $total = count($module) - 1;
+    for ($i = 0; $i < $total; $i++) {
+        // Add
+        add_submenu_page(
+            '',                                            // Parent menu slug
+            'Add ' . $module[$i]['label'],                 // Page title
+            '',                                            // Menu title
+            'manage_options',                              // Capability
+            'discography-' . $module[$i]['name'] . '-add', // Menu slug
+            'discography_' . $module[$i]['name'] . '_add'  // Callback function
+        );
 
-    // View
-    add_submenu_page(
-        '',                                 // Parent menu slug
-        'View ' . $label,                   // Page title
-        '',                                 // Menu title
-        'manage_options',                   // Capability
-        'discography-' . $module . '-view', // Menu slug
-        'discography_' . $module . '_view'  // Callback function
-    );
+        // View
+        add_submenu_page(
+            '',                                             // Parent menu slug
+            'View ' . $module[$i]['label'],                 // Page title
+            '',                                             // Menu title
+            'manage_options',                               // Capability
+            'discography-' . $module[$i]['name'] . '-view', // Menu slug
+            'discography_' . $module[$i]['name'] . '_view'  // Callback function
+        );
 
-    // Edit
-    add_submenu_page(
-        '',                                 // Parent menu slug
-        'Edit ' . $label,                   // Page title
-        '',                                 // Menu title
-        'manage_options',                   // Capability
-        'discography-' . $module . '-edit', // Menu slug
-        'discography_' . $module . '_edit'  // Callback function
-    );
-
-    /**
-     * Songs
-     */
-
-    // Add
-    add_submenu_page(
-        '',                   // Parent menu slug
-        'Songs',              // Page title
-        '',                   // Menu title
-        'manage_options',     // Capability
-        'songs-add-settings', // Menu slug
-        'songs_add_html'      // Callback function
-    );
-
-    // View
-    add_submenu_page(
-        '',                    // Parent menu slug
-        'Songs',               // Page title
-        '',                    // Menu title
-        'manage_options',      // Capability
-        'songs-view-settings', // Menu slug
-        'songs_view_html'      // Callback function
-    );
-
-    // Edit
-    add_submenu_page(
-        '',                    // Parent menu slug
-        'Songs',               // Page title
-        '',                    // Menu title
-        'manage_options',      // Capability
-        'songs-edit-settings', // Menu slug
-        'songs_edit_html'      // Callback function
-    );
+        // Edit
+        add_submenu_page(
+            '',                                             // Parent menu slug
+            'Edit ' . $module[$i]['label'],                 // Page title
+            '',                                             // Menu title
+            'manage_options',                               // Capability
+            'discography-' . $module[$i]['name'] . '-edit', // Menu slug
+            'discography_' . $module[$i]['name'] . '_edit'  // Callback function
+        );
+    }
 
     /**
      * Buttons
