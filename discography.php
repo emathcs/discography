@@ -47,13 +47,13 @@ function albums_admin_menu() {
 
     // List
     add_menu_page(
-        'Albums',                      // Page title
-        'Albums',                      // Menu title
-        'manage_options',              // Required user capability
-        'albums-settings',             // URL slug
-        'albums_render_settings_page', // Function that outputs the HTML page
-        'dashicons-format-gallery',    // Left menu icon
-        '81'                           // The left menu link appears after the Settings link
+        'Discography',                      // Page title
+        'Discography',                      // Menu title
+        'manage_options',                   // Required user capability
+        'discography',                      // URL slug
+        'discography_render_settings_page', // Function that outputs the HTML page
+        'dashicons-format-gallery',         // Left menu icon
+        '81'                                // The left menu link appears after the Settings link
     );
 
     // Add
@@ -179,7 +179,7 @@ require_once plugin_dir_path( __FILE__ ) . 'button.php';
 function albums_admin_enqueue_scripts( $hook ) {
     $sections = [
         // Album
-        'toplevel_page_albums-settings'   => true,
+        'toplevel_page_discography'       => true,
         'admin_page_albums-add-settings'  => true,
         'admin_page_albums-edit-settings' => true,
         'admin_page_albums-view-settings' => true,

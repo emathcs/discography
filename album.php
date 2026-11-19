@@ -1,7 +1,7 @@
 <?php
 
 // List
-function albums_render_settings_page() {
+function discography_render_settings_page() {
     $controller = new AlbumController();
     $controller->list();
 }
