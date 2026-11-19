@@ -59,4 +59,12 @@ jQuery(document).all ? jQuery(window) : jQuery(document).ready(function($) {
         $('#album-image-gallery-item-preview').addClass('album-admin-hide');
         $('#album-image-gallery-item-upload').removeClass('album-admin-hide');
     });
+
+    //
+    $('.delete-record').on('click', function(e) {
+        var id = $(this).attr('data-id');
+        var model = $(this).attr('data-model');
+        $('#delete-' + model + '-id').val(id);
+        $('#delete-' + model).val(model);
+    });
 });
