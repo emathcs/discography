@@ -49,13 +49,13 @@ function albums_admin_menu() {
     $module = 'release';
     // List
     add_menu_page(
-        'Discography',                      // Page title
-        'Discography',                      // Menu title
-        'manage_options',                   // Required user capability
-        'discography-release',           // URL slug
+        'Discography',              // Page title
+        'Discography',              // Menu title
+        'manage_options',           // Required user capability
+        'discography-release',      // URL slug
         'discography_release_list', // Function that outputs the HTML page
-        'dashicons-format-gallery',         // Left menu icon
-        '81'                                // The left menu link appears after the Settings link
+        'dashicons-format-gallery', // Left menu icon
+        '81'                        // The left menu link appears after the Settings link
     );
 
     $module =[
@@ -162,24 +162,31 @@ require_once plugin_dir_path( __FILE__ ) . 'button.php';
  * Enqueue admin scripts and styles
  */
 function albums_admin_enqueue_scripts( $hook ) {
-    $module = 'release';
-    $sections = [
-        // Album
-        'toplevel_page_discography-' . $module        => true,
-        'admin_page_discography-' . $module . '-add'  => true,
-        'admin_page_discography-' . $module . '-edit' => true,
-        'admin_page_discography-' . $module . '-view' => true,
-        // Song
-        'admin_page_songs-add-settings'  => true,
-        'admin_page_songs-view-settings' => true,
-        'admin_page_songs-edit-settings' => true,
-        // Button
-        'admin_page_buttons-add-settings'  => true,
-        'admin_page_buttons-view-settings' => true,
-        'admin_page_buttons-edit-settings' => true,
+    $module =[
+        [
+            'name'  => 'release',
+        ],
+        [
+            'name'  => 'track',
+        ],
+        [
+            'name'  => 'button',
+        ],
     ];
+
+    $total = count($module) - 1;
+    $route['toplevel_page_discography-release'] = true;
+    for ($i = 0; $i < $total; $i++) {
+        $route['admin_page_discography-' . $module[$i]['name'] . '-add'] = true;
+        $route['admin_page_discography-' . $module[$i]['name'] . '-view'] = true;
+        $route['admin_page_discography-' . $module[$i]['name'] . '-edit'] = true;
+    }
+    $route['admin_page_buttons-add-settings'] = true;
+    $route['admin_page_buttons-view-settings'] = true;
+    $route['admin_page_buttons-edit-settings'] = true;
+
     // Load scripts only on your specific plugin settings page
-    if ( ! ( isset( $sections[$hook] ) && $sections[$hook] ) ) {
+    if ( ! ( isset( $route[$hook] ) && $route[$hook] ) ) {
         return;
     }
     // Call the core WordPress media files
