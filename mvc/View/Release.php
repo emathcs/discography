@@ -1,6 +1,6 @@
 <?php
 
-class AlbumView extends View {
+class ReleaseView extends View {
     /**
      * List page
      *
@@ -11,9 +11,9 @@ class AlbumView extends View {
         $total = count($records);
 
         // Panel
-        echo $this->panelOpen('Albums');
+        echo $this->panelOpen('Releases');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Album</a>';
+        echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Release</a>';
         echo '</div>';
         if ($total) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
@@ -29,10 +29,10 @@ class AlbumView extends View {
                 echo '    <tr>';
                 echo '        <th scope="row">' . $records[$i]->id . '</th>';
                 echo '        <td>' . $records[$i]->name . '</td>';
-                echo '        <td class="col-action"><a href="?page=discography-release-view&album=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                echo '        <td class="col-action"><a href="?page=discography-release-edit&album=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                echo '        <td class="col-action"><a href="?page=discography-release-view&release=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
+                echo '        <td class="col-action"><a href="?page=discography-release-edit&release=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 echo '        <td class="col-action">';
-                echo '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteAlbum" data-id="' . $records[$i]->id . '" data-model="album">';
+                echo '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteRelease" data-id="' . $records[$i]->id . '" data-model="release">';
                 echo '                Delete';
                 echo '            </button>';
                 echo '        </td>';
@@ -41,7 +41,7 @@ class AlbumView extends View {
             echo '    </tbody>';
             echo '</table>';
             // Delete form
-            echo $this->deleteModal('Album', 'album');
+            echo $this->deleteModal('Release', 'release');
         }
         echo $this->panelClose();
     }
@@ -60,7 +60,7 @@ class AlbumView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Add Album');
+        echo $this->panelOpen('Add Release');
         echo $form->init(['action' => "admin.php?page=discography-release-view", 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
@@ -120,8 +120,8 @@ class AlbumView extends View {
         // Navigation buttons
         echo $input->setLabel('');
         echo $navigation->buttons(
-            ['href' => '?page=albums-settings', 'label' => 'Go to Albums', 'class' => 'btn btn-warning'],
-            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Album', 'class' => 'btn btn-primary']
+            ['href' => '?page=discography-release', 'label' => 'Go to Releases', 'class' => 'btn btn-warning'],
+            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Release', 'class' => 'btn btn-primary']
         );
         echo $form->end();
         echo $this->panelClose();
@@ -136,7 +136,7 @@ class AlbumView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
 
         // Panel
-        echo $this->panelOpen( 'View Album' );
+        echo $this->panelOpen( 'View Release' );
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
@@ -180,14 +180,14 @@ class AlbumView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            echo '    <a href="?page=discography-release" class="btn btn-warning">Go to Albums</a>';
-            echo '    <a href="?page=discography-release-edit&album=' . $record->id .'" class="btn btn-secondary">Edit Album</a>';
-            echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Album</a>';
+            echo '    <a href="?page=discography-release" class="btn btn-warning">Go to Releases</a>';
+            echo '    <a href="?page=discography-release-edit&release=' . $record->id .'" class="btn btn-secondary">Edit Release</a>';
+            echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Release</a>';
             echo '</div>';
             // Button view
             echo '<br><hr><br>';
             echo '<h2>Buttons</h2>';
-            echo '<a href="?page=buttons-add-settings&album=' . $record->id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=buttons-add-settings&release=' . $record->id . '" class="btn btn-primary">Add Button</a>';
             echo '<br>';
             if ($buttonsTable) {
                 echo '<br>';
@@ -196,7 +196,7 @@ class AlbumView extends View {
             // Song view
             echo '<br><hr><br>';
             echo '<h2>Songs</h2>';
-            echo '<a href="?page=songs-add-settings&album=' . $record->id . '" class="btn btn-primary">Add Song</a>';
+            echo '<a href="?page=songs-add-settings&release=' . $record->id . '" class="btn btn-primary">Add Song</a>';
             echo '<br><br>';
             if ($songsTable) {
                 echo $songView->table($data['songs']);
@@ -220,9 +220,9 @@ class AlbumView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Edit Album');
+        echo $this->panelOpen('Edit Release');
         if ($record) {
-            echo $form->init(['action' => "admin.php?page=discography-release-view&album=" . $record->id, 'method' => 'post']);
+            echo $form->init(['action' => "admin.php?page=discography-release-view&release=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Cover image
@@ -292,8 +292,8 @@ class AlbumView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' => '?page=albums-view-settings&album=' . $record->id, 'label' => 'Go to the Album', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Album', 'class' => 'btn btn-primary']
+                ['href' => '?page=discography-release-view&release=' . $record->id, 'label' => 'Go to the Release', 'class' => 'btn btn-warning'],
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Release', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }

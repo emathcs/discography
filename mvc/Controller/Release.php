@@ -1,12 +1,12 @@
 <?php
 
-class AlbumController extends Controller {
+class ReleaseController extends Controller {
     /**
      * Constructor
      */
     public function __construct() {
-        $Model = new AlbumModel();
-        $View  = new AlbumView();
+        $Model = new ReleaseModel();
+        $View  = new ReleaseView();
         // ModelChild
         $ChildModel = new TypeModel();
         // Parent constructor
@@ -19,8 +19,8 @@ class AlbumController extends Controller {
     public function list() {
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Album model
-            if ('album' === $_POST['model']) {
+            // Release model
+            if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
             $this->delete();
@@ -37,7 +37,7 @@ class AlbumController extends Controller {
     public function add() {
         // Types
         $types = $this->getChildModel()->getOptionsFormat();
-        // Default album image
+        // Default release image
         $default_src = $src_default = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // View
         $this->getView()->add(['default_src' => $default_src, 'types' => $types]);
@@ -46,7 +46,7 @@ class AlbumController extends Controller {
     /**
      * View
      *
-     * @param Integer $id Album id
+     * @param Integer $id Release id
      */
     public function view($id = 0) {
         // Children model
@@ -88,15 +88,15 @@ class AlbumController extends Controller {
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related songs
-        $songs = $songModel->selectByAlbumId($id);
+        $songs = $songModel->selectByReleaseId($id);
         // Get the related buttons
-        $buttons = $buttonModel->selectByAlbumId($id);
+        $buttons = $buttonModel->selectByReleaseId($id);
         // Platforms
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
         // Types
         $types = $this->getChildModel()->getListFormat();
-        // Image section // Default album image
+        // Image section // Default release image
         $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         if ($record) {
             $src = wp_get_attachment_image_url($record->image_id, 'medium');
@@ -115,7 +115,7 @@ class AlbumController extends Controller {
     /**
      * Edit
      *
-     * @param Integer $id Album id
+     * @param Integer $id Release id
      */
     public function edit($id = 0) {
         // Get the record

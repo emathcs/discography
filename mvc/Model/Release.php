@@ -1,6 +1,6 @@
 <?php
 
-class AlbumModel extends Model {
+class ReleaseModel extends Model {
     /**
      * Constructor
      */
