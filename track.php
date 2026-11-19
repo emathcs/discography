@@ -1,7 +1,7 @@
 <?php
 
 // Add
-function songs_add_html() {
+function discography_track_add() {
     // Get the album id
     $album_id = isset( $_GET['album'] ) ? $_GET['album'] : 0 ;
     $controller = new SongController();
@@ -9,14 +9,14 @@ function songs_add_html() {
 }
 
 // View
-function songs_view_html() {
+function discography_track_view() {
     $song_id = isset( $_GET['song'] ) ? $_GET['song'] : 0 ;
     $controller = new SongController();
     $controller->view( $song_id );
 }
 
 // Edit
-function songs_edit_html() {
+function discography_track_edit() {
     $song_id = isset( $_GET['song'] ) ? $_GET['song'] : 0 ;
     $controller = new SongController();
     $controller->edit( $song_id );

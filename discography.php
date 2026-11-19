@@ -172,7 +172,7 @@ require_once plugin_dir_path( __FILE__ ) . 'mvc/Load.php';
  * Render function
  */
 require_once plugin_dir_path( __FILE__ ) . 'release.php';
-require_once plugin_dir_path( __FILE__ ) . 'song.php';
+require_once plugin_dir_path( __FILE__ ) . 'track.php';
 require_once plugin_dir_path( __FILE__ ) . 'button.php';
 
 /**
