@@ -20,13 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin version
-if ( ! defined( 'AP_VERSION' ) ) {
+if ( ! defined( 'DISCOGRAPHY_VERSION' ) ) {
     // Replace the version number of the theme on each release.
-    define( 'AP_VERSION', '1.0.0' );
+    define( 'DISCOGRAPHY_VERSION', '1.0.0' );
 }
 
 // Plugin URL
-define( 'ALBUM_URL', plugin_dir_url( __FILE__ ) );
+define( 'DISCOGRAPHY_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Create the tables into the database
@@ -199,10 +199,10 @@ function albums_admin_enqueue_scripts( $hook ) {
     // Call the core WordPress media files
     wp_enqueue_media();
     // Loading the assets
-    wp_enqueue_script('albums-media-library-js', plugins_url('/assets/js/admin-gallery.js', __FILE__), false , AP_VERSION, true);
-    wp_enqueue_style( 'albums_bootstrap_min_css', plugins_url('/assets/css/bootstrap.min.css', __FILE__), array(), AP_VERSION );
-    wp_enqueue_style( 'albums_admin_css', plugins_url('/assets/css/admin.css', __FILE__), array(), AP_VERSION );
-    wp_enqueue_script('albums-bootstrap-bundle-min-js', plugins_url('/assets/js/bootstrap.bundle.min.js', __FILE__), false , AP_VERSION, true);
+    wp_enqueue_script('albums-media-library-js', plugins_url('/assets/js/admin-gallery.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
+    wp_enqueue_style( 'albums_bootstrap_min_css', plugins_url('/assets/css/bootstrap.min.css', __FILE__), array(), DISCOGRAPHY_VERSION );
+    wp_enqueue_style( 'albums_admin_css', plugins_url('/assets/css/admin.css', __FILE__), array(), DISCOGRAPHY_VERSION );
+    wp_enqueue_script('albums-bootstrap-bundle-min-js', plugins_url('/assets/js/bootstrap.bundle.min.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
 }
 add_action('admin_enqueue_scripts', 'albums_admin_enqueue_scripts');
 
