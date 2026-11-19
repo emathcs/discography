@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:       Albums
- * Plugin URI:        https://www.github.com/emathcs/albums
- * Description:       Plugin to manage albums.
+ * Plugin Name:       Discography
+ * Plugin URI:        https://www.github.com/emathcs/discography
+ * Description:       Plugin to manage albums, singles, songs and streaming platforms.
  * Author:            Carlos E. Alvarez
  * Author URI:        https://www.emathcs.com
  * Version:           1.0.0
