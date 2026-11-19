@@ -26,11 +26,17 @@ class SongView extends View {
                 $html .= '        <td>' . $records[$i]->name . '</td>';
                 $html .= '        <td class="col-action"><a href="?page=songs-view-settings&song=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
                 $html .= '        <td class="col-action"><a href="?page=songs-edit-settings&song=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
-                $html .= '        <td class="col-action">' . $this->deleteForm($records[$i]->id, 'song') . '</td>';
+                $html .= '        <td class="col-action">';
+                $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteSong" data-id="' . $records[$i]->id . '" data-model="song">';
+                $html .= '                Delete';
+                $html .= '            </button>';
+                $html .= '        </td>';
                 $html .= '    </tr>';
             }
             $html .= '    </tbody>';
             $html .= '</table>';
+            // Delete form
+            $html .= $this->deleteModal('Song', 'song');
         }
         return $html;
     }

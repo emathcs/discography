@@ -31,11 +31,17 @@ class AlbumView extends View {
                 echo '        <td>' . $records[$i]->name . '</td>';
                 echo '        <td class="col-action"><a href="?page=albums-view-settings&album=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
                 echo '        <td class="col-action"><a href="?page=albums-edit-settings&album=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
-                echo '        <td class="col-action">' . $this->deleteForm($records[$i]->id, 'album') . '</td>';
+                echo '        <td class="col-action">';
+                echo '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteAlbum" data-id="' . $records[$i]->id . '" data-model="album">';
+                echo '                Delete';
+                echo '            </button>';
+                echo '        </td>';
                 echo '    </tr>';
             }
             echo '    </tbody>';
             echo '</table>';
+            // Delete form
+            echo $this->deleteModal('Album', 'album');
         }
         echo $this->panelClose();
     }

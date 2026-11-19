@@ -11,28 +11,34 @@ class ButtonView extends View {
         $html = '';
         $total = count($records);
         if ($total) {
-            echo '<table class="table table-sm table-striped table-hover table-bordered">';
-            echo '    <thead>';
-            echo '        <tr>';
-            echo '            <th scope="col">Id</th>';
-            echo '            <th scope="col">Platform</th>';
-            echo '            <th scope="col">Link</th>';
-            echo '            <th scope="col" colspan="3" class="col-actions">Actions</th>';
-            echo '        </tr>';
-            echo '    </thead>';
-            echo '    <tbody>';
+            $html .= '<table class="table table-sm table-striped table-hover table-bordered">';
+            $html .= '    <thead>';
+            $html .= '        <tr>';
+            $html .= '            <th scope="col">Id</th>';
+            $html .= '            <th scope="col">Platform</th>';
+            $html .= '            <th scope="col">Link</th>';
+            $html .= '            <th scope="col" colspan="3" class="col-actions">Actions</th>';
+            $html .= '        </tr>';
+            $html .= '    </thead>';
+            $html .= '    <tbody>';
             for ($i = 0; $i < $total; $i++) {
-                echo '    <tr>';
-                echo '        <th scope="row">' . $records[$i]->id . '</th>';
-                echo '        <td>' . $platforms[$records[$i]->platform_id] . '</td>';
-                echo '        <td>' . $records[$i]->link . '</td>';
-                echo '        <td class="col-action"><a href="?page=buttons-view-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                echo '        <td class="col-action"><a href="?page=buttons-edit-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
-                echo '        <td class="col-action">' . $this->deleteForm($records[$i]->id, 'button') . '</td>';
-                echo '    </tr>';
+                $html .= '    <tr>';
+                $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
+                $html .= '        <td>' . $platforms[$records[$i]->platform_id] . '</td>';
+                $html .= '        <td>' . $records[$i]->link . '</td>';
+                $html .= '        <td class="col-action"><a href="?page=buttons-view-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=buttons-edit-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                $html .= '        <td class="col-action">';
+                $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteButton" data-id="' . $records[$i]->id . '" data-model="button">';
+                $html .= '                Delete';
+                $html .= '            </button>';
+                $html .= '        </td>';
+                $html .= '    </tr>';
             }
-            echo '    </tbody>';
-            echo '</table>';
+            $html .= '    </tbody>';
+            $html .= '</table>';
+            // Delete form
+            $html .= $this->deleteModal('Button', 'button');
         }
         return $html;
     }

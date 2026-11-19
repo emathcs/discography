@@ -33,9 +33,11 @@ class View {
     /**
      * Delete form
      *
+     * @param String $model       Model name
+     * @param String $buttonClass Button class
      * @return String HTML code to generate the delete form
      */
-    public function deleteForm($id = 0, $model = '') {
+    public function deleteForm($model = '', $buttonClass = '') {
         $form  = new Form();
         $input = new Input();
 
@@ -45,23 +47,51 @@ class View {
         $html .= $input->setLabel('');
         $html .= $input->create([
             'type'  => 'hidden',
-            'id'    => 'id-' . $id,
+            'id'    => 'delete-' . $model . '-id',
             'name'  => 'id',
             'class' => 'form-control',
-            'value' => $id
+            'value' => ''
         ]);
         $html .= $input->setLabel('');
         $html .= $input->create([
             'type'  => 'hidden',
-            'id'    => $model . '-' . $id,
+            'id'    => 'delete-' . $model,
             'name'  => 'model',
             'class' => 'form-control',
-            'value' => $model
+            'value' => ''
         ]);
         $html .= $input->setLabel('');
-        $html .= $input->create(['type' => 'submit', 'name' => 'delete', 'value' => 'Delete', 'class' => 'btn btn-sm btn-danger']);
+        $html .= $input->create(['type' => 'submit', 'name' => 'delete', 'value' => 'Delete', 'class' => 'btn btn-danger' . $buttonClass]);
         $html .= $form->end();
 
+        return $html;
+    }
+
+    /**
+     * Delete Model
+     *
+     * @param String $label Label model name
+     * @param String $model Model name
+     * @return String $html HTML modal
+     */
+    public function deleteModal($label = '', $model = '') {
+        $html  = '<div class="modal fade" id="delete' . $label . '" tabindex="-1" aria-labelledby="delete' . $label . 'Label" aria-hidden="true">';
+        $html .= '    <div class="modal-dialog modal-dialog-centered">';
+        $html .= '        <div class="modal-content">';
+        $html .= '            <div class="modal-header">';
+        $html .= '                <h2 class="modal-title fs-5" id="exampleModalLabel">Delete ' . $label . '</h2>';
+        $html .= '                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
+        $html .= '            </div>';
+        $html .= '            <div class="modal-body">';
+        $html .= '                Are you sure to delete the ' . $label . '?';
+        $html .= '            </div>';
+        $html .= '            <div class="modal-footer">';
+        $html .= '                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>';
+        $html .=                  $this->deleteForm($model);
+        $html .= '            </div>';
+        $html .= '        </div>';
+        $html .= '    </div>';
+        $html .= '</div>';
         return $html;
     }
 }
