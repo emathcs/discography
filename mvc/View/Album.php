@@ -13,7 +13,7 @@ class AlbumView extends View {
         // Panel
         echo $this->panelOpen('Albums');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add Album</a>';
+        echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Album</a>';
         echo '</div>';
         if ($total) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
@@ -29,8 +29,8 @@ class AlbumView extends View {
                 echo '    <tr>';
                 echo '        <th scope="row">' . $records[$i]->id . '</th>';
                 echo '        <td>' . $records[$i]->name . '</td>';
-                echo '        <td class="col-action"><a href="?page=albums-view-settings&album=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                echo '        <td class="col-action"><a href="?page=albums-edit-settings&album=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                echo '        <td class="col-action"><a href="?page=discography-release-view&album=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
+                echo '        <td class="col-action"><a href="?page=discography-release-edit&album=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 echo '        <td class="col-action">';
                 echo '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteAlbum" data-id="' . $records[$i]->id . '" data-model="album">';
                 echo '                Delete';
@@ -61,7 +61,7 @@ class AlbumView extends View {
 
         // Panel
         echo $this->panelOpen('Add Album');
-        echo $form->init(['action' => "admin.php?page=albums-view-settings", 'method' => 'post']);
+        echo $form->init(['action' => "admin.php?page=discography-release-view", 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
         // Cover image
@@ -180,9 +180,9 @@ class AlbumView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            echo '    <a href="?page=albums-settings" class="btn btn-warning">Go to Albums</a>';
-            echo '    <a href="?page=albums-edit-settings&album=' . $record->id .'" class="btn btn-secondary">Edit Album</a>';
-            echo '    <a href="?page=albums-add-settings" class="btn btn-primary">Add Album</a>';
+            echo '    <a href="?page=discography-release" class="btn btn-warning">Go to Albums</a>';
+            echo '    <a href="?page=discography-release-edit&album=' . $record->id .'" class="btn btn-secondary">Edit Album</a>';
+            echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Album</a>';
             echo '</div>';
             // Button view
             echo '<br><hr><br>';
@@ -222,7 +222,7 @@ class AlbumView extends View {
         // Panel
         echo $this->panelOpen('Edit Album');
         if ($record) {
-            echo $form->init(['action' => "admin.php?page=albums-view-settings&album=" . $record->id, 'method' => 'post']);
+            echo $form->init(['action' => "admin.php?page=discography-release-view&album=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Cover image

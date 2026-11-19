@@ -38,7 +38,7 @@ class AlbumController extends Controller {
         // Types
         $types = $this->getChildModel()->getOptionsFormat();
         // Default album image
-        $default_src = $src_default = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        $default_src = $src_default = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // View
         $this->getView()->add(['default_src' => $default_src, 'types' => $types]);
     }
@@ -97,7 +97,7 @@ class AlbumController extends Controller {
         // Types
         $types = $this->getChildModel()->getListFormat();
         // Image section // Default album image
-        $src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         if ($record) {
             $src = wp_get_attachment_image_url($record->image_id, 'medium');
         }
@@ -123,8 +123,8 @@ class AlbumController extends Controller {
         // Types
         $types = $this->getChildModel()->getOptionsFormat();
         // Images
-        $src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
-        $default_src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
+        $default_src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // Check if there is a record
         if ($record) {
             // Image section

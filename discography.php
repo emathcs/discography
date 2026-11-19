@@ -45,45 +45,47 @@ function albums_admin_menu() {
      * Albums
      */
 
+    $label = 'Release';
+    $module = 'release';
     // List
     add_menu_page(
         'Discography',                      // Page title
         'Discography',                      // Menu title
         'manage_options',                   // Required user capability
-        'discography',                      // URL slug
-        'discography_render_settings_page', // Function that outputs the HTML page
+        'discography-' . $module,           // URL slug
+        'discography_' . $module . '_list', // Function that outputs the HTML page
         'dashicons-format-gallery',         // Left menu icon
         '81'                                // The left menu link appears after the Settings link
     );
 
     // Add
     add_submenu_page(
-        '',                    // Parent menu slug
-        'Add a new album',     // Page title
-        '',                    // Menu title
-        'manage_options',      // Capability
-        'albums-add-settings', // Menu slug
-        'albums_add_html'      // Callback function
+        '',                                // Parent menu slug
+        'Add ' . $label,                   // Page title
+        '',                                // Menu title
+        'manage_options',                  // Capability
+        'discography-' . $module . '-add', // Menu slug
+        'discography_' . $module . '_add'  // Callback function
     );
 
     // View
     add_submenu_page(
-        '',                     // Parent menu slug
-        'View album',           // Page title
-        '',                     // Menu title
-        'manage_options',       // Capability
-        'albums-view-settings', // Menu slug
-        'albums_view_html'      // Callback function
+        '',                                 // Parent menu slug
+        'View ' . $label,                   // Page title
+        '',                                 // Menu title
+        'manage_options',                   // Capability
+        'discography-' . $module . '-view', // Menu slug
+        'discography_' . $module . '_view'  // Callback function
     );
 
     // Edit
     add_submenu_page(
-        '',                     // Parent menu slug
-        'Edit album',           // Page title
-        '',                     // Menu title
-        'manage_options',       // Capability
-        'albums-edit-settings', // Menu slug
-        'albums_edit_html'      // Callback function
+        '',                                 // Parent menu slug
+        'Edit ' . $label,                   // Page title
+        '',                                 // Menu title
+        'manage_options',                   // Capability
+        'discography-' . $module . '-edit', // Menu slug
+        'discography_' . $module . '_edit'  // Callback function
     );
 
     /**
@@ -177,12 +179,13 @@ require_once plugin_dir_path( __FILE__ ) . 'button.php';
  * Enqueue admin scripts and styles
  */
 function albums_admin_enqueue_scripts( $hook ) {
+    $module = 'release';
     $sections = [
         // Album
-        'toplevel_page_discography'       => true,
-        'admin_page_albums-add-settings'  => true,
-        'admin_page_albums-edit-settings' => true,
-        'admin_page_albums-view-settings' => true,
+        'toplevel_page_discography-' . $module        => true,
+        'admin_page_discography-' . $module . '-add'  => true,
+        'admin_page_discography-' . $module . '-edit' => true,
+        'admin_page_discography-' . $module . '-view' => true,
         // Song
         'admin_page_songs-add-settings'  => true,
         'admin_page_songs-view-settings' => true,
