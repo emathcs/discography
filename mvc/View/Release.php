@@ -144,11 +144,11 @@ class ReleaseView extends View {
                 $buttonsTable = true;
                 $buttonView = new ButtonView();
             }
-            // Get the Song view
-            $songsTable = false;
-            if (isset($data['songs']) && count($data['songs'])) {
-                $songsTable = true;
-                $songView = new SongView();
+            // Get the Track view
+            $tracksTable = false;
+            if (isset($data['tracks']) && count($data['tracks'])) {
+                $tracksTable = true;
+                $trackView = new TrackView();
             }
 
             // Cover image
@@ -193,13 +193,13 @@ class ReleaseView extends View {
                 echo '<br>';
                 echo $buttonView->table($data['buttons'], $data['platforms']);
             }
-            // Song view
+            // Track view
             echo '<br><hr><br>';
-            echo '<h2>Songs</h2>';
-            echo '<a href="?page=songs-add-settings&release=' . $record->id . '" class="btn btn-primary">Add Song</a>';
+            echo '<h2>Tracks</h2>';
+            echo '<a href="?page=discography-track-add&release=' . $record->id . '" class="btn btn-primary">Add Track</a>';
             echo '<br><br>';
-            if ($songsTable) {
-                echo $songView->table($data['songs']);
+            if ($tracksTable) {
+                echo $trackView->table($data['tracks']);
             }
         }
         echo $this->panelClose();

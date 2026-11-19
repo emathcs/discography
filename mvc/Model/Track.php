@@ -1,6 +1,6 @@
 <?php
 
-class SongModel extends Model {
+class TrackModel extends Model {
     /**
      * Constructor
      */
@@ -12,7 +12,7 @@ class SongModel extends Model {
      * Select by Release id function
      *
      * @param Integer $id Release id
-     * @return Array Songs Object Array
+     * @return Array Tracks Object Array
      */
     public function selectByReleaseId($id = 0) {
         return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE album_id={$id}");

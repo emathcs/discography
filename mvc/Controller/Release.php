@@ -50,7 +50,7 @@ class ReleaseController extends Controller {
      */
     public function view($id = 0) {
         // Children model
-        $songModel = new SongModel();
+        $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
@@ -73,11 +73,11 @@ class ReleaseController extends Controller {
                 $id = $this->insert($_POST, $fields);
             }
         }
-        // Delete Button or Song
+        // Delete Button or Track
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Song model
-            if ('song' === $_POST['model']) {
-                $this->setDeleteModel($songModel);
+            // Track model
+            if ('track' === $_POST['model']) {
+                $this->setDeleteModel($trackModel);
             }
             // Button model
             if ('button' === $_POST['model']) {
@@ -87,8 +87,8 @@ class ReleaseController extends Controller {
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
-        // Get the related songs
-        $songs = $songModel->selectByReleaseId($id);
+        // Get the related tracks
+        $tracks = $trackModel->selectByReleaseId($id);
         // Get the related buttons
         $buttons = $buttonModel->selectByReleaseId($id);
         // Platforms
@@ -104,7 +104,7 @@ class ReleaseController extends Controller {
         // View
         $this->getView()->view([
             'src'       => $src,
-            'songs'     => $songs,
+            'tracks'    => $tracks,
             'types'     => $types,
             'record'    => $record,
             'buttons'   => $buttons,

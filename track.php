@@ -2,22 +2,22 @@
 
 // Add
 function discography_track_add() {
-    // Get the album id
-    $album_id = isset( $_GET['album'] ) ? $_GET['album'] : 0 ;
-    $controller = new SongController();
-    $controller->add($album_id);
+    // Get the release id
+    $release_id = isset( $_GET['release'] ) ? $_GET['release'] : 0 ;
+    $controller = new TrackController();
+    $controller->add($release_id);
 }
 
 // View
 function discography_track_view() {
-    $song_id = isset( $_GET['song'] ) ? $_GET['song'] : 0 ;
-    $controller = new SongController();
-    $controller->view( $song_id );
+    $track_id = isset( $_GET['track'] ) ? $_GET['track'] : 0 ;
+    $controller = new TrackController();
+    $controller->view( $track_id );
 }
 
 // Edit
 function discography_track_edit() {
-    $song_id = isset( $_GET['song'] ) ? $_GET['song'] : 0 ;
-    $controller = new SongController();
-    $controller->edit( $song_id );
+    $track_id = isset( $_GET['track'] ) ? $_GET['track'] : 0 ;
+    $controller = new TrackController();
+    $controller->edit( $track_id );
 }

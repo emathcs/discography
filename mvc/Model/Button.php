@@ -19,12 +19,12 @@ class ButtonModel extends Model {
     }
 
     /**
-     * Select by Song id function
+     * Select by Track id function
      *
-     * @param Integer $id Song id
+     * @param Integer $id Track id
      * @return Array Buttons Object Array
      */
-    public function selectBySongId($id = 0) {
+    public function selectByTrackId($id = 0) {
         return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE song_id={$id}");
     }
 }

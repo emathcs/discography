@@ -1,12 +1,12 @@
 <?php
 
-class SongController extends Controller {
+class TrackController extends Controller {
     /**
      * Constructor
      */
     public function __construct() {
-        $Model = new SongModel();
-        $View  = new SongView();
+        $Model = new TrackModel();
+        $View  = new TrackView();
         // Parent constructor
         parent::__construct($Model, $View);
     }
@@ -17,8 +17,8 @@ class SongController extends Controller {
     public function list() {
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Song model
-            if ('song' === $_POST['model']) {
+            // Track model
+            if ('track' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
             $this->delete();
@@ -32,17 +32,17 @@ class SongController extends Controller {
     /**
      * Add
      *
-     * @param Integer $album_id Album id
+     * @param Integer $release_id Release id
      */
-    public function add($album_id = 0) {
+    public function add($release_id = 0) {
         // View
-        $this->getView()->add(['album_id' => $album_id]);
+        $this->getView()->add(['release_id' => $release_id]);
     }
 
     /**
      * View
      *
-     * @param Integer $id Song id
+     * @param Integer $id Track id
      */
     public function view($id = 0) {
         // Button Model
@@ -71,7 +71,7 @@ class SongController extends Controller {
         }
         // Delete Button
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Song model
+            // Track model
             if ('button' === $_POST['model']) {
                 $this->setDeleteModel($buttonModel);
             }
@@ -80,7 +80,7 @@ class SongController extends Controller {
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related buttons
-        $buttons = $buttonModel->selectBySongId($id);
+        $buttons = $buttonModel->selectByTrackId($id);
         // Platforms
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
@@ -91,7 +91,7 @@ class SongController extends Controller {
     /**
      * Edit
      *
-     * @param Integer $id Song id
+     * @param Integer $id Track id
      */
     public function edit($id = 0) {
         // Get the record
