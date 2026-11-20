@@ -141,7 +141,7 @@ class TrackView extends View {
             // Button view
             echo '<br><hr><br>';
             echo '<h2>Buttons</h2>';
-            echo '<a href="?page=buttons-add-settings&track=' . $record->id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=discography-button-add&track=' . $record->id . '" class="btn btn-primary">Add Button</a>';
             echo '<br><br>';
             if ($buttonsTable) {
                 echo $buttonView->table($data['buttons'], $data['platforms']);

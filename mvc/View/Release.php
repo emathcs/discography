@@ -187,7 +187,7 @@ class ReleaseView extends View {
             // Button view
             echo '<br><hr><br>';
             echo '<h2>Buttons</h2>';
-            echo '<a href="?page=buttons-add-settings&release=' . $record->id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=discography-button-add&release=' . $record->id . '" class="btn btn-primary">Add Button</a>';
             echo '<br>';
             if ($buttonsTable) {
                 echo '<br>';

@@ -72,7 +72,7 @@ function albums_admin_menu() {
             'label' => 'Button',
         ],
     ];
-    $total = count($module) - 1;
+    $total = count($module);
     for ($i = 0; $i < $total; $i++) {
         // Add
         add_submenu_page(
@@ -104,40 +104,6 @@ function albums_admin_menu() {
             'discography_' . $module[$i]['name'] . '_edit'  // Callback function
         );
     }
-
-    /**
-     * Buttons
-     */
-
-    // Add
-    add_submenu_page(
-        '',                     // Parent menu slug
-        'Buttons',              // Page title
-        '',                     // Menu title
-        'manage_options',       // Capability
-        'buttons-add-settings', // Menu slug
-        'buttons_add_html'      // Callback function
-    );
-
-    // View
-    add_submenu_page(
-        '',                      // Parent menu slug
-        'Buttons',               // Page title
-        '',                      // Menu title
-        'manage_options',        // Capability
-        'buttons-view-settings', // Menu slug
-        'buttons_view_html'      // Callback function
-    );
-
-    // Edit
-    add_submenu_page(
-        '',                      // Parent menu slug
-        'Buttons',               // Page title
-        '',                      // Menu title
-        'manage_options',        // Capability
-        'buttons-edit-settings', // Menu slug
-        'buttons_edit_html'      // Callback function
-    );
 }
 add_action( 'admin_menu', 'albums_admin_menu' );
 
@@ -174,16 +140,13 @@ function albums_admin_enqueue_scripts( $hook ) {
         ],
     ];
 
-    $total = count($module) - 1;
+    $total = count($module);
     $route['toplevel_page_discography-release'] = true;
     for ($i = 0; $i < $total; $i++) {
         $route['admin_page_discography-' . $module[$i]['name'] . '-add'] = true;
         $route['admin_page_discography-' . $module[$i]['name'] . '-view'] = true;
         $route['admin_page_discography-' . $module[$i]['name'] . '-edit'] = true;
     }
-    $route['admin_page_buttons-add-settings'] = true;
-    $route['admin_page_buttons-view-settings'] = true;
-    $route['admin_page_buttons-edit-settings'] = true;
 
     // Load scripts only on your specific plugin settings page
     if ( ! ( isset( $route[$hook] ) && $route[$hook] ) ) {

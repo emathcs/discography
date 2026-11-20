@@ -1,20 +1,20 @@
 <?php
 
 // Add
-function buttons_add_html() {
+function discography_button_add() {
     $controller = new ButtonController();
     $controller->add();
 }
 
 // View
-function buttons_view_html() {
+function discography_button_view() {
     $button_id = isset( $_GET['button'] ) ? $_GET['button'] : 0 ;
     $controller = new ButtonController();
     $controller->view( $button_id );
 }
 
 // Edit
-function buttons_edit_html() {
+function discography_button_edit() {
     $button_id = isset( $_GET['button'] ) ? $_GET['button'] : 0 ;
     $controller = new ButtonController();
     $controller->edit( $button_id );
