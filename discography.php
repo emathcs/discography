@@ -157,9 +157,9 @@ function discography_admin_enqueue_scripts( $hook ) {
 add_action('admin_enqueue_scripts', 'discography_admin_enqueue_scripts');
 
 /**
- * Shortcut section
+ * Shortcuts section
  */
-require_once plugin_dir_path( __FILE__ ) . 'shortcut.php';
+require_once plugin_dir_path( __FILE__ ) . 'shortcuts.php';
 
 /**
  * Redirection function
