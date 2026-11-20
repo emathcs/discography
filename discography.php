@@ -114,9 +114,9 @@ require_once plugin_dir_path( __FILE__ ) . 'mvc/Load.php';
 /**
  * Render function
  */
-require_once plugin_dir_path( __FILE__ ) . 'release.php';
-require_once plugin_dir_path( __FILE__ ) . 'track.php';
-require_once plugin_dir_path( __FILE__ ) . 'button.php';
+require_once plugin_dir_path( __FILE__ ) . 'render/release.php';
+require_once plugin_dir_path( __FILE__ ) . 'render/track.php';
+require_once plugin_dir_path( __FILE__ ) . 'render/button.php';
 
 /**
  * Enqueue admin scripts and styles
