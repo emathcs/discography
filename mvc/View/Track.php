@@ -84,8 +84,8 @@ class TrackView extends View {
         // Release id
         echo $input->create([
             'type'     => 'hidden',
-            'id'       => 'album-id',
-            'name'     => 'album_id',
+            'id'       => 'release-id',
+            'name'     => 'release_id',
             'class'    => 'form-control',
             'value'    => $release_id
         ]);
@@ -134,9 +134,9 @@ class TrackView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            echo '    <a href="?page=discography-release-view&release=' . $record->album_id .'" class="btn btn-warning">Go to the Release</a>';
+            echo '    <a href="?page=discography-release-view&release=' . $record->release_id .'" class="btn btn-warning">Go to the Release</a>';
             echo '    <a href="?page=discography-track-edit&track=' . $record->id .'" class="btn btn-secondary">Edit Track</a>';
-            echo '    <a href="?page=discography-track-add&release=' . $record->album_id . '" class="btn btn-primary">Add Track</a>';
+            echo '    <a href="?page=discography-track-add&release=' . $record->release_id . '" class="btn btn-primary">Add Track</a>';
             echo '</div>';
             // Button view
             echo '<br><hr><br>';

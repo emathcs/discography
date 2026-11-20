@@ -62,8 +62,8 @@ class TrackController extends Controller {
             }
             else {
                 $fields = [
-                    [ 'name' => 'name',     'format' => '%s' ],
-                    [ 'name' => 'album_id',  'format' => '%d' ],
+                    [ 'name' => 'name',       'format' => '%s' ],
+                    [ 'name' => 'release_id', 'format' => '%d' ],
                 ];
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);

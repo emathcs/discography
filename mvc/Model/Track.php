@@ -5,7 +5,7 @@ class TrackModel extends Model {
      * Constructor
      */
     public function __construct() {
-        parent::__construct('songs');
+        parent::__construct('Tracks');
     }
 
     /**
@@ -15,6 +15,6 @@ class TrackModel extends Model {
      * @return Array Tracks Object Array
      */
     public function selectByReleaseId($id = 0) {
-        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE album_id={$id}");
+        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE release_id={$id}");
     }
 }

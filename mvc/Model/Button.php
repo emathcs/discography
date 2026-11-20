@@ -15,7 +15,7 @@ class ButtonModel extends Model {
      * @return Array Buttons Object Array
      */
     public function selectByReleaseId($id = 0) {
-        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE album_id={$id}");
+        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE release_id={$id}");
     }
 
     /**
@@ -25,6 +25,6 @@ class ButtonModel extends Model {
      * @return Array Buttons Object Array
      */
     public function selectByTrackId($id = 0) {
-        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE song_id={$id}");
+        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE track_id={$id}");
     }
 }

@@ -97,8 +97,8 @@ class ButtonView extends View {
         if ($data['release_id']) {
             echo $input->create([
                 'type'     => 'hidden',
-                'id'       => 'album-id',
-                'name'     => 'album_id',
+                'id'       => 'release-id',
+                'name'     => 'release_id',
                 'class'    => 'form-control',
                 'value'    => $data['release_id']
             ]);
@@ -107,8 +107,8 @@ class ButtonView extends View {
         if ($data['track_id']) {
             echo $input->create([
                 'type'     => 'hidden',
-                'id'       => 'song-id',
-                'name'     => 'song_id',
+                'id'       => 'track-id',
+                'name'     => 'track_id',
                 'class'    => 'form-control',
                 'value'    => $data['track_id']
             ]);
@@ -157,19 +157,19 @@ class ButtonView extends View {
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
-        if ($record->album_id) {
+        if ($record->release_id) {
             $parameter = 'release';
-            $id = $record->album_id;
+            $id = $record->release_id;
             $goToLabel = 'Go to the Release';
-            $parameters = '&model=release&id=' . $record->album_id;
-            $goTo = '?page=discography-release-view&release=' . $record->album_id ;
+            $parameters = '&model=release&id=' . $record->release_id;
+            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
         }
-        if ($record->song_id) {
+        if ($record->track_id) {
             $parameter = 'track';
-            $id = $record->song_id;
+            $id = $record->track_id;
             $goToLabel = 'Go to the Track';
-            $parameters = '&model=track&id=' . $record->song_id;
-            $goTo = '?page=discography-track-view&track=' . $record->song_id;
+            $parameters = '&model=track&id=' . $record->track_id;
+            $goTo = '?page=discography-track-view&track=' . $record->track_id;
         }
 
         // Panel
@@ -215,15 +215,15 @@ class ButtonView extends View {
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
-        if ($record->album_id) {
+        if ($record->release_id) {
             $goToLabel = 'Go to the Release';
-            $parameters = '&model=release&id=' . $record->album_id;
-            $goTo = '?page=discography-release-view&release=' . $record->album_id ;
+            $parameters = '&model=release&id=' . $record->release_id;
+            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
         }
-        if ($record->song_id) {
+        if ($record->track_id) {
             $goToLabel = 'Go to the Track';
-            $parameters = '&model=track&id=' . $record->song_id;
-            $goTo = '?page=discography-track-view&track=' . $record->song_id;
+            $parameters = '&model=track&id=' . $record->track_id;
+            $goTo = '?page=discography-track-view&track=' . $record->track_id;
         }
 
         // Panel

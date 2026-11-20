@@ -69,11 +69,11 @@ class ButtonController extends Controller {
             else {
                 $i = 0;
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
-                if (isset($_POST['song_id'])) {
-                    $fields[$i++] = [ 'name' => 'song_id', 'format' => '%d' ];
+                if (isset($_POST['track_id'])) {
+                    $fields[$i++] = [ 'name' => 'track_id', 'format' => '%d' ];
                 }
-                if (isset($_POST['album_id'])) {
-                    $fields[$i++] = [ 'name' => 'album_id', 'format' => '%d' ];
+                if (isset($_POST['release_id'])) {
+                    $fields[$i++] = [ 'name' => 'release_id', 'format' => '%d' ];
                 }
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
                 // Insert a new record
