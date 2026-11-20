@@ -40,14 +40,8 @@ register_activation_hook( __FILE__, 'jal_install' );
 /**
  * Register the plugin into the admin section
  */
-function albums_admin_menu() {
-    /**
-     * Albums
-     */
-
-    $label = 'Release';
-    $module = 'release';
-    // List
+function discography_admin_menu() {
+    // Release ist
     add_menu_page(
         'Discography',              // Page title
         'Discography',              // Menu title
@@ -105,7 +99,7 @@ function albums_admin_menu() {
         );
     }
 }
-add_action( 'admin_menu', 'albums_admin_menu' );
+add_action( 'admin_menu', 'discography_admin_menu' );
 
 /**
  * Load HTML elements library
@@ -127,7 +121,7 @@ require_once plugin_dir_path( __FILE__ ) . 'button.php';
 /**
  * Enqueue admin scripts and styles
  */
-function albums_admin_enqueue_scripts( $hook ) {
+function discography_admin_enqueue_scripts( $hook ) {
     $module =[
         [
             'name'  => 'release',
@@ -155,12 +149,12 @@ function albums_admin_enqueue_scripts( $hook ) {
     // Call the core WordPress media files
     wp_enqueue_media();
     // Loading the assets
-    wp_enqueue_script('albums-media-library-js', plugins_url('/assets/js/admin-gallery.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
-    wp_enqueue_style( 'albums_bootstrap_min_css', plugins_url('/assets/css/bootstrap.min.css', __FILE__), array(), DISCOGRAPHY_VERSION );
-    wp_enqueue_style( 'albums_admin_css', plugins_url('/assets/css/admin.css', __FILE__), array(), DISCOGRAPHY_VERSION );
-    wp_enqueue_script('albums-bootstrap-bundle-min-js', plugins_url('/assets/js/bootstrap.bundle.min.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
+    wp_enqueue_style( 'discography-bootstrap_min_css', plugins_url('/assets/css/bootstrap.min.css', __FILE__), array(), DISCOGRAPHY_VERSION );
+    wp_enqueue_style( 'discography-admin_css', plugins_url('/assets/css/admin.css', __FILE__), array(), DISCOGRAPHY_VERSION );
+    wp_enqueue_script( 'discography-admin_gallery_js', plugins_url('/assets/js/admin-gallery.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
+    wp_enqueue_script( 'discography-bootstrap_bundle_min_js', plugins_url('/assets/js/bootstrap.bundle.min.js', __FILE__), false , DISCOGRAPHY_VERSION, true);
 }
-add_action('admin_enqueue_scripts', 'albums_admin_enqueue_scripts');
+add_action('admin_enqueue_scripts', 'discography_admin_enqueue_scripts');
 
 /**
  * Shortcut section
@@ -170,44 +164,44 @@ require_once plugin_dir_path( __FILE__ ) . 'shortcut.php';
 /**
  * Redirection function
  */
-function albums_redirections() {
-    // Albums add in view page
+function discography_redirections() {
+    // Rereleases add in view page
     $page = isset( $_GET['page'] ) ? $_GET['page'] : null;
-    if ( 'albums-view-settings' === $page ) {
-        $model_id = isset( $_GET['album'] ) ? $_GET['album'] : 0 ;
+    if ( 'discography-release-view-settings' === $page ) {
+        $model_id = isset( $_GET['release'] ) ? $_GET['release'] : 0 ;
         if ( 0 === $model_id && 0 === count($_POST) ) {
-            wp_safe_redirect( admin_url( 'admin.php?page=albums-settings' ) );
+            wp_safe_redirect( admin_url( 'admin.php?page=discography-release' ) );
             exit;
         }
     }
 
     // Buttons add in view page
-    if ( 'buttons-view-settings' === $page ) {
+    if ( 'discography-button-view' === $page ) {
         $model    = isset( $_GET['model'] ) ? $_GET['model'] : 0 ;
         $model_id = isset( $_GET['id'] ) ? $_GET['id'] : 0 ;
-        // Albums
-        if ('album' === $model) {
+        // Release
+        if ('release' === $model) {
             if ( 0 === count($_POST) ) {
-                wp_safe_redirect( admin_url( 'admin.php?page=albums-view-settings&album=' . $model_id) );
+                wp_safe_redirect( admin_url( 'admin.php?page=discography-release-view&release=' . $model_id) );
                 exit;
             }
         }
-        // Song
-        if ('song' === $model) {
+        // Track
+        if ('track' === $model) {
             if ( 0 === count($_POST) ) {
-                wp_safe_redirect( admin_url( 'admin.php?page=songs-view-settings&song=' . $model_id) );
+                wp_safe_redirect( admin_url( 'admin.php?page=discography-track-view-&track=' . $model_id) );
                 exit;
             }
         }
     }
 
-    // Albums add in view page
-    if ( 'songs-view-settings' === $page ) {
-        $model_id = isset( $_GET['album'] ) ? $_GET['album'] : 0 ;
+    // Release add in view page
+    if ( 'discography-track-view' === $page ) {
+        $model_id = isset( $_GET['release'] ) ? $_GET['release'] : 0 ;
         if ( $model_id && 0 === count($_POST) ) {
-            wp_safe_redirect( admin_url( 'admin.php?page=albums-view-settings&album=' . $model_id) );
+            wp_safe_redirect( admin_url( 'admin.php?page=discography-release-view&release=' . $model_id) );
             exit;
         }
     }
 }
-add_action( 'admin_init', 'albums_redirections' );
+add_action( 'admin_init', 'discography_redirections' );
