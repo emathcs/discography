@@ -7,8 +7,8 @@ class View {
      * @return String HTML code to start a panel
      */
     public function panelOpen($title = '') {
-        $render  = '<div class="albums-wrap">';
-        $render .= '    <div class="container albums-panel">';
+        $render  = '<div class="discography-wrap">';
+        $render .= '    <div class="container discography-panel">';
         $render .= '        <div class="row">';
         $render .= '            <div class="col-xs">';
         $render .= '                <h1>' . esc_html($title) . '</h1>';

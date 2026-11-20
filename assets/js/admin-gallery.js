@@ -1,7 +1,7 @@
 jQuery(document).all ? jQuery(window) : jQuery(document).ready(function($) {
     var galleryFrame;
     // Set an image
-    $('.album-upload-btn').on('click', function(e) {
+    $('.discography-upload-btn').on('click', function(e) {
         e.preventDefault();
         // If the media frame already exists, reopen it.
         if (galleryFrame) {
@@ -37,11 +37,11 @@ jQuery(document).all ? jQuery(window) : jQuery(document).ready(function($) {
             // Populate the input field with a comma-separated list of IDs
             $('#image-id').val(imageIds);
             // Update the preview and the buttons
-            $('#upload-btn').addClass('album-admin-hide');
-            $('#remove-btn').removeClass('album-admin-hide');
-            $('#album-image-gallery-item-preview').html(previewHtml);
-            $('#album-image-gallery-item-upload').addClass('album-admin-hide');
-            $('#album-image-gallery-item-preview').removeClass('album-admin-hide');
+            $('#upload-btn').addClass('discography-admin-hide');
+            $('#remove-btn').removeClass('discography-admin-hide');
+            $('#discography-image-gallery-item-preview').html(previewHtml);
+            $('#discography-image-gallery-item-upload').addClass('discography-admin-hide');
+            $('#discography-image-gallery-item-preview').removeClass('discography-admin-hide');
         });
 
         // Finally, open the modal
@@ -49,15 +49,15 @@ jQuery(document).all ? jQuery(window) : jQuery(document).ready(function($) {
     });
 
     // Removing the image
-    $('.album-remove-btn').on('click', function(e) {
+    $('.discography-remove-btn').on('click', function(e) {
         // Remove the image from the hidden imput
         $('#image-id').val('');
         // Update the preview and the buttons
-        $('#album-image-gallery-item-preview').html('');
-        $('#remove-btn').addClass('album-admin-hide');
-        $('#upload-btn').removeClass('album-admin-hide');
-        $('#album-image-gallery-item-preview').addClass('album-admin-hide');
-        $('#album-image-gallery-item-upload').removeClass('album-admin-hide');
+        $('#discography-image-gallery-item-preview').html('');
+        $('#remove-btn').addClass('discography-admin-hide');
+        $('#upload-btn').removeClass('discography-admin-hide');
+        $('#discography-image-gallery-item-preview').addClass('discography-admin-hide');
+        $('#discography-image-gallery-item-upload').removeClass('discography-admin-hide');
     });
 
     //
