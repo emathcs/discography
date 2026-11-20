@@ -25,7 +25,7 @@ class TrackView extends View {
                 $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
                 $html .= '        <td>' . $records[$i]->name . '</td>';
                 $html .= '        <td class="col-action"><a href="?page=discography-track-view&track=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                $html .= '        <td class="col-action"><a href="?page=discography-tracks-edit&track=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=discography-track-edit&track=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 $html .= '        <td class="col-action">';
                 $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteTrack" data-id="' . $records[$i]->id . '" data-model="track">';
                 $html .= '                Delete';
@@ -190,7 +190,7 @@ class TrackView extends View {
             echo $input->setLabel('');
             echo $navigation->buttons(
                 ['href' => '?page=discography-track-view&track=' . $record->id , 'label' => 'Go to the Track', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Track', 'class' => 'btn btn-primary']
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Track', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }
