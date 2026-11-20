@@ -11,7 +11,7 @@ Please, don't use this repository.
 
 **[discography]**
 
-Displays the cover image gallery.
+Displays the cover image gallery
 
 Attributes:
 
@@ -19,25 +19,25 @@ Attributes:
 - skip: item number to don't display
 - class: discovery + bootstrap class for grid
 
-**[discography_cover id="x"]**
+**[discography_cover id="release_id"]**
 
-Displays the cover of a release.
-
-Attributes:
-
-- id: release id
-
-**[discography_tracklist id="x"]**
-
-Displays the tracklist of a release.
+Displays the cover of a release
 
 Attributes:
 
 - id: release id
 
-**[discography_tracklist id="x"]**
+**[discography_tracklist id="release_id"]**
 
-Displays the cover and tracklist of a release.
+Displays the tracklist of a release
+
+Attributes:
+
+- id: release id
+
+**[discography_tracklist id="release_id"]**
+
+Displays the cover and tracklist of a release
 
 Attributes:
 
