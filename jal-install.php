@@ -16,7 +16,7 @@ function jal_install() {
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
     // Albums
-    $table_1 = $wpdb->prefix . 'albums';
+    $table_1 = $wpdb->prefix . 'releases';
     $sql  = "CREATE TABLE ". $table_1 . " (";
     $sql .= "    id INT(11) AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "    name VARCHAR(255) NOT NULL,";
@@ -26,12 +26,12 @@ function jal_install() {
     $sql .= ") " . $charset_collate . ";";
     dbDelta( $sql );
     // Songs
-    $table_2 = $wpdb->prefix . 'songs';
+    $table_2 = $wpdb->prefix . 'tracks';
     $sql  = "CREATE TABLE ". $table_2 . " (";
     $sql .= "    id INT(11) AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "    name VARCHAR(255) NOT NULL,";
-    $sql .= "    album_id INT(11),";
-    $sql .= "    FOREIGN KEY (album_id) REFERENCES " . $table_1 . "(id) ON DELETE CASCADE";
+    $sql .= "    release_id INT(11),";
+    $sql .= "    FOREIGN KEY (release_id) REFERENCES " . $table_1 . "(id) ON DELETE CASCADE";
     $sql .= ") " . $charset_collate . ";";
     dbDelta( $sql );
     // Buttons
@@ -40,10 +40,10 @@ function jal_install() {
     $sql .= "    id INT(11) AUTO_INCREMENT PRIMARY KEY,";
     $sql .= "    link VARCHAR(255) NOT NULL,";
     $sql .= "    platform_id TINYINT NOT NULL,";
-    $sql .= "    album_id INT(11),";
-    $sql .= "    song_id INT(11),";
-    $sql .= "    FOREIGN KEY (album_id) REFERENCES " . $table_1 . "(id) ON DELETE CASCADE,";
-    $sql .= "    FOREIGN KEY (song_id) REFERENCES " . $table_2 . "(id) ON DELETE CASCADE";
+    $sql .= "    release_id INT(11),";
+    $sql .= "    track_id INT(11),";
+    $sql .= "    FOREIGN KEY (release_id) REFERENCES " . $table_1 . "(id) ON DELETE CASCADE,";
+    $sql .= "    FOREIGN KEY (track_id) REFERENCES " . $table_2 . "(id) ON DELETE CASCADE";
     $sql .= ") " . $charset_collate . ";";
     dbDelta( $sql );
 
