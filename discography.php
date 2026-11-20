@@ -34,7 +34,7 @@ define( 'DISCOGRAPHY_URL', plugin_dir_url( __FILE__ ) );
 global $jal_db_version;
 $jal_db_version = '1.0';
 
-require_once plugin_dir_path( __FILE__ ) . 'jal-install.php';
+require_once plugin_dir_path( __FILE__ ) . 'jal_install.php';
 register_activation_hook( __FILE__, 'jal_install' );
 
 /**

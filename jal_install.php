@@ -15,7 +15,7 @@ function jal_install() {
     $charset_collate = $wpdb->get_charset_collate();
     require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
-    // Albums
+    // Releases
     $table_1 = $wpdb->prefix . 'releases';
     $sql  = "CREATE TABLE ". $table_1 . " (";
     $sql .= "    id INT(11) AUTO_INCREMENT PRIMARY KEY,";
@@ -25,7 +25,7 @@ function jal_install() {
     $sql .= "    post_id BIGINT(20) NOT NULL";
     $sql .= ") " . $charset_collate . ";";
     dbDelta( $sql );
-    // Songs
+    // Tracks
     $table_2 = $wpdb->prefix . 'tracks';
     $sql  = "CREATE TABLE ". $table_2 . " (";
     $sql .= "    id INT(11) AUTO_INCREMENT PRIMARY KEY,";
