@@ -26,8 +26,8 @@ class ButtonView extends View {
                 $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
                 $html .= '        <td>' . $platforms[$records[$i]->platform_id] . '</td>';
                 $html .= '        <td>' . $records[$i]->link . '</td>';
-                $html .= '        <td class="col-action"><a href="?page=buttons-view-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                $html .= '        <td class="col-action"><a href="?page=buttons-edit-settings&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=discography-button-view&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=discography-button-edit&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 $html .= '        <td class="col-action">';
                 $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteButton" data-id="' . $records[$i]->id . '" data-model="button">';
                 $html .= '                Delete';
@@ -54,7 +54,7 @@ class ButtonView extends View {
         // Panel
         echo $this->panelOpen('Buttons');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=buttons-add-settings" class="btn btn-sm btn-primary">Add Button</a>';
+        echo '    <a href="?page=discography-button-add" class="btn btn-sm btn-primary">Add Button</a>';
         echo '</div>';
         echo $this->table($records, $data['platforms']);
         echo $this->panelClose();
@@ -77,40 +77,40 @@ class ButtonView extends View {
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
-        if (isset($data['album_id']) && $data['album_id']) {
-            $goToLabel = 'Go to the Album';
-            $parameters = '&model=album&id=' . $data['album_id'];
-            $goTo = '?page=albums-view-settings&album=' . $data['album_id'] ;
+        if (isset($data['release_id']) && $data['release_id']) {
+            $goToLabel = 'Go to the Release';
+            $parameters = '&model=&id=' . $data['release_id'];
+            $goTo = '?page=discography-release-view&release=' . $data['release_id'] ;
         }
-        if (isset($data['song_id']) && $data['song_id']) {
-            $goToLabel = 'Go to the Song';
-            $parameters = '&model=song&id=' . $data['song_id'];
-            $goTo = '?page=songs-view-settings&song=' . $data['song_id'] ;
+        if (isset($data['track_id']) && $data['track_id']) {
+            $goToLabel = 'Go to the Track';
+            $parameters = '&model=track&id=' . $data['track_id'];
+            $goTo = '?page=discography-track-view&track=' . $data['track_id'] ;
         }
 
         // Panel
         echo $this->panelOpen('Add Button');
-        echo $form->init(['action' => 'admin.php?page=buttons-view-settings' . $parameters, 'method' => 'post']);
+        echo $form->init(['action' => 'admin.php?page=discography-button-view' . $parameters, 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
-        // Album id
-        if ($data['album_id']) {
+        // Release id
+        if ($data['release_id']) {
             echo $input->create([
                 'type'     => 'hidden',
-                'id'       => 'album-id',
-                'name'     => 'album_id',
+                'id'       => 'release-id',
+                'name'     => 'release_id',
                 'class'    => 'form-control',
-                'value'    => $data['album_id']
+                'value'    => $data['release_id']
             ]);
         }
-        // Song id
-        if ($data['song_id']) {
+        // Track id
+        if ($data['track_id']) {
             echo $input->create([
                 'type'     => 'hidden',
-                'id'       => 'song-id',
-                'name'     => 'song_id',
+                'id'       => 'track-id',
+                'name'     => 'track_id',
                 'class'    => 'form-control',
-                'value'    => $data['song_id']
+                'value'    => $data['track_id']
             ]);
         }
         // Platform
@@ -157,19 +157,19 @@ class ButtonView extends View {
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
-        if ($record->album_id) {
-            $parameter = 'album';
-            $id = $record->album_id;
-            $goToLabel = 'Go to the Album';
-            $parameters = '&model=album&id=' . $record->album_id;
-            $goTo = '?page=albums-view-settings&album=' . $record->album_id ;
+        if ($record->release_id) {
+            $parameter = 'release';
+            $id = $record->release_id;
+            $goToLabel = 'Go to the Release';
+            $parameters = '&model=release&id=' . $record->release_id;
+            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
         }
-        if ($record->song_id) {
-            $parameter = 'song';
-            $id = $record->song_id;
-            $goToLabel = 'Go to the Song';
-            $parameters = '&model=song&id=' . $record->song_id;
-            $goTo = '?page=songs-view-settings&song=' . $record->song_id;
+        if ($record->track_id) {
+            $parameter = 'track';
+            $id = $record->track_id;
+            $goToLabel = 'Go to the Track';
+            $parameters = '&model=track&id=' . $record->track_id;
+            $goTo = '?page=discography-track-view&track=' . $record->track_id;
         }
 
         // Panel
@@ -190,8 +190,8 @@ class ButtonView extends View {
             echo '<div class="mb-3">';
             // Navigation buttons
             echo '<a href="' . $goTo .'" class="btn btn-warning">' . $goToLabel . '</a> ';
-            echo '<a href="?page=buttons-edit-settings&button=' . $record->id .'" class="btn btn-secondary">Edit Button</a> ';
-            echo '<a href="?page=buttons-add-settings&' . $parameter . '=' . $id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=discography-button-edit&button=' . $record->id .'" class="btn btn-secondary">Edit Button</a> ';
+            echo '<a href="?page=discography-button-add&' . $parameter . '=' . $id . '" class="btn btn-primary">Add Button</a>';
             echo '</div>';
         }
         echo $this->panelClose();
@@ -215,21 +215,21 @@ class ButtonView extends View {
         $goTo = '';
         $goToLabel = '';
         $parameters = '';
-        if ($record->album_id) {
-            $goToLabel = 'Go to the Album';
-            $parameters = '&model=album&id=' . $record->album_id;
-            $goTo = '?page=albums-view-settings&album=' . $record->album_id ;
+        if ($record->release_id) {
+            $goToLabel = 'Go to the Release';
+            $parameters = '&model=release&id=' . $record->release_id;
+            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
         }
-        if ($record->song_id) {
-            $goToLabel = 'Go to the Song';
-            $parameters = '&model=song&id=' . $record->song_id;
-            $goTo = '?page=songs-view-settings&song=' . $record->song_id;
+        if ($record->track_id) {
+            $goToLabel = 'Go to the Track';
+            $parameters = '&model=track&id=' . $record->track_id;
+            $goTo = '?page=discography-track-view&track=' . $record->track_id;
         }
 
         // Panel
         echo $this->panelOpen('Edit Button');
         if ($record) {
-            echo $form->init(['action' => "admin.php?page=buttons-view-settings&button=" . $record->id, 'method' => 'post']);
+            echo $form->init(['action' => "admin.php?page=discography-button-view&button=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Id

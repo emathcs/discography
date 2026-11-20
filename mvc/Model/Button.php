@@ -9,22 +9,22 @@ class ButtonModel extends Model {
     }
 
     /**
-     * Select by Album id function
+     * Select by Release id function
      *
-     * @param Integer $id Album id
+     * @param Integer $id Release id
      * @return Array Buttons Object Array
      */
-    public function selectByAlbumId($id = 0) {
-        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE album_id={$id}");
+    public function selectByReleaseId($id = 0) {
+        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE release_id={$id}");
     }
 
     /**
-     * Select by Song id function
+     * Select by Track id function
      *
-     * @param Integer $id Song id
+     * @param Integer $id Track id
      * @return Array Buttons Object Array
      */
-    public function selectBySongId($id = 0) {
-        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE song_id={$id}");
+    public function selectByTrackId($id = 0) {
+        return $this->getDb()->get_results("SELECT * FROM {$this->getTable()} WHERE track_id={$id}");
     }
 }

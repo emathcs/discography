@@ -37,14 +37,14 @@ class ButtonController extends Controller {
      * Add
      */
     public function add() {
-        // Album id
-        $album_id = isset($_GET['album']) ? $_GET['album'] : 0;
-        // Song id
-        $song_id = isset($_GET['song']) ? $_GET['song'] : 0;
+        // Release id
+        $release_id = isset($_GET['release']) ? $_GET['release'] : 0;
+        // Track id
+        $track_id = isset($_GET['track']) ? $_GET['track'] : 0;
         // Platforms
         $platforms = $this->getChildModel()->getOptionsFormat();
         // View
-        $this->getView()->add(['platforms' => $platforms, 'album_id' => $album_id, 'song_id' => $song_id]);
+        $this->getView()->add(['platforms' => $platforms, 'release_id' => $release_id, 'track_id' => $track_id]);
     }
 
     /**
@@ -69,11 +69,11 @@ class ButtonController extends Controller {
             else {
                 $i = 0;
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
-                if (isset($_POST['song_id'])) {
-                    $fields[$i++] = [ 'name' => 'song_id', 'format' => '%d' ];
+                if (isset($_POST['track_id'])) {
+                    $fields[$i++] = [ 'name' => 'track_id', 'format' => '%d' ];
                 }
-                if (isset($_POST['album_id'])) {
-                    $fields[$i++] = [ 'name' => 'album_id', 'format' => '%d' ];
+                if (isset($_POST['release_id'])) {
+                    $fields[$i++] = [ 'name' => 'release_id', 'format' => '%d' ];
                 }
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
                 // Insert a new record

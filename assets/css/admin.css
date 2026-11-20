@@ -1,13 +1,14 @@
-.albums-wrap {
+.discography-wrap {
     padding-right: 20px;
 }
 
-.albums-panel {
+.discography-panel {
+    padding: 25px 30px 20px 30px;
     background-color: #fff;
     box-shadow: rgba(3, 27, 78, 0.25) 0px 0px 20px;
 }
 
-.albums-submit .button {
+.discography-submit .button {
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -32,11 +33,11 @@ body {
     width: 100%;
 }
 
-.album-admin-hide {
+.discography-admin-hide {
     display: none;
 }
 
-.album-upload-btn {
+.discography-upload-btn {
     cursor: pointer;
 }
 

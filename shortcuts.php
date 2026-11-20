@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * This file contains the Shortcut to display the Album image gallery.
+ * This file contains the Shortcuts to display discography sections.
  *
  */
 
@@ -12,7 +12,7 @@
  * @param Boolean $label  Display label Default true
  * @return String Platform button
  */
-function albums_button( $button = null, $label = true ) {
+function discography_button( $button = null, $label = true ) {
     $local_content  = '';
     // Checking it the id is valid
     if ( $button ) {
@@ -43,10 +43,10 @@ function albums_button( $button = null, $label = true ) {
  *
  * @param Array  $image_id Image ID  Default 0
  * @param String $post_id  Post ID   Default 0
- * @param String $class    CSS class Default 'albums-col-sm-3'
+ * @param String $class    CSS class Default 'discography-col-sm-3'
  * @return String Gallery item
  */
-function albums_col( $image_id = null, $post_id = 0, $class = 'albums-col-sm-3' ) {
+function discography_col( $image_id = null, $post_id = 0, $class = 'discography-col-sm-3' ) {
     $local_content  = '';
     // Checking it the id is valid
     if ( $image_id ) {
@@ -57,9 +57,9 @@ function albums_col( $image_id = null, $post_id = 0, $class = 'albums-col-sm-3' 
             // Generate the url
             $url = get_permalink( $post_id );
         }
-        $local_content .= '<div class="albums-col albums-col-12 ' . $class . '" data-id="' . $image_id . '">';
+        $local_content .= '<div class="discography-col discography-col-12 ' . $class . '" data-id="' . $image_id . '">';
         $local_content .=      strlen( $url ) ? '<a href="' . esc_url( $url ) . '">' : '';
-        $local_content .= '        <img src="' . wp_get_attachment_image_url( $image_id , 'medium' ) . '" class="albums-gallery-image-item-img">';
+        $local_content .= '        <img src="' . wp_get_attachment_image_url( $image_id , 'medium' ) . '" class="discography-gallery-image-item-img">';
         $local_content .=      strlen( $url ) ? '</a>' : '';
         $local_content .= '</div>';
     }
@@ -67,34 +67,34 @@ function albums_col( $image_id = null, $post_id = 0, $class = 'albums-col-sm-3' 
 }
 
 /**
- * Generate a song
+ * Generate a track
  *
  * @param Integer $li List item         Default 0
- * @param Object  $song Song record     Default null
+ * @param Object  $track Track record     Default null
  * @param Boolean $label  Display label Default true
- * @return String Song list item
+ * @return String Track list item
  */
-function albums_song( $li = 0, $song = null ) {
+function discography_track( $li = 0, $track = null ) {
     $local_content = '';
-    if ( $song ) {
+    if ( $track ) {
         global $wpdb;
         // Get the Buttons
-        $id = $song->id;
+        $id = $track->id;
         $table_name = $wpdb->prefix . 'buttons';
         $buttons = $wpdb->get_results(
-            $wpdb->prepare( "SELECT * FROM $table_name WHERE song_id=%d", $id )
+            $wpdb->prepare( "SELECT * FROM $table_name WHERE track_id=%d", $id )
         );
         // Total
         $total = count( $buttons );
-        // Generate the song and buttons
-        $local_content .= '<div class="row albums-song">';
+        // Generate the track and buttons
+        $local_content .= '<div class="row discography-track">';
         $local_content .= '    <div class="col-7">';
-        $local_content .= '        <p>' . ($li < 10 ? '&nbsp;' : '') . $li . '&nbsp;&nbsp;&nbsp;&nbsp;' . $song->name. '</p>';
+        $local_content .= '        <p>' . ($li < 10 ? '&nbsp;' : '') . $li . '&nbsp;&nbsp;&nbsp;&nbsp;' . $track->name. '</p>';
         $local_content .= '    </div>';
         $local_content .= '    <div class="col-5 text-end">';
         for ( $i = 0; $i < $total; $i++ ) {
             // Generate the buttons
-            $local_content .= albums_button( $buttons[$i] , false );
+            $local_content .= discography_button( $buttons[$i] , false );
         }
         $local_content .= '    </div>';
         $local_content .= '</div>';
@@ -109,19 +109,19 @@ function albums_song( $li = 0, $song = null ) {
  */
 
 /**
- * The [albums_image_gallery] shortcode
+ * The [discography] shortcode
  *
  * @param Array  $atts    Shortcode attributes Default empty
  * @param String $content Shortcode content    Default null
  * @param String $tag     Shortcode tag (name) Default empty
  * @return String Shortcode output.
  */
-function albums_image_gallery( $atts = [], $content = null , $tag = '' ) {
-    $local_content = '';
+function discography( $atts = [], $content = null , $tag = '' ) {
     global $wpdb;
-    // Get the Albums
+    $local_content = '';
+    // Get the Discography
     $type = isset( $atts['type'] ) ? $atts['type'] : '';
-    $table_name = $wpdb->prefix . 'albums';
+    $table_name = $wpdb->prefix . 'releases';
     if ( 'albums' == $type || 'singles' == $type ) {
         $types = [
             'albums'  => 1,
@@ -139,18 +139,18 @@ function albums_image_gallery( $atts = [], $content = null , $tag = '' ) {
     if ( count( $records ) ) {
         // Get the parameters
         $skip  = isset( $atts['skip'] ) ? $atts['skip'] : '';
-        $class = isset( $atts['class'] ) ? $atts['class'] : 'albums-col-sm-6 albums-col-md-4 albums-col-lg-4';
+        $class = isset( $atts['class'] ) ? $atts['class'] : 'discography-col-sm-6 discography-col-md-4 discography-col-lg-4';
         // Total
         $total = count( $records );
         // Start the gallery
-        $local_content .= '<div class="albums-row">';
+        $local_content .= '<div class="discography-row">';
         for ( $i = 0; $i < $total; $i++ ) {
             // Post ID
             $post_id = $records[$i]->post_id;
             // Image ID
             $image_id = $i + 1 == $skip ? null : $records[$i]->image_id;
             // Generate an item
-            $local_content .= albums_col( $image_id , $post_id, $class );
+            $local_content .= discography_col( $image_id , $post_id, $class );
         }
         $local_content .= '</div>';
     }
@@ -158,41 +158,41 @@ function albums_image_gallery( $atts = [], $content = null , $tag = '' ) {
 }
 
 /**
- * The [albums_cover_buttons] shortcode
+ * The [discography_cover] shortcode
  *
  * @param Array  $atts    Shortcode attributes Default empty
  * @param String $content Shortcode content    Default null
  * @param String $tag     Shortcode tag (name) Default empty
  * @return String Shortcode output.
  */
-function albums_cover_buttons( $atts = [], $content = null , $tag = '' ) {
+function discography_cover( $atts = [], $content = null , $tag = '' ) {
     $local_content = '';
     $id = isset( $atts['id'] ) ? $atts['id'] : 0;
     if ( $id > 0 ) {
         global $wpdb;
-        // Get an Album
-        $table_name = $wpdb->prefix . 'albums';
-        $album = $wpdb->get_row(
+        // Get a Release
+        $table_name = $wpdb->prefix . 'releases';
+        $record = $wpdb->get_row(
             $wpdb->prepare( "SELECT * FROM {$table_name} WHERE id=%d", $id )
         );
-        if ( $album ) {
+        if ( $record ) {
             // Get the Buttons
-            $id = $album->id;
+            $id = $record->id;
             $table_name = $wpdb->prefix . 'buttons';
             $buttons = $wpdb->get_results(
-                $wpdb->prepare( "SELECT * FROM $table_name WHERE album_id=%d", $id )
+                $wpdb->prepare( "SELECT * FROM $table_name WHERE release_id=%d", $id )
             );
             // Get the parameters
             $class = isset( $atts['class'] ) ? $atts['class'] : '';
             // Total
             $total = count( $buttons );
             // Generate the gallery
-            $local_content .= '<div class="albums-row">';
-            $local_content .=      albums_col( $album->image_id, 0, $class );
-            $local_content .= '    <div class="albums-col albums-col-12">';
+            $local_content .= '<div class="discography-row">';
+            $local_content .=      discography_col( $record->image_id, 0, $class );
+            $local_content .= '    <div class="discography-col discography-col-12">';
             for ( $i = 0; $i < $total; $i++ ) {
                 // Gererate the buttons
-                $local_content .= albums_button( $buttons[$i] );
+                $local_content .= discography_button( $buttons[$i] );
             }
             $local_content .= '    </div>';
             $local_content .= '</div>';
@@ -202,54 +202,54 @@ function albums_cover_buttons( $atts = [], $content = null , $tag = '' ) {
 }
 
 /**
- * The [albums_song_list] shortcode
+ * The [discography_tracklist] shortcode
  *
  * @param Array  $atts    Shortcode attributes Default empty
  * @param String $content Shortcode content    Default null
  * @param String $tag     Shortcode tag (name) Default empty
  * @return String Shortcode output.
  */
-function albums_song_list( $atts = [], $content = null , $tag = '' ) {
+function discography_tracklist( $atts = [], $content = null , $tag = '' ) {
     $local_content = '';
     $id = isset( $atts['id'] ) ? $atts['id'] : 0;
     if ( $id > 0 ) {
         global $wpdb;
-        // Song
-        $table_name = $wpdb->prefix . 'songs';
-        $songs = $wpdb->get_results(
-            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE album_id=%d", $id )
+        // Track
+        $table_name = $wpdb->prefix . 'tracks';
+        $records = $wpdb->get_results(
+            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE release_id=%d", $id )
         );
         // Get the parameters
         $class = isset( $atts['class'] ) ? $atts['class'] : '';
         // Total
-        $total = count( $songs );
+        $total = count( $records );
         // Generate the gallery
         for ( $i = 0; $i < $total; $i++ ) {
-            $local_content .=  albums_song( $i + 1, $songs[$i] );
+            $local_content .=  discography_track( $i + 1, $records[$i] );
         }
     }
     return $local_content . $content;
 }
 
 /**
- * The [albums_cover_list] shortcode
+ * The [discography_cover_tracklist] shortcode
  *
  * @param Array  $atts    Shortcode attributes Default empty
  * @param String $content Shortcode content    Default null
  * @param String $tag     Shortcode tag (name) Default empty
  * @return String Shortcode output.
  */
-function albums_cover_list( $atts = [], $content = null , $tag = '' ) {
+function discography_cover_tracklist( $atts = [], $content = null , $tag = '' ) {
     $local_content  = '';
     $id = isset( $atts['id'] ) ? $atts['id'] : 0;
     if ( $id > 0 ) {
         $container_class = isset( $atts['container_class'] ) ? $atts['container_class'] : '';
-        $local_content .= '<div class="albums-row ' . $container_class . '">';
+        $local_content .= '<div class="discography-row ' . $container_class . '">';
         $local_content .= '    <div class="col-12 col-lg-6">';
-        $local_content .=          albums_cover_buttons( $atts, '', $tag );
+        $local_content .=          discography_cover( $atts, '', $tag );
         $local_content .= '    </div>';
-        $local_content .= '    <div class="col-12 col-lg-6 albums-song-list">';
-        $local_content .=          albums_song_list( $atts, '', $tag );
+        $local_content .= '    <div class="col-12 col-lg-6 discography-track-list">';
+        $local_content .=          discography_tracklist( $atts, '', $tag );
         $local_content .= '    </div>';
         $local_content .= '</div>';
     }
@@ -259,19 +259,19 @@ function albums_cover_list( $atts = [], $content = null , $tag = '' ) {
 /**
  * Central location to create all shortcodes
  */
-function albums_image_galery_init() {
-    add_shortcode( 'albums_image_gallery', 'albums_image_gallery' );
-    add_shortcode( 'albums_cover_buttons', 'albums_cover_buttons' );
-    add_shortcode( 'albums_song_list', 'albums_song_list' );
-    add_shortcode( 'albums_cover_list', 'albums_cover_list' );
+function discography_init() {
+    add_shortcode( 'discography', 'discography' );
+    add_shortcode( 'discography_cover', 'discography_cover' );
+    add_shortcode( 'discography_tracklist', 'discography_tracklist' );
+    add_shortcode( 'discography_cover_tracklist', 'discography_cover_tracklist' );
 }
-add_action( 'init', 'albums_image_galery_init' );
+add_action( 'init', 'discography_init' );
 
 /**
  * Enqueue scripts and styles.
  */
-function albums_wp_enqueue_scripts() {
-    wp_enqueue_style( 'albums_grid_css', plugins_url('/assets/css/bootstrap-grid.css', __FILE__), array(), '1.0.0' );
-    wp_enqueue_style( 'albums_icons_css', plugins_url('/assets/css/bootstrap-icons.min.css', __FILE__), array(), '1.0.0' );
+function discography_wp_enqueue_scripts() {
+    wp_enqueue_style( 'discography-bootstrap_grid_css', plugins_url('/assets/css/bootstrap-grid.css', __FILE__), array(), '1.0.0' );
+    wp_enqueue_style( 'discography-bootstrap_icons_min_css', plugins_url('/assets/css/bootstrap-icons.min.css', __FILE__), array(), '1.0.0' );
 }
-add_action( 'wp_enqueue_scripts', 'albums_wp_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'discography_wp_enqueue_scripts' );

@@ -1,12 +1,12 @@
 <?php
 
-class AlbumController extends Controller {
+class ReleaseController extends Controller {
     /**
      * Constructor
      */
     public function __construct() {
-        $Model = new AlbumModel();
-        $View  = new AlbumView();
+        $Model = new ReleaseModel();
+        $View  = new ReleaseView();
         // ModelChild
         $ChildModel = new TypeModel();
         // Parent constructor
@@ -19,8 +19,8 @@ class AlbumController extends Controller {
     public function list() {
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Album model
-            if ('album' === $_POST['model']) {
+            // Release model
+            if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
             $this->delete();
@@ -37,8 +37,8 @@ class AlbumController extends Controller {
     public function add() {
         // Types
         $types = $this->getChildModel()->getOptionsFormat();
-        // Default album image
-        $default_src = $src_default = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        // Default release image
+        $default_src = $src_default = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // View
         $this->getView()->add(['default_src' => $default_src, 'types' => $types]);
     }
@@ -46,11 +46,11 @@ class AlbumController extends Controller {
     /**
      * View
      *
-     * @param Integer $id Album id
+     * @param Integer $id Release id
      */
     public function view($id = 0) {
         // Children model
-        $songModel = new SongModel();
+        $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
@@ -73,11 +73,11 @@ class AlbumController extends Controller {
                 $id = $this->insert($_POST, $fields);
             }
         }
-        // Delete Button or Song
+        // Delete Button or Track
         if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Song model
-            if ('song' === $_POST['model']) {
-                $this->setDeleteModel($songModel);
+            // Track model
+            if ('track' === $_POST['model']) {
+                $this->setDeleteModel($trackModel);
             }
             // Button model
             if ('button' === $_POST['model']) {
@@ -87,24 +87,24 @@ class AlbumController extends Controller {
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
-        // Get the related songs
-        $songs = $songModel->selectByAlbumId($id);
+        // Get the related tracks
+        $tracks = $trackModel->selectByReleaseId($id);
         // Get the related buttons
-        $buttons = $buttonModel->selectByAlbumId($id);
+        $buttons = $buttonModel->selectByReleaseId($id);
         // Platforms
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
         // Types
         $types = $this->getChildModel()->getListFormat();
-        // Image section // Default album image
-        $src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        // Image section // Default release image
+        $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         if ($record) {
             $src = wp_get_attachment_image_url($record->image_id, 'medium');
         }
         // View
         $this->getView()->view([
             'src'       => $src,
-            'songs'     => $songs,
+            'tracks'    => $tracks,
             'types'     => $types,
             'record'    => $record,
             'buttons'   => $buttons,
@@ -115,7 +115,7 @@ class AlbumController extends Controller {
     /**
      * Edit
      *
-     * @param Integer $id Album id
+     * @param Integer $id Release id
      */
     public function edit($id = 0) {
         // Get the record
@@ -123,8 +123,8 @@ class AlbumController extends Controller {
         // Types
         $types = $this->getChildModel()->getOptionsFormat();
         // Images
-        $src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
-        $default_src = esc_url(ALBUM_URL . 'assets/images/default-cover.png');
+        $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
+        $default_src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // Check if there is a record
         if ($record) {
             // Image section

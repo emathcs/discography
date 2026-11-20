@@ -1,10 +1,10 @@
 <?php
 
-class SongView extends View {
+class TrackView extends View {
     /**
      * Table function
      *
-     * @param Array $records Song records
+     * @param Array $records Track records
      * @return String $html An HTML table
      */
     public function table($records = []) {
@@ -24,10 +24,10 @@ class SongView extends View {
                 $html .= '    <tr>';
                 $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
                 $html .= '        <td>' . $records[$i]->name . '</td>';
-                $html .= '        <td class="col-action"><a href="?page=songs-view-settings&song=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                $html .= '        <td class="col-action"><a href="?page=songs-edit-settings&song=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=discography-track-view&track=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
+                $html .= '        <td class="col-action"><a href="?page=discography-track-edit&track=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 $html .= '        <td class="col-action">';
-                $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteSong" data-id="' . $records[$i]->id . '" data-model="song">';
+                $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteTrack" data-id="' . $records[$i]->id . '" data-model="track">';
                 $html .= '                Delete';
                 $html .= '            </button>';
                 $html .= '        </td>';
@@ -36,7 +36,7 @@ class SongView extends View {
             $html .= '    </tbody>';
             $html .= '</table>';
             // Delete form
-            $html .= $this->deleteModal('Song', 'song');
+            $html .= $this->deleteModal('Track', 'track');
         }
         return $html;
     }
@@ -50,9 +50,9 @@ class SongView extends View {
         $records = isset($data['records']) ? $data['records'] : [];
 
         // Panel
-        echo $this->panelOpen('Songs');
+        echo $this->panelOpen('Tracks');
         echo '<div class="mb-3">';
-        echo '    <a href="?page=songs-add-settings" class="btn btn-sm btn-primary">Add a new song</a>';
+        echo '    <a href="?page=discography-track-add" class="btn btn-sm btn-primary">Add a new track</a>';
         echo '</div>';
         echo $this->table($records);
         echo $this->panelClose();
@@ -67,27 +67,27 @@ class SongView extends View {
         $form  = new Form();
         $input = new Input('mb-3');
         $input->setLabelClass('form-label');
-        $album_id = isset($data['album_id']) ? $data['album_id'] : 0;
+        $release_id = isset($data['release_id']) ? $data['release_id'] : 0;
         $navigation = new Navigation('mb-3');
 
         // Model for redirection
         $parameters = '';
-        if (isset($data['album_id']) && $data['album_id']) {
-            $parameters = '&album=' . $data['album_id'];
+        if (isset($data['release_id']) && $data['release_id']) {
+            $parameters = '&release=' . $data['release_id'];
         }
 
         // Panel
-        echo $this->panelOpen('Add a new song');
-        echo $form->init(['action' => 'admin.php?page=songs-view-settings' . $parameters, 'method' => 'post']);
+        echo $this->panelOpen('Add a new track');
+        echo $form->init(['action' => 'admin.php?page=discography-track-view' . $parameters, 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
-        // Album id
+        // Release id
         echo $input->create([
             'type'     => 'hidden',
-            'id'       => 'album-id',
-            'name'     => 'album_id',
+            'id'       => 'release-id',
+            'name'     => 'release_id',
             'class'    => 'form-control',
-            'value'    => $album_id
+            'value'    => $release_id
         ]);
         // Name
         $input->setLabel('Name');
@@ -101,8 +101,8 @@ class SongView extends View {
         // Navigation buttons
         echo $input->setLabel('');
         echo $navigation->buttons(
-            ['href' => '?page=albums-view-settings&album=' . $album_id , 'label' => 'Go to the Album', 'class' => 'btn btn-warning'],
-            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Song', 'class' => 'btn btn-primary']
+            ['href' => '?page=discography-release-view&release=' . $release_id , 'label' => 'Go to the Release', 'class' => 'btn btn-warning'],
+            ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Track', 'class' => 'btn btn-primary']
         );
         echo $form->end();
         echo $this->panelClose();
@@ -117,7 +117,7 @@ class SongView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
 
         // Panel
-        echo $this->panelOpen( 'View Song' );
+        echo $this->panelOpen( 'View Track' );
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
@@ -134,14 +134,14 @@ class SongView extends View {
             echo '    </tbody>';
             echo '</table>';
             echo '<div class="mb-3">';
-            echo '    <a href="?page=albums-view-settings&album=' . $record->album_id .'" class="btn btn-warning">Go to the Album</a>';
-            echo '    <a href="?page=songs-edit-settings&song=' . $record->id .'" class="btn btn-secondary">Edit Song</a>';
-            echo '    <a href="?page=songs-add-settings&album=' . $record->album_id . '" class="btn btn-primary">Add Song</a>';
+            echo '    <a href="?page=discography-release-view&release=' . $record->release_id .'" class="btn btn-warning">Go to the Release</a>';
+            echo '    <a href="?page=discography-track-edit&track=' . $record->id .'" class="btn btn-secondary">Edit Track</a>';
+            echo '    <a href="?page=discography-track-add&release=' . $record->release_id . '" class="btn btn-primary">Add Track</a>';
             echo '</div>';
             // Button view
             echo '<br><hr><br>';
             echo '<h2>Buttons</h2>';
-            echo '<a href="?page=buttons-add-settings&song=' . $record->id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=discography-button-add&track=' . $record->id . '" class="btn btn-primary">Add Button</a>';
             echo '<br><br>';
             if ($buttonsTable) {
                 echo $buttonView->table($data['buttons'], $data['platforms']);
@@ -163,9 +163,9 @@ class SongView extends View {
         $navigation = new Navigation('mb-3');
 
         // Panel
-        echo $this->panelOpen('Edit Song');
+        echo $this->panelOpen('Edit Track');
         if ($record) {
-            echo $form->init(['action' => "admin.php?page=songs-view-settings&song=" . $record->id, 'method' => 'post']);
+            echo $form->init(['action' => "admin.php?page=discography-track-view&track=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
             // Id
@@ -189,8 +189,8 @@ class SongView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' => '?page=songs-view-settings&song=' . $record->id , 'label' => 'Go to the Song', 'class' => 'btn btn-warning'],
-                ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Song', 'class' => 'btn btn-primary']
+                ['href' => '?page=discography-track-view&track=' . $record->id , 'label' => 'Go to the Track', 'class' => 'btn btn-warning'],
+                ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Track', 'class' => 'btn btn-primary']
             );
             echo $form->end();
         }

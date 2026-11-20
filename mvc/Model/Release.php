@@ -1,10 +1,10 @@
 <?php
 
-class AlbumModel extends Model {
+class ReleaseModel extends Model {
     /**
      * Constructor
      */
     public function __construct() {
-        parent::__construct('albums');
+        parent::__construct('releases');
     }
 }

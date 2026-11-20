@@ -6,15 +6,15 @@ require_once 'Core/SmallModel.php';
 require_once 'Core/View.php';
 require_once 'Core/Controller.php';
 
-// Album
-require_once 'Model/Album.php';
-require_once 'View/Album.php';
-require_once 'Controller/Album.php';
+// Release
+require_once 'Model/Release.php';
+require_once 'View/Release.php';
+require_once 'Controller/Release.php';
 
-// Song
-require_once 'Model/Song.php';
-require_once 'View/Song.php';
-require_once 'Controller/Song.php';
+// Track
+require_once 'Model/Track.php';
+require_once 'View/Track.php';
+require_once 'Controller/Track.php';
 
 // Button
 require_once 'Model/Button.php';
