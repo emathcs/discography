@@ -5,7 +5,7 @@ class TrackModel extends Model {
      * Constructor
      */
     public function __construct() {
-        parent::__construct('Tracks');
+        parent::__construct('tracks');
     }
 
     /**
