@@ -3,13 +3,13 @@
  * Copyright 2011-2025 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-.albums-container,
-.albums-container-fluid,
-.albums-container-xxl,
-.albums-container-xl,
-.albums-container-lg,
-.albums-container-md,
-.albums-container-sm {
+.discography-container,
+.discography-container-fluid,
+.discography-container-xxl,
+.discography-container-xl,
+.discography-container-lg,
+.discography-container-md,
+.discography-container-sm {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     width: 100%;
@@ -20,27 +20,27 @@
 }
 
 @media (min-width: 576px) {
-    .albums-container-sm, .albums-container {
+    .discography-container-sm, .discography-container {
         max-width: 540px;
     }
 }
 @media (min-width: 768px) {
-    .albums-container-md, .albums-container-sm, .albums-container {
+    .discography-container-md, .discography-container-sm, .discography-container {
         max-width: 720px;
     }
 }
 @media (min-width: 992px) {
-    .albums-container-lg, .albums-container-md, .albums-container-sm, .albums-container {
+    .discography-container-lg, .discography-container-md, .discography-container-sm, .discography-container {
         max-width: 960px;
     }
 }
 @media (min-width: 1200px) {
-    .albums-container-xl, .albums-container-lg, .albums-container-md, .albums-container-sm, .albums-container {
+    .discography-container-xl, .discography-container-lg, .discography-container-md, .discography-container-sm, .discography-container {
         max-width: 1140px;
     }
 }
 @media (min-width: 1400px) {
-    .albums-container-xxl, .albums-container-xl, .albums-container-lg, .albums-container-md, .albums-container-sm, .albums-container {
+    .discography-container-xxl, .discography-container-xl, .discography-container-lg, .discography-container-md, .discography-container-sm, .discography-container {
         max-width: 1320px;
     }
 }
@@ -53,7 +53,7 @@
     --bs-breakpoint-xxl: 1400px;
 }
 
-.albums-row {
+.discography-row {
     --bs-gutter-x: 1.5rem;
     --bs-gutter-y: 0;
     display: flex;
@@ -62,7 +62,7 @@
     margin-right: calc(-0.5 * var(--bs-gutter-x));
     margin-left: calc(-0.5 * var(--bs-gutter-x));
 }
-.albums-row > * {
+.discography-row > * {
     box-sizing: border-box;
     flex-shrink: 0;
     width: 100%;
@@ -72,390 +72,390 @@
     margin-top: var(--bs-gutter-y);
 }
 
-.albums-col {
+.discography-col {
     flex: 1 0 0;
 }
 
-.albums-col-auto {
+.discography-col-auto {
     flex: 0 0 auto;
     width: auto;
 }
 
-.albums-col-1 {
+.discography-col-1 {
     flex: 0 0 auto;
     width: 8.33333333%;
 }
 
-.albums-col-2 {
+.discography-col-2 {
     flex: 0 0 auto;
     width: 16.66666667%;
 }
 
-.albums-col-3 {
+.discography-col-3 {
     flex: 0 0 auto;
     width: 25%;
 }
 
-.albums-col-4 {
+.discography-col-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
 }
 
-.albums-col-5 {
+.discography-col-5 {
     flex: 0 0 auto;
     width: 41.66666667%;
 }
 
-.albums-col-6 {
+.discography-col-6 {
     flex: 0 0 auto;
     width: 50%;
 }
 
-.albums-col-7 {
+.discography-col-7 {
     flex: 0 0 auto;
     width: 58.33333333%;
 }
 
-.albums-col-8 {
+.discography-col-8 {
     flex: 0 0 auto;
     width: 66.66666667%;
 }
 
-.albums-col-9 {
+.discography-col-9 {
     flex: 0 0 auto;
     width: 75%;
 }
 
-.albums-col-10 {
+.discography-col-10 {
     flex: 0 0 auto;
     width: 83.33333333%;
 }
 
-.albums-col-11 {
+.discography-col-11 {
     flex: 0 0 auto;
     width: 91.66666667%;
 }
 
-.albums-col-12 {
+.discography-col-12 {
     flex: 0 0 auto;
     width: 100%;
 }
 
 @media (min-width: 576px) {
-    .albums-col-sm {
+    .discography-col-sm {
         flex: 1 0 0;
     }
-    .albums-col-sm-auto {
+    .discography-col-sm-auto {
         flex: 0 0 auto;
         width: auto;
     }
-    .albums-col-sm-1 {
+    .discography-col-sm-1 {
         flex: 0 0 auto;
         width: 8.33333333%;
     }
-    .albums-col-sm-2 {
+    .discography-col-sm-2 {
         flex: 0 0 auto;
         width: 16.66666667%;
     }
-    .albums-col-sm-3 {
+    .discography-col-sm-3 {
         flex: 0 0 auto;
         width: 25%;
     }
-    .albums-col-sm-4 {
+    .discography-col-sm-4 {
         flex: 0 0 auto;
         width: 33.33333333%;
     }
-    .albums-col-sm-5 {
+    .discography-col-sm-5 {
         flex: 0 0 auto;
         width: 41.66666667%;
     }
-    .albums-col-sm-6 {
+    .discography-col-sm-6 {
         flex: 0 0 auto;
         width: 50%;
     }
-    .albums-col-sm-7 {
+    .discography-col-sm-7 {
         flex: 0 0 auto;
         width: 58.33333333%;
     }
-    .albums-col-sm-8 {
+    .discography-col-sm-8 {
         flex: 0 0 auto;
         width: 66.66666667%;
     }
-    .albums-col-sm-9 {
+    .discography-col-sm-9 {
         flex: 0 0 auto;
         width: 75%;
     }
-    .albums-col-sm-10 {
+    .discography-col-sm-10 {
         flex: 0 0 auto;
         width: 83.33333333%;
     }
-    .albums-col-sm-11 {
+    .discography-col-sm-11 {
         flex: 0 0 auto;
         width: 91.66666667%;
     }
-    .albums-col-sm-12 {
+    .discography-col-sm-12 {
         flex: 0 0 auto;
         width: 100%;
     }
 
-    .albums-offset-sm-9 {
+    .discography-offset-sm-9 {
         margin-left: 75%;
     }
 }
 @media (min-width: 768px) {
-    .albums-col-md {
+    .discography-col-md {
         flex: 1 0 0;
     }
-    .albums-col-md-auto {
+    .discography-col-md-auto {
         flex: 0 0 auto;
         width: auto;
     }
-    .albums-col-md-1 {
+    .discography-col-md-1 {
         flex: 0 0 auto;
         width: 8.33333333%;
     }
-    .albums-col-md-2 {
+    .discography-col-md-2 {
         flex: 0 0 auto;
         width: 16.66666667%;
     }
-    .albums-col-md-3 {
+    .discography-col-md-3 {
         flex: 0 0 auto;
         width: 25%;
     }
-    .albums-col-md-4 {
+    .discography-col-md-4 {
         flex: 0 0 auto;
         width: 33.33333333%;
     }
-    .albums-col-md-5 {
+    .discography-col-md-5 {
         flex: 0 0 auto;
         width: 41.66666667%;
     }
-    .albums-col-md-6 {
+    .discography-col-md-6 {
         flex: 0 0 auto;
         width: 50%;
     }
-    .albums-col-md-7 {
+    .discography-col-md-7 {
         flex: 0 0 auto;
         width: 58.33333333%;
     }
-    .albums-col-md-8 {
+    .discography-col-md-8 {
         flex: 0 0 auto;
         width: 66.66666667%;
     }
-    .albums-col-md-9 {
+    .discography-col-md-9 {
         flex: 0 0 auto;
         width: 75%;
     }
-    .albums-col-md-10 {
+    .discography-col-md-10 {
         flex: 0 0 auto;
         width: 83.33333333%;
     }
-    .albums-col-md-11 {
+    .discography-col-md-11 {
         flex: 0 0 auto;
         width: 91.66666667%;
     }
-    .albums-col-md-12 {
+    .discography-col-md-12 {
         flex: 0 0 auto;
         width: 100%;
     }
 }
 @media (min-width: 992px) {
-    .albums-col-lg {
+    .discography-col-lg {
         flex: 1 0 0;
     }
-    .albums-col-lg-auto {
+    .discography-col-lg-auto {
         flex: 0 0 auto;
         width: auto;
     }
-    .albums-col-lg-1 {
+    .discography-col-lg-1 {
         flex: 0 0 auto;
         width: 8.33333333%;
     }
-    .albums-col-lg-2 {
+    .discography-col-lg-2 {
         flex: 0 0 auto;
         width: 16.66666667%;
     }
-    .albums-col-lg-3 {
+    .discography-col-lg-3 {
         flex: 0 0 auto;
         width: 25%;
     }
-    .albums-col-lg-4 {
+    .discography-col-lg-4 {
         flex: 0 0 auto;
         width: 33.33333333%;
     }
-    .albums-col-lg-5 {
+    .discography-col-lg-5 {
         flex: 0 0 auto;
         width: 41.66666667%;
     }
-    .albums-col-lg-6 {
+    .discography-col-lg-6 {
         flex: 0 0 auto;
         width: 50%;
     }
-    .albums-col-lg-7 {
+    .discography-col-lg-7 {
         flex: 0 0 auto;
         width: 58.33333333%;
     }
-    .albums-col-lg-8 {
+    .discography-col-lg-8 {
         flex: 0 0 auto;
         width: 66.66666667%;
     }
-    .albums-col-lg-9 {
+    .discography-col-lg-9 {
         flex: 0 0 auto;
         width: 75%;
     }
-    .albums-col-lg-10 {
+    .discography-col-lg-10 {
         flex: 0 0 auto;
         width: 83.33333333%;
     }
-    .albums-col-lg-11 {
+    .discography-col-lg-11 {
         flex: 0 0 auto;
         width: 91.66666667%;
     }
-    .albums-col-lg-12 {
+    .discography-col-lg-12 {
         flex: 0 0 auto;
         width: 100%;
     }
 }
 @media (min-width: 1200px) {
-    .albums-col-xl {
+    .discography-col-xl {
         flex: 1 0 0;
     }
-    .albums-col-xl-auto {
+    .discography-col-xl-auto {
         flex: 0 0 auto;
         width: auto;
     }
-    .albums-col-xl-1 {
+    .discography-col-xl-1 {
         flex: 0 0 auto;
         width: 8.33333333%;
     }
-    .albums-col-xl-2 {
+    .discography-col-xl-2 {
         flex: 0 0 auto;
         width: 16.66666667%;
     }
-    .albums-col-xl-3 {
+    .discography-col-xl-3 {
         flex: 0 0 auto;
         width: 25%;
     }
-    .albums-col-xl-4 {
+    .discography-col-xl-4 {
         flex: 0 0 auto;
         width: 33.33333333%;
     }
-    .albums-col-xl-5 {
+    .discography-col-xl-5 {
         flex: 0 0 auto;
         width: 41.66666667%;
     }
-    .albums-col-xl-6 {
+    .discography-col-xl-6 {
         flex: 0 0 auto;
         width: 50%;
     }
-    .albums-col-xl-7 {
+    .discography-col-xl-7 {
         flex: 0 0 auto;
         width: 58.33333333%;
     }
-    .albums-col-xl-8 {
+    .discography-col-xl-8 {
         flex: 0 0 auto;
         width: 66.66666667%;
     }
-    .albums-col-xl-9 {
+    .discography-col-xl-9 {
         flex: 0 0 auto;
         width: 75%;
     }
-    .albums-col-xl-10 {
+    .discography-col-xl-10 {
         flex: 0 0 auto;
         width: 83.33333333%;
     }
-    .albums-col-xl-11 {
+    .discography-col-xl-11 {
         flex: 0 0 auto;
         width: 91.66666667%;
     }
-    .albums-col-xl-12 {
+    .discography-col-xl-12 {
         flex: 0 0 auto;
         width: 100%;
     }
 }
 @media (min-width: 1400px) {
-    .albums-col-xxl {
+    .discography-col-xxl {
         flex: 1 0 0;
     }
-    .albums-col-xxl-auto {
+    .discography-col-xxl-auto {
         flex: 0 0 auto;
         width: auto;
     }
-    .albums-col-xxl-1 {
+    .discography-col-xxl-1 {
         flex: 0 0 auto;
         width: 8.33333333%;
     }
-    .albums-col-xxl-2 {
+    .discography-col-xxl-2 {
         flex: 0 0 auto;
         width: 16.66666667%;
     }
-    .albums-col-xxl-3 {
+    .discography-col-xxl-3 {
         flex: 0 0 auto;
         width: 25%;
     }
-    .albums-col-xxl-4 {
+    .discography-col-xxl-4 {
         flex: 0 0 auto;
         width: 33.33333333%;
     }
-    .albums-col-xxl-5 {
+    .discography-col-xxl-5 {
         flex: 0 0 auto;
         width: 41.66666667%;
     }
-    .albums-col-xxl-6 {
+    .discography-col-xxl-6 {
         flex: 0 0 auto;
         width: 50%;
     }
-    .albums-col-xxl-7 {
+    .discography-col-xxl-7 {
         flex: 0 0 auto;
         width: 58.33333333%;
     }
-    .albums-col-xxl-8 {
+    .discography-col-xxl-8 {
         flex: 0 0 auto;
         width: 66.66666667%;
     }
-    .albums-col-xxl-9 {
+    .discography-col-xxl-9 {
         flex: 0 0 auto;
         width: 75%;
     }
-    .albums-col-xxl-10 {
+    .discography-col-xxl-10 {
         flex: 0 0 auto;
         width: 83.33333333%;
     }
-    .albums-col-xxl-11 {
+    .discography-col-xxl-11 {
         flex: 0 0 auto;
         width: 91.66666667%;
     }
-    .albums-col-xxl-12 {
+    .discography-col-xxl-12 {
         flex: 0 0 auto;
         width: 100%;
     }
 }
 /*# sourceMappingURL=bootstrap-grid.css.map */
 
-.albums-col {
+.discography-col {
     margin-bottom: var(--bs-gutter-x);
 }
 
-.albums-gallery-image-item-img {
+.discography-gallery-image-item-img {
     box-shadow: 0 15px 15px 5px rgba(0,0,0,.15);
     border: 1px solid #444444;
 }
 
-.row.albums-song {
+.row.discography-track {
     padding: 10px 0 10px 0;
     margin: 0;
     border-bottom: 1px solid #eeeeee;
 }
 
-.albums-song:first-child {
+.discography-track:first-child {
     border-top: 1px solid #eeeeee;
 }
 
-.row.albums-song:hover {
+.row.discography-track:hover {
     background-color: #eeeeee;
 }
 
-.row.albums-song p {
+.row.discography-track p {
     font-size: 16px;
     margin-bottom: 0;
     color: #666666;
@@ -466,15 +466,15 @@
     text-decoration: none;
 }
 
-.dark .row.albums-song p {
+.dark .row.discography-track p {
     color: #777777;
 }
 
-.dark .row.albums-song {
+.dark .row.discography-track {
     border-bottom: 1px solid #555555;
 }
 
-.dark .row.albums-song:hover {
+.dark .row.discography-track:hover {
     background-color: #222222;
 }
 
@@ -485,7 +485,7 @@
 }
 
 @media (min-width: 992px) {
-    .albums-song-list {
+    .discography-track-list {
         padding-left: 32px;
         padding-right: 32px;
     }
