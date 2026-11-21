@@ -22,7 +22,8 @@ function jal_install() {
     $sql .= "    name VARCHAR(255) NOT NULL,";
     $sql .= "    type_id TINYINT NOT NULL,";
     $sql .= "    image_id BIGINT(20) NOT NULL,";
-    $sql .= "    post_id BIGINT(20) NOT NULL";
+    $sql .= "    post_id BIGINT(20) NOT NULL,";
+    $sql .= "    status_id TINYINT NOT NULL";
     $sql .= ") " . $charset_collate . ";";
     dbDelta( $sql );
     // Tracks
