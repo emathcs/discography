@@ -65,7 +65,7 @@ class ReleaseController extends Controller {
                 [ 'name' => 'type_id',   'format' => '%d' ],
                 [ 'name' => 'post_id',   'format' => '%d' ],
                 [ 'name' => 'image_id',  'format' => '%d' ],
-                [ 'name' => 'status_id', 'format' => '%d' ],
+                [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
             ];
             if (isset($_POST['id'])) {
                 $id = sanitize_text_field($_POST['id']);
