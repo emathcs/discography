@@ -126,7 +126,7 @@ class ReleaseController extends Controller {
         $src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         $default_src = esc_url(DISCOGRAPHY_URL . 'assets/images/default-cover.png');
         // Check if there is a record
-        if ($record && $records->image_id) {
+        if ($record && $record->image_id) {
             // Image section
             $src = wp_get_attachment_image_url($record->image_id, 'medium');
         }
