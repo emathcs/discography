@@ -43,10 +43,10 @@ function discography_button( $button = null, $label = true ) {
  *
  * @param Array  $image_id Image ID  Default 0
  * @param String $post_id  Post ID   Default 0
- * @param String $class    CSS class Default 'discography-col-sm-3'
+ * @param String $class    CSS class Default 'discography-col-sm-6'
  * @return String Gallery item
  */
-function discography_col( $image_id = null, $post_id = 0, $class = 'discography-col-sm-3' ) {
+function discography_col( $image_id = null, $post_id = 0, $class = 'discography-col-md-6' ) {
     $local_content  = '';
     // Checking it the id is valid
     if ( $image_id ) {
@@ -136,19 +136,19 @@ function discography( $atts = [], $content = null , $tag = '' ) {
             $wpdb->prepare( "SELECT * FROM {$table_name}")
         );
     }
-    if ( count( $records ) ) {
+    // Total
+    $total = count( $records );
+    if ( $total ) {
         // Get the parameters
         $skip  = isset( $atts['skip'] ) ? $atts['skip'] : '';
-        $class = isset( $atts['class'] ) ? $atts['class'] : 'discography-col-sm-6 discography-col-md-4 discography-col-lg-4';
-        // Total
-        $total = count( $records );
+        $class = isset( $atts['class'] ) ? $atts['class'] : 'discography-col-md-6 discography-col-lg-4';
         // Start the gallery
         $local_content .= '<div class="discography-row">';
         for ( $i = 0; $i < $total; $i++ ) {
             // Post ID
             $post_id = $records[$i]->post_id;
             // Image ID
-            $image_id = $i + 1 == $skip ? null : $records[$i]->image_id;
+            $image_id = $records[$i]->id === $skip ? null : $records[$i]->image_id;
             // Generate an item
             $local_content .= discography_col( $image_id , $post_id, $class );
         }
