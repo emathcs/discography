@@ -25,7 +25,7 @@ class ButtonView extends View {
                 $html .= '    <tr>';
                 $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
                 $html .= '        <td>' . $platforms[$records[$i]->platform_id] . '</td>';
-                $html .= '        <td>' . $records[$i]->link . '</td>';
+                $html .= '        <td><a href="' . $records[$i]->link . '" target="_blank">' . $records[$i]->link . '</a></td>';
                 $html .= '        <td class="col-action"><a href="?page=discography-button-view&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
                 $html .= '        <td class="col-action"><a href="?page=discography-button-edit&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
                 $html .= '        <td class="col-action">';
@@ -183,7 +183,7 @@ class ButtonView extends View {
             echo '        </tr>';
             echo '        <tr>';
             echo '            <th>Link</th>';
-            echo '            <td>' . $record->link . '</td>';
+            echo '            <td><a href="' . $record->link . '" target="_blank">' . $record->link . '</a></td>';
             echo '        </tr>';
             echo '    </tbody>';
             echo '</table>';
