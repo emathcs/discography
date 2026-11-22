@@ -67,14 +67,17 @@ class ReleaseController extends Controller {
                 [ 'name' => 'image_id',  'format' => '%d' ],
                 [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
             ];
+            $success = 0;
             if (isset($_POST['id'])) {
                 $id = sanitize_text_field($_POST['id']);
                 // Update record
-                $this->update($id, $_POST, $fields);
+                $success = $this->update($id, $_POST, $fields);
+                $success = $success ? 2 : $success;
             }
             else {
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);
+                $succcess = $id ? 1 : $id;
             }
         }
         // Delete Button or Track
