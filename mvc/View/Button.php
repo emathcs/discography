@@ -183,7 +183,7 @@ class ButtonView extends View {
             echo '        </tr>';
             echo '        <tr>';
             echo '            <th>Link</th>';
-            echo '            <td>' . $record->link . '</td>';
+            echo '            <td><a href="' . $record->link . '" target="_blank">' . $record->link . '</a></td>';
             echo '        </tr>';
             echo '    </tbody>';
             echo '</table>';
