@@ -125,8 +125,8 @@ class Controller {
             $formats[$i] = $fields[$i]['format'];
             $data[$fields[$i]['name']] = sanitize_text_field(wp_unslash($form[$fields[$i]['name']]));
             // Process to check if the field could be empty
-            $verify = isset($fields[$i]['name']);
-            if (!$verify || ($verify && $data[$fields[$i]['name']])) {
+            $verify = isset($fields[$i]['verify']);
+            if (!$verify || ($verify && $fields[$i]['verify'])) {
                 $condition = $condition && !empty($data[$fields[$i]['name']]);
             }
         }
