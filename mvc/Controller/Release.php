@@ -55,42 +55,44 @@ class ReleaseController extends Controller {
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
-        // This process has been added here to avoid the process to redirect to this page from add or edit page
-        if (isset($_POST['submit'])) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
+        if (count($_POST)) {
+            // This process has been added here to avoid the process to redirect to this page from add or edit page
+            if (isset($_POST['submit'])) {
+                if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
+                    wp_die( 'Security check failed. Please try again.' );
+                }
+                $fields = [
+                    [ 'name' => 'name',      'format' => '%s' ],
+                    [ 'name' => 'type_id',   'format' => '%d' ],
+                    [ 'name' => 'post_id',   'format' => '%d' ],
+                    [ 'name' => 'image_id',  'format' => '%d' ],
+                    [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
+                ];
+                $success = 0;
+                if (isset($_POST['id'])) {
+                    $id = sanitize_text_field($_POST['id']);
+                    // Update record
+                    $success = $this->update($id, $_POST, $fields);
+                    $success = $success ? 2 : $success;
+                }
+                else {
+                    // Insert a new record
+                    $id = $this->insert($_POST, $fields);
+                    $succcess = $id ? 1 : $id;
+                }
             }
-            $fields = [
-                [ 'name' => 'name',      'format' => '%s' ],
-                [ 'name' => 'type_id',   'format' => '%d' ],
-                [ 'name' => 'post_id',   'format' => '%d' ],
-                [ 'name' => 'image_id',  'format' => '%d' ],
-                [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
-            ];
-            $success = 0;
-            if (isset($_POST['id'])) {
-                $id = sanitize_text_field($_POST['id']);
-                // Update record
-                $success = $this->update($id, $_POST, $fields);
-                $success = $success ? 2 : $success;
+            // Delete Button or Track
+            if (isset($_POST['delete']) && isset($_POST['model'])) {
+                // Track model
+                if ('track' === $_POST['model']) {
+                    $this->setDeleteModel($trackModel);
+                }
+                // Button model
+                if ('button' === $_POST['model']) {
+                    $this->setDeleteModel($buttonModel);
+                }
+                $this->delete();
             }
-            else {
-                // Insert a new record
-                $id = $this->insert($_POST, $fields);
-                $succcess = $id ? 1 : $id;
-            }
-        }
-        // Delete Button or Track
-        if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Track model
-            if ('track' === $_POST['model']) {
-                $this->setDeleteModel($trackModel);
-            }
-            // Button model
-            if ('button' === $_POST['model']) {
-                $this->setDeleteModel($buttonModel);
-            }
-            $this->delete();
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
