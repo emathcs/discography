@@ -26,3 +26,6 @@ require_once 'Model/Platform.php';
 
 // Type
 require_once 'Model/Type.php';
+
+// Type
+require_once 'Model/Status.php';

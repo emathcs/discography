@@ -128,12 +128,12 @@ function discography( $atts = [], $content = null , $tag = '' ) {
             'singles' => 2
         ];
         $records = $wpdb->get_results(
-            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE type_id=%d", $types[$type])
+            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE status_id=1 AND type_id=%d", $types[$type])
         );
     }
     else {
         $records = $wpdb->get_results(
-            $wpdb->prepare( "SELECT * FROM {$table_name}")
+            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE status_id=1")
         );
     }
     // Total
@@ -173,7 +173,7 @@ function discography_cover( $atts = [], $content = null , $tag = '' ) {
         // Get a Release
         $table_name = $wpdb->prefix . 'releases';
         $record = $wpdb->get_row(
-            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE id=%d", $id )
+            $wpdb->prepare( "SELECT * FROM {$table_name} WHERE status_id=1 AND id=%d", $id )
         );
         if ( $record ) {
             // Get the Buttons

@@ -117,6 +117,19 @@ class ReleaseView extends View {
             'class'    => 'form-control',
             'required' => ''
         ]);
+        // Status
+        $select->setLabel('Status');
+        echo $select->create(
+            [
+                'type'     => 'text',
+                'id'       => 'status-id',
+                'name'     => 'status_id',
+                'class'    => 'form-control',
+                'required' => '',
+                'value'    => ''
+            ],
+            $data['status']
+        );
         // Navigation buttons
         echo $input->setLabel('');
         echo $navigation->buttons(
@@ -176,6 +189,10 @@ class ReleaseView extends View {
             echo '        <tr>';
             echo '            <th>Post ID</th>';
             echo '            <td>' . $record->post_id . '</td>';
+            echo '        </tr>';
+            echo '        <tr>';
+            echo '            <th>Status</th>';
+            echo '            <td>' . $data['status'][$record->status_id] . '</td>';
             echo '        </tr>';
             echo '    </tbody>';
             echo '</table>';
@@ -289,6 +306,19 @@ class ReleaseView extends View {
                 'required' => '',
                 'value'    => $record->post_id
             ]);
+            // Status
+            $select->setLabel('Status');
+            echo $select->create(
+                [
+                    'type'     => 'text',
+                    'id'       => 'status-id',
+                    'name'     => 'status_id',
+                    'class'    => 'form-control',
+                    'required' => '',
+                    'value'    => $record->status_id
+                ],
+                $data['status']
+            );
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
