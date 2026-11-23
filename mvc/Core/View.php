@@ -31,6 +31,24 @@ class View {
     }
 
     /**
+     * Message section
+     *
+     * @param Array $message Array with the message information
+     * @return String HTML code to generate the message section
+     */
+    public function message($message = []) {
+        $html = '';
+        if (count($message)) {
+            $alertClass = 'danger';
+            if ($success['status']) {
+                $alertClass = 'success';
+            }
+            $html .= '<div class="alert alert-' . $alertClass . '" role="alert">' . $message['message'] . '</div>';
+        }
+        return $html;
+    }
+
+    /**
      * Delete form
      *
      * @param String $model       Model name
