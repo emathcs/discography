@@ -150,13 +150,7 @@ class ReleaseView extends View {
 
         // Panel
         echo $this->panelOpen( 'View Release' );
-        if (count($data['success'])) {
-            $alertClass = 'danger';
-            if ($data['success']['status']) {
-                $alertClass = 'success';
-            }
-            echo '<div class="alert alert-' . $alertClass . '" role="alert">' . $data['success']['message'] . '</div>';
-        }
+        echo $this->message($data['success']);
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
