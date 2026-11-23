@@ -116,13 +116,14 @@ class Model {
             '%d'
         ];
         // Database insertion
-        return $this->getDb()->update(
+        $updated = $this->getDb()->update(
             $this->getTable(),
             $data,
             $where,
             $format_data,
             $format_where
         );
+        return $updated ? $id : 0;
     }
 
     /**
