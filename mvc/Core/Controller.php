@@ -145,17 +145,18 @@ class Controller {
      *
      * @param Array $form   Data to insert
      * @param Array $fields Name and formats
-     * @return Integer $id Id of the inserted record
+     * @return Integer $id Record id, -1, 0 or false
      */
     public function insert($form = [], $fields = []) {
-        $id = 0;
+        $status = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
             if (count($dataFormats)) {
                 $id = $this->getModel()->insert($dataFormats['data'], $dataFormats['formats']);
             }
         }
-        return $id;
+        $status = $id > -1 ? $id : $status;
+        return $status;
     }
 
     /**
@@ -164,20 +165,21 @@ class Controller {
      * @param Integer $id     Record id to update
      * @param Array   $form   Data to insert
      * @param Array   $fields Name and formats
-     * @return Integer $id Id of the inserted record
+     * @return Integer $status -1, 0, 1 or false
      */
     public function update($id = 0, $form = [], $fields = []) {
+        $status = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
             if (count($dataFormats)) {
-                $id = $this->getModel()->updateById(
+                $status = $this->getModel()->updateById(
                     $id,
                     $dataFormats['data'],
                     $dataFormats['formats']
                 );
             }
         }
-        return $id;
+        return $status;
     }
 
     /**
