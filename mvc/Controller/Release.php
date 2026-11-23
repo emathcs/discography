@@ -146,6 +146,26 @@ class ReleaseController extends Controller {
                         ];
                     }
                 }
+                else {
+                    if ('delete' === $process) {
+                        $messages = [
+                            'The record was not deleted.',
+                            'The record was deleted.',
+                        ];
+                        if (false === $status) {
+                            $success = [
+                                'message' => 'There was an error when the program tried to store the record.',
+                                'status'  => 0,
+                            ];
+                        }
+                        else {
+                            $success = [
+                                'message' => $messages[$status],
+                                'status'  => $status < 0 ? 0 : $status,
+                            ];
+                        }
+                    }
+                }
             }
         }
         // Get the record
