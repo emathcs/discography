@@ -84,15 +84,21 @@ class ReleaseController extends Controller {
             else {
                 // Delete Button or Track
                 if (isset($_POST['delete']) && isset($_POST['model'])) {
+                    $deleteModel = null;
                     // Track model
                     if ('track' === $_POST['model']) {
-                        $this->setDeleteModel($trackModel);
+                        $deleteModel = $trackModel;
                     }
-                    // Button model
-                    if ('button' === $_POST['model']) {
-                        $this->setDeleteModel($buttonModel);
+                    else {
+                        // Button model
+                        if ('button' === $_POST['model']) {
+                            $deleteModel = $buttonModel;
+                        }
                     }
-                    $this->delete();
+                    if ($deleteModel) {
+                        $this->setDeleteModel($deleteModel);
+                        $this->delete();
+                    }
                 }
             }
         }
