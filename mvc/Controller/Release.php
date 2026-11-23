@@ -58,6 +58,7 @@ class ReleaseController extends Controller {
         $buttonModel = new ButtonModel();
         if (count($_POST)) {
             $status = 0;
+            $process = 0;
             // This process has been added here to avoid the process to redirect to this page from add or edit page
             if (isset($_POST['submit'])) {
                 if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
@@ -72,14 +73,17 @@ class ReleaseController extends Controller {
                 ];
                 if (isset($_POST['id'])) {
                     $id = sanitize_text_field($_POST['id']);
-                    // Update record
+                    // Process
+                    $process = 'update';
+                    // Update record: -1, 0, 1, or null
                     $status = $this->update($id, $_POST, $fields);
-                    $status = $status ? 2 : $status;
                 }
                 else {
-                    // Insert a new record
+                    // Process
+                    $process = 'insert';
+                    // Insert a new record: -1, 0, record id, or null
                     $id = $this->insert($_POST, $fields);
-                    $succcess = $id ? 1 : $id;
+                    $status = $id > 0 ? 1 : $id;
                 }
             }
             else {
@@ -105,17 +109,19 @@ class ReleaseController extends Controller {
                     }
                 }
             }
-            $messages = [
-                'There is a problem with your request, please check the data and try again.',
-                'A new Release record was inserted.',
-                'The release record was updated.',
-                'The Track record was deleted.',
-                'The Button record was deleted.',
-            ];
-            $success = [
-                'message' => $messages[$status],
-                'status'  => $status
-            ];
+            if ('update' === $process) {
+                $messages = [
+                    'The record was not updated, check the values have the right type.',
+                    'Action succeeded, but values were already identical.',
+                    'The record was updated.',
+                ];
+                if (!(null === $status)) {
+                    $success = [
+                        'message' => $messages[(1 + $status)],
+                        'status'  => $status < 0 ? 0 : $status,
+                    ];
+                }
+            }
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
