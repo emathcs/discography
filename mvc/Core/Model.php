@@ -89,15 +89,15 @@ class Model {
      *
      * @param Array $data   Record to insert
      * @param Array $format Format of the data to insert
-     * @return Integer Record id or 0
+     * @return Integer Record id, 0 or null
      */
     public function insert($data = [], $format = []) {
-        $inserted = $this->getDb()->insert(
+        $result = $this->getDb()->insert(
             $this->getTable(),
             $data,
             $format
         );
-        return $inserted ? $this->getDb()->insert_id : 0;
+        return $result ? $this->getDb()->insert_id : $result;
     }
 
     /**
