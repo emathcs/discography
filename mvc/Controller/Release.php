@@ -52,6 +52,7 @@ class ReleaseController extends Controller {
      * @param Integer $id Release id
      */
     public function view($id = 0) {
+        $message = '';
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
@@ -87,23 +88,31 @@ class ReleaseController extends Controller {
                     $deleteModel = null;
                     // Track model
                     if ('track' === $_POST['model']) {
-                        $successModel = 1;
+                        $successModel = 3;
                         $deleteModel = $trackModel;
                     }
                     else {
                         // Button model
                         if ('button' === $_POST['model']) {
-                            $successModel = 2;
+                            $successModel = 4;
                             $deleteModel = $buttonModel;
                         }
                     }
                     if ($deleteModel) {
                         $this->setDeleteModel($deleteModel);
                         $success = $this->delete();
-                        $success = $success ? -1 * $successModel : $success;
+                        $success = $success ? $successModel : $success;
                     }
                 }
             }
+            $messages = [
+                'There is a problem with your request, please check the data and try again.',
+                'A new Release record was inserted.',
+                'The release record was updated.',
+                'The Track record was deleted.',
+                'The Button record was deleted.',
+            ];
+            $message = $messages[$success];
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
@@ -132,6 +141,7 @@ class ReleaseController extends Controller {
             'record'    => $record,
             'status'    => $status,
             'buttons'   => $buttons,
+            'message'   => $message,
             'platforms' => $platforms,
         ]);
     }
