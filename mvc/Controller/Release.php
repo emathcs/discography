@@ -75,13 +75,13 @@ class ReleaseController extends Controller {
                     $id = sanitize_text_field($_POST['id']);
                     // Process
                     $process = 'update';
-                    // Update record: -1, 0, 1, or null
+                    // Update record: -1, 0, 1, or false
                     $status = $this->update($id, $_POST, $fields);
                 }
                 else {
                     // Process
                     $process = 'insert';
-                    // Insert a new record: -1, 0, record id, or null
+                    // Insert a new record: -1, 0, record id, or false
                     $id = $this->insert($_POST, $fields);
                     $status = $id > 0 ? 1 : $id;
                 }
@@ -115,7 +115,13 @@ class ReleaseController extends Controller {
                     'Action succeeded, but values were already identical.',
                     'The record was updated.',
                 ];
-                if (!(null === $status)) {
+                if (false === $status) {
+                    $success = [
+                        'message' => 'There was an error when the program tried to update the record.',
+                        'status'  => 0,
+                    ];
+                }
+                else {
                     $success = [
                         'message' => $messages[(1 + $status)],
                         'status'  => $status < 0 ? 0 : $status,
