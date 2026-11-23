@@ -89,23 +89,21 @@ class ReleaseController extends Controller {
             else {
                 // Delete Button or Track
                 if (isset($_POST['delete']) && isset($_POST['model'])) {
+                    $process = 'delete';
                     $deleteModel = null;
                     // Track model
                     if ('track' === $_POST['model']) {
-                        $statusModel = 3;
                         $deleteModel = $trackModel;
                     }
                     else {
                         // Button model
                         if ('button' === $_POST['model']) {
-                            $statusModel = 4;
                             $deleteModel = $buttonModel;
                         }
                     }
                     if ($deleteModel) {
                         $this->setDeleteModel($deleteModel);
                         $status = $this->delete();
-                        $status = $status ? $statusModel : $status;
                     }
                 }
             }
@@ -126,6 +124,27 @@ class ReleaseController extends Controller {
                         'message' => $messages[(1 + $status)],
                         'status'  => $status < 0 ? 0 : $status,
                     ];
+                }
+            }
+            else {
+                if ('insert' === $process) {
+                    $messages = [
+                        'The record was not stored, check the values have the right type.',
+                        'The record was not stored, check the values have the right type.',
+                        'The record was stored.',
+                    ];
+                    if (false === $status) {
+                        $success = [
+                            'message' => 'There was an error when the program tried to store the record.',
+                            'status'  => 0,
+                        ];
+                    }
+                    else {
+                        $success = [
+                            'message' => $messages[(1 + $status)],
+                            'status'  => $status < 0 ? 0 : $status,
+                        ];
+                    }
                 }
             }
         }
