@@ -148,15 +148,14 @@ class Controller {
      * @return Integer $id Record id, -1, 0 or false
      */
     public function insert($form = [], $fields = []) {
-        $status = -1;
+        $id = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
             if (count($dataFormats)) {
                 $id = $this->getModel()->insert($dataFormats['data'], $dataFormats['formats']);
             }
         }
-        $status = $id > -1 ? $id : $status;
-        return $status;
+        return $id;
     }
 
     /**
