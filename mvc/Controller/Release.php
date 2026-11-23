@@ -52,12 +52,12 @@ class ReleaseController extends Controller {
      * @param Integer $id Release id
      */
     public function view($id = 0) {
-        $message = '';
+        $success = [];
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
         if (count($_POST)) {
-            $success = 0;
+            $status = 0;
             // This process has been added here to avoid the process to redirect to this page from add or edit page
             if (isset($_POST['submit'])) {
                 if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
@@ -73,8 +73,8 @@ class ReleaseController extends Controller {
                 if (isset($_POST['id'])) {
                     $id = sanitize_text_field($_POST['id']);
                     // Update record
-                    $success = $this->update($id, $_POST, $fields);
-                    $success = $success ? 2 : $success;
+                    $status = $this->update($id, $_POST, $fields);
+                    $status = $status ? 2 : $status;
                 }
                 else {
                     // Insert a new record
@@ -88,20 +88,20 @@ class ReleaseController extends Controller {
                     $deleteModel = null;
                     // Track model
                     if ('track' === $_POST['model']) {
-                        $successModel = 3;
+                        $statusModel = 3;
                         $deleteModel = $trackModel;
                     }
                     else {
                         // Button model
                         if ('button' === $_POST['model']) {
-                            $successModel = 4;
+                            $statusModel = 4;
                             $deleteModel = $buttonModel;
                         }
                     }
                     if ($deleteModel) {
                         $this->setDeleteModel($deleteModel);
-                        $success = $this->delete();
-                        $success = $success ? $successModel : $success;
+                        $status = $this->delete();
+                        $status = $status ? $statusModel : $status;
                     }
                 }
             }
@@ -112,7 +112,10 @@ class ReleaseController extends Controller {
                 'The Track record was deleted.',
                 'The Button record was deleted.',
             ];
-            $message = $messages[$success];
+            $success = [
+                'message' => $messages[$status],
+                'status'  => $status
+            ];
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
@@ -141,7 +144,7 @@ class ReleaseController extends Controller {
             'record'    => $record,
             'status'    => $status,
             'buttons'   => $buttons,
-            'message'   => $message,
+            'success'   => $success,
             'platforms' => $platforms,
         ]);
     }
