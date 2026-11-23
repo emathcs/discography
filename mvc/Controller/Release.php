@@ -56,6 +56,7 @@ class ReleaseController extends Controller {
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
         if (count($_POST)) {
+            $success = 0;
             // This process has been added here to avoid the process to redirect to this page from add or edit page
             if (isset($_POST['submit'])) {
                 if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
@@ -68,7 +69,6 @@ class ReleaseController extends Controller {
                     [ 'name' => 'image_id',  'format' => '%d' ],
                     [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
                 ];
-                $success = 0;
                 if (isset($_POST['id'])) {
                     $id = sanitize_text_field($_POST['id']);
                     // Update record
@@ -87,17 +87,20 @@ class ReleaseController extends Controller {
                     $deleteModel = null;
                     // Track model
                     if ('track' === $_POST['model']) {
+                        $successModel = 1;
                         $deleteModel = $trackModel;
                     }
                     else {
                         // Button model
                         if ('button' === $_POST['model']) {
+                            $successModel = 2;
                             $deleteModel = $buttonModel;
                         }
                     }
                     if ($deleteModel) {
                         $this->setDeleteModel($deleteModel);
-                        $this->delete();
+                        $success = $this->delete();
+                        $success = $success ? -1 * $successModel : $success;
                     }
                 }
             }
