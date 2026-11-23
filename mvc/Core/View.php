@@ -40,7 +40,7 @@ class View {
         $html = '';
         if (count($message)) {
             $alertClass = 'danger';
-            if ($success['status']) {
+            if ($message['status']) {
                 $alertClass = 'success';
             }
             $html .= '<div class="alert alert-' . $alertClass . '" role="alert">' . $message['message'] . '</div>';
