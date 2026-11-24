@@ -64,7 +64,7 @@ class ReleaseView extends View {
         echo $this->panelOpen('Add Release');
         echo $form->init(['action' => "admin.php?page=discography-release-view", 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
-        wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+        wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
         // Cover image
         echo '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview discography-admin-hide">';
         echo '    <img src="" id="discography-cover-img">';
@@ -249,7 +249,7 @@ class ReleaseView extends View {
         if ($record) {
             echo $form->init(['action' => "admin.php?page=discography-release-view&release=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
-            wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+            wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
             // Cover image
             echo '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview">';
             echo '    <img src="' . $data['src'] . '" id="discography-cover-img">';

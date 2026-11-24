@@ -92,7 +92,7 @@ class ButtonView extends View {
         echo $this->panelOpen('Add Button');
         echo $form->init(['action' => 'admin.php?page=discography-button-view' . $parameters, 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
-        wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+        wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
         // Release id
         if ($data['release_id']) {
             echo $input->create([
@@ -241,7 +241,7 @@ class ButtonView extends View {
         if ($record) {
             echo $form->init(['action' => "admin.php?page=discography-button-view&button=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
-            wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+            wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
             // Id
             echo $input->create([
                 'type'     => 'hidden',

@@ -24,7 +24,7 @@ class ReleaseController extends Controller {
             if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $status = $this->delete();
+            $status = $this->delete($_POST);
             $process = 'delete';
             $notification = $this->getNotification($process, $status);
         }
@@ -63,9 +63,6 @@ class ReleaseController extends Controller {
         $process = '';
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
             $fields = [
                 [ 'name' => 'name',      'format' => '%s' ],
                 [ 'name' => 'type_id',   'format' => '%d' ],
@@ -105,7 +102,7 @@ class ReleaseController extends Controller {
                 }
                 if ($deleteModel) {
                     $this->setDeleteModel($deleteModel);
-                    $status = $this->delete();
+                    $status = $this->delete($_POST);
                 }
             }
         }

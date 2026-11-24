@@ -80,7 +80,7 @@ class TrackView extends View {
         echo $this->panelOpen('Add a new track');
         echo $form->init(['action' => 'admin.php?page=discography-track-view' . $parameters, 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
-        wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+        wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
         // Release id
         echo $input->create([
             'type'     => 'hidden',
@@ -175,7 +175,7 @@ class TrackView extends View {
         if ($record) {
             echo $form->init(['action' => "admin.php?page=discography-track-view&track=" . $record->id, 'method' => 'post']);
             // Security field: Nonce to prevent CSRF attacks
-            wp_nonce_field( 'save_custom_form_action', 'custom_form_nonce' );
+            wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
             // Id
             echo $input->create([
                 'type'     => 'hidden',

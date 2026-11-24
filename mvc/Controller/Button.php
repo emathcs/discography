@@ -23,7 +23,7 @@ class ButtonController extends Controller {
             if ('button' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $this->delete();
+            $this->delete($_POST);
         }
         // Platforms
         $platforms = $this->getChildModel()->getListFormat();
@@ -57,9 +57,6 @@ class ButtonController extends Controller {
         $notification = [];
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
             $status = 0;
             $process = '';
             if (isset($_POST['id'])) {

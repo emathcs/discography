@@ -141,6 +141,17 @@ class Controller {
     }
 
     /**
+     * Security verification
+     *
+     * @param Array $form Form to validate
+     */
+    public function securityVerification($form = []) {
+        if ( ! isset( $form['custom_form_nonce'] ) || ! wp_verify_nonce( $form['custom_form_nonce'], 'custom_form_action' ) ) {
+            wp_die( 'Security check failed. Please try again.' );
+        }
+    }
+
+    /**
      * Insert into table
      *
      * @param Array $form   Data to insert
@@ -148,6 +159,7 @@ class Controller {
      * @return Integer $id Record id, -1, 0 or false
      */
     public function insert($form = [], $fields = []) {
+        $this->securityVerification($form);
         $id = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
@@ -167,6 +179,7 @@ class Controller {
      * @return Integer $status -1, 0, 1 or false
      */
     public function update($id = 0, $form = [], $fields = []) {
+        $this->securityVerification($form);
         $status = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
@@ -184,20 +197,17 @@ class Controller {
     /**
      * Delete function
      *
+     * @param Array $form The form to verify
      * @return Boolean Status of the operation
      */
-    public function delete() {
-        if (isset( $_POST['delete'])) {
-            if (!isset( $_POST['custom_form_nonce']) || !wp_verify_nonce($_POST['custom_form_nonce'], 'delete_custom_form_action')) {
-                wp_die('Security check failed. Please try again.');
-            }
-            $deleteModel = $this->getDeleteModel();
-            if (!$deleteModel) {
-                return 0;
-            }
-            $id = sanitize_text_field($_POST['id']);
-            return $this->getDeleteModel()->deleteById($id);
+    public function delete($form = []) {
+        $this->securityVerification($form);
+        $deleteModel = $this->getDeleteModel();
+        if (!$deleteModel) {
+            return 0;
         }
+        $id = sanitize_text_field($_POST['id']);
+        return $this->getDeleteModel()->deleteById($id);
     }
 
     /**
