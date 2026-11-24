@@ -45,6 +45,7 @@ class TrackController extends Controller {
      * @param Integer $id Track id
      */
     public function view($id = 0) {
+        $success = [];
         // Button Model
         $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
@@ -52,22 +53,28 @@ class TrackController extends Controller {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
+            $status = 0;
+            $process = '';
             if (isset($_POST['id'])) {
+                $process = 'update';
                 $id = sanitize_text_field($_POST['id']);
                 $fields = [
                     [ 'name' => 'name', 'format' => '%s' ],
                 ];
                 // Update record
-                $this->update($id, $_POST, $fields);
+                $status = $this->update($id, $_POST, $fields);
             }
             else {
+                $process = 'update';
                 $fields = [
                     [ 'name' => 'name',       'format' => '%s' ],
                     [ 'name' => 'release_id', 'format' => '%d' ],
                 ];
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);
+                $status = $id > 0 ? 1 : $id;
             }
+            $success = $this->getMessage($process, $status);
         }
         // Delete Button
         if (isset($_POST['delete']) && isset($_POST['model'])) {
@@ -85,7 +92,7 @@ class TrackController extends Controller {
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
         // View
-        $this->getView()->view(['record' => $record, 'buttons' => $buttons, 'platforms' => $platforms]);
+        $this->getView()->view(['record' => $record, 'buttons' => $buttons, 'platforms' => $platforms, 'success'   => $success]);
     }
 
     /**
