@@ -58,7 +58,7 @@ class ReleaseController extends Controller {
         $buttonModel = new ButtonModel();
         if (count($_POST)) {
             $status = 0;
-            $process = 0;
+            $process = '';
             // This process has been added here to avoid the process to redirect to this page from add or edit page
             if (isset($_POST['submit'])) {
                 if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
