@@ -148,6 +148,13 @@ class TrackView extends View {
                 echo $buttonView->table($data['buttons'], $data['platforms']);
             }
         }
+        else {
+            // Navigation buttons
+            echo '<div class="mb-3">';
+            echo '    <a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['backToLabel'] . '</a> ';
+            echo '    <a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Track</a>';
+            echo '</div>';
+        }
         echo $this->panelClose();
     }
 

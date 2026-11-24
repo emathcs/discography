@@ -53,6 +53,7 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function view($id = 0) {
+        $navigation = [];
         $notification = [];
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
@@ -75,15 +76,30 @@ class ButtonController extends Controller {
                 $process = 'insert';
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
                 if (isset($_POST['track_id'])) {
+                    $track_id = $_POST['track_id'];
+
+                    $navigation['model']  = 'track';
+                    $navigation['id']     = $track_id;
+                    $navigation['backTo'] = '?page=discography-track-view&track=' . $track_id;
+                    $navigation['backToLabel'] = 'Go to the Track';
+
                     $fields[$i++] = [ 'name' => 'track_id', 'format' => '%d' ];
                 }
                 if (isset($_POST['release_id'])) {
+                    $release_id =  $_POST['release_id'];
+
+                    $navigation['model']  = 'release';
+                    $navigation['id']     = $release_id;
+                    $navigation['backTo'] = '?page=discography-release-view&release=' . $release_id;
+                    $navigation['backToLabel'] = 'Go to the Release';
+
                     $fields[$i++] = [ 'name' => 'release_id', 'format' => '%d' ];
                 }
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);
                 $status = $id > 0 ? 1 : $id;
+
             }
             $notification = $this->getNotification($process, $status);
         }
@@ -92,7 +108,7 @@ class ButtonController extends Controller {
         // Get the record
         $record = $this->getModel()->selectById($id);
         // View
-        $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'notification'   => $notification]);
+        $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'notification'   => $notification, 'navigation' => $navigation]);
     }
 
     /**
