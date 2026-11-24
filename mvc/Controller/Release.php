@@ -107,66 +107,7 @@ class ReleaseController extends Controller {
                     }
                 }
             }
-            if ('update' === $process) {
-                $messages = [
-                    'The record was not updated, check the values have the right type.',
-                    'Action succeeded, but values were already identical.',
-                    'The record was updated.',
-                ];
-                if (false === $status) {
-                    $success = [
-                        'message' => 'There was an error when the program tried to update the record.',
-                        'status'  => 0,
-                    ];
-                }
-                else {
-                    $success = [
-                        'message' => $messages[(1 + $status)],
-                        'status'  => $status < 0 ? 0 : $status,
-                    ];
-                }
-            }
-            else {
-                if ('insert' === $process) {
-                    $messages = [
-                        'The record was not stored, check the values have the right type.',
-                        'The record was not stored, check the values have the right type.',
-                        'The record was stored.',
-                    ];
-                    if (false === $status) {
-                        $success = [
-                            'message' => 'There was an error when the program tried to store the record.',
-                            'status'  => 0,
-                        ];
-                    }
-                    else {
-                        $success = [
-                            'message' => $messages[(1 + $status)],
-                            'status'  => $status < 0 ? 0 : $status,
-                        ];
-                    }
-                }
-                else {
-                    if ('delete' === $process) {
-                        $messages = [
-                            'The record was not deleted.',
-                            'The record was deleted.',
-                        ];
-                        if (false === $status) {
-                            $success = [
-                                'message' => 'There was an error when the program tried to store the record.',
-                                'status'  => 0,
-                            ];
-                        }
-                        else {
-                            $success = [
-                                'message' => $messages[$status],
-                                'status'  => $status < 0 ? 0 : $status,
-                            ];
-                        }
-                    }
-                }
-            }
+            $success = $this->getMessage($process, $status);
         }
         // Get the record
         $record = $this->getModel()->selectById($id);
