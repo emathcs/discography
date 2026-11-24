@@ -24,7 +24,7 @@ class ReleaseController extends Controller {
             if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $status = $this->delete();
+            $status = $this->delete($_POST);
             $process = 'delete';
             $notification = $this->getNotification($process, $status);
         }
@@ -102,7 +102,7 @@ class ReleaseController extends Controller {
                 }
                 if ($deleteModel) {
                     $this->setDeleteModel($deleteModel);
-                    $status = $this->delete();
+                    $status = $this->delete($_POST);
                 }
             }
         }

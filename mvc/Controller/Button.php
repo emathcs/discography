@@ -23,7 +23,7 @@ class ButtonController extends Controller {
             if ('button' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $this->delete();
+            $this->delete($_POST);
         }
         // Platforms
         $platforms = $this->getChildModel()->getListFormat();

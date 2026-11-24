@@ -21,7 +21,7 @@ class TrackController extends Controller {
             if ('track' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $this->delete();
+            $this->delete($_POST);
         }
         // Get the records
         $records = $this->getModel()->select();
@@ -89,7 +89,7 @@ class TrackController extends Controller {
                     $this->setDeleteModel($buttonModel);
                 }
                 $process = 'delete';
-                $status = $this->delete();
+                $status = $this->delete($_POST);
             }
         }
         $notification = $this->getNotification($process, $status);
