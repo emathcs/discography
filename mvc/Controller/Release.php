@@ -86,9 +86,6 @@ class ReleaseController extends Controller {
             }
         }
         else {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
             // Delete Button or Track
             if (isset($_POST['delete']) && isset($_POST['model'])) {
                 $process = 'delete';
