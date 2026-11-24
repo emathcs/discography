@@ -189,7 +189,7 @@ function discography_redirections() {
         // Track
         if ('track' === $model) {
             if ( 0 === count($_POST) ) {
-                wp_safe_redirect( admin_url( 'admin.php?page=discography-track-view-&track=' . $model_id) );
+                wp_safe_redirect( admin_url( 'admin.php?page=discography-track-view&track=' . $model_id) );
                 exit;
             }
         }
