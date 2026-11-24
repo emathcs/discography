@@ -79,7 +79,7 @@ class ButtonView extends View {
         $parameters = '';
         if (isset($data['release_id']) && $data['release_id']) {
             $goToLabel = 'Go to the Release';
-            $parameters = '&model=&id=' . $data['release_id'];
+            $parameters = '&model=release&id=' . $data['release_id'];
             $goTo = '?page=discography-release-view&release=' . $data['release_id'] ;
         }
         if (isset($data['track_id']) && $data['track_id']) {
@@ -195,6 +195,15 @@ class ButtonView extends View {
             echo '<a href="' . $goTo .'" class="btn btn-warning">' . $goToLabel . '</a> ';
             echo '<a href="?page=discography-button-edit&button=' . $record->id .'" class="btn btn-secondary">Edit Button</a> ';
             echo '<a href="?page=discography-button-add&' . $parameter . '=' . $id . '" class="btn btn-primary">Add Button</a>';
+            echo '</div>';
+        }
+        else {
+            // Navigation buttons
+            echo '<div class="mb-3">';
+            echo '    <a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['backToLabel'] . '</a> ';
+            if (isset($data['navigation']['model'])) {
+                echo '    <a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Button</a>';
+            }
             echo '</div>';
         }
         echo $this->panelClose();
