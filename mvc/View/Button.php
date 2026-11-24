@@ -201,9 +201,7 @@ class ButtonView extends View {
             // Navigation buttons
             echo '<div class="mb-3">';
             echo '    <a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['backToLabel'] . '</a> ';
-            if (isset($data['navigation']['model'])) {
-                echo '    <a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Button</a>';
-            }
+            echo '    <a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Button</a>';
             echo '</div>';
         }
         echo $this->panelClose();
