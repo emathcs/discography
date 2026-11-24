@@ -56,59 +56,61 @@ class ReleaseController extends Controller {
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
-        if (count($_POST)) {
-            $status = 0;
-            $process = '';
-            // This process has been added here to avoid the process to redirect to this page from add or edit page
-            if (isset($_POST['submit'])) {
-                if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                    wp_die( 'Security check failed. Please try again.' );
-                }
-                $fields = [
-                    [ 'name' => 'name',      'format' => '%s' ],
-                    [ 'name' => 'type_id',   'format' => '%d' ],
-                    [ 'name' => 'post_id',   'format' => '%d' ],
-                    [ 'name' => 'image_id',  'format' => '%d' ],
-                    [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
-                ];
-                if (isset($_POST['id'])) {
-                    $id = sanitize_text_field($_POST['id']);
-                    // Process
-                    $process = 'update';
-                    // Update record: -1, 0, 1, or false
-                    $status = $this->update($id, $_POST, $fields);
-                }
-                else {
-                    // Process
-                    $process = 'insert';
-                    // Insert a new record: -1, 0, record id, or false
-                    $id = $this->insert($_POST, $fields);
-                    $status = $id > 0 ? 1 : $id;
-                }
+        $status = 0;
+        $process = '';
+        // This process has been added here to avoid the process to redirect to this page from add or edit page
+        if (isset($_POST['submit'])) {
+            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
+                wp_die( 'Security check failed. Please try again.' );
+            }
+            $fields = [
+                [ 'name' => 'name',      'format' => '%s' ],
+                [ 'name' => 'type_id',   'format' => '%d' ],
+                [ 'name' => 'post_id',   'format' => '%d' ],
+                [ 'name' => 'image_id',  'format' => '%d' ],
+                [ 'name' => 'status_id', 'format' => '%d' , 'verify' => false ],
+            ];
+            if (isset($_POST['id'])) {
+                $id = sanitize_text_field($_POST['id']);
+                // Process
+                $process = 'update';
+                // Update record: -1, 0, 1, or false
+                $status = $this->update($id, $_POST, $fields);
             }
             else {
-                // Delete Button or Track
-                if (isset($_POST['delete']) && isset($_POST['model'])) {
-                    $process = 'delete';
-                    $deleteModel = null;
-                    // Track model
-                    if ('track' === $_POST['model']) {
-                        $deleteModel = $trackModel;
-                    }
-                    else {
-                        // Button model
-                        if ('button' === $_POST['model']) {
-                            $deleteModel = $buttonModel;
-                        }
-                    }
-                    if ($deleteModel) {
-                        $this->setDeleteModel($deleteModel);
-                        $status = $this->delete();
+                // Process
+                $process = 'insert';
+                // Insert a new record: -1, 0, record id, or false
+                $id = $this->insert($_POST, $fields);
+                $status = $id > 0 ? 1 : $id;
+            }
+        }
+        else {
+            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
+                wp_die( 'Security check failed. Please try again.' );
+            }
+            // Delete Button or Track
+            if (isset($_POST['delete']) && isset($_POST['model'])) {
+                $process = 'delete';
+                $deleteModel = null;
+                // Track model
+                if ('track' === $_POST['model']) {
+                    $deleteModel = $trackModel;
+                }
+                else {
+                    // Button model
+                    if ('button' === $_POST['model']) {
+                        $deleteModel = $buttonModel;
                     }
                 }
+                if ($deleteModel) {
+                    $this->setDeleteModel($deleteModel);
+                    $status = $this->delete();
+                }
             }
-            $success = $this->getMessage($process, $status);
         }
+        $success = $this->getMessage($process, $status);
+
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related tracks
