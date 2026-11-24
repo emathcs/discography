@@ -201,9 +201,7 @@ class Controller {
      * @return Boolean Status of the operation
      */
     public function delete($form = []) {
-        if (!isset( $form['custom_form_nonce']) || !wp_verify_nonce($form['custom_form_nonce'], 'custom_form_action')) {
-            wp_die('Security check failed. Please try again.');
-        }
+        $this->securityVerification($form);
         $deleteModel = $this->getDeleteModel();
         if (!$deleteModel) {
             return 0;
