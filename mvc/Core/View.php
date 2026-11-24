@@ -31,6 +31,24 @@ class View {
     }
 
     /**
+     * Notification section
+     *
+     * @param Array $data Array with the notification information
+     * @return String HTML code to generate the notification section
+     */
+    public function notification($data = []) {
+        $html = '';
+        if (count($data)) {
+            $alertClass = 'danger';
+            if ($data['status']) {
+                $alertClass = 'success';
+            }
+            $html .= '<div class="alert alert-' . $alertClass . '" role="alert">' . $data['message'] . '</div>';
+        }
+        return $html;
+    }
+
+    /**
      * Delete form
      *
      * @param String $model       Model name

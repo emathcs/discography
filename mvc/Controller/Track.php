@@ -45,6 +45,9 @@ class TrackController extends Controller {
      * @param Integer $id Track id
      */
     public function view($id = 0) {
+        $status = 0;
+        $process = '';
+        $notification = [];
         // Button Model
         $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
@@ -53,30 +56,37 @@ class TrackController extends Controller {
                 wp_die( 'Security check failed. Please try again.' );
             }
             if (isset($_POST['id'])) {
+                $process = 'update';
                 $id = sanitize_text_field($_POST['id']);
                 $fields = [
                     [ 'name' => 'name', 'format' => '%s' ],
                 ];
                 // Update record
-                $this->update($id, $_POST, $fields);
+                $status = $this->update($id, $_POST, $fields);
             }
             else {
+                $process = 'update';
                 $fields = [
                     [ 'name' => 'name',       'format' => '%s' ],
                     [ 'name' => 'release_id', 'format' => '%d' ],
                 ];
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);
+                $status = $id > 0 ? 1 : $id;
             }
         }
-        // Delete Button
-        if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Track model
-            if ('button' === $_POST['model']) {
-                $this->setDeleteModel($buttonModel);
+        else {
+            // Delete Button
+            if (isset($_POST['delete']) && isset($_POST['model'])) {
+                // Track model
+                if ('button' === $_POST['model']) {
+                    $this->setDeleteModel($buttonModel);
+                }
+                $process = 'delete';
+                $status = $this->delete();
             }
-            $this->delete();
         }
+        $notification = $this->getNotification($process, $status);
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related buttons
@@ -85,7 +95,7 @@ class TrackController extends Controller {
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
         // View
-        $this->getView()->view(['record' => $record, 'buttons' => $buttons, 'platforms' => $platforms]);
+        $this->getView()->view(['record' => $record, 'buttons' => $buttons, 'platforms' => $platforms, 'notification'   => $notification]);
     }
 
     /**

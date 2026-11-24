@@ -89,15 +89,15 @@ class Model {
      *
      * @param Array $data   Record to insert
      * @param Array $format Format of the data to insert
-     * @return Integer Record id or 0
+     * @return Integer Record id, 0 or false on error
      */
     public function insert($data = [], $format = []) {
-        $inserted = $this->getDb()->insert(
+        $result = $this->getDb()->insert(
             $this->getTable(),
             $data,
             $format
         );
-        return $inserted ? $this->getDb()->insert_id : 0;
+        return $result ? $this->getDb()->insert_id : $result;
     }
 
     /**
@@ -106,7 +106,7 @@ class Model {
      * @param Integer $id          Record id
      * @param Array   $data        Record
      * @param Array   $format_data Format of the data to update
-     * @return Integer Id or 0
+     * @return Integer The number of rows updated, or false on error
      */
     public function updateById($id = 0, $data = [], $format_data = []) {
         $where = [
@@ -116,14 +116,13 @@ class Model {
             '%d'
         ];
         // Database insertion
-        $updated = $this->getDb()->update(
+        return $this->getDb()->update(
             $this->getTable(),
             $data,
             $where,
             $format_data,
             $format_where
         );
-        return $updated ? $id : 0;
     }
 
     /**

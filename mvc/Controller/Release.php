@@ -17,18 +17,21 @@ class ReleaseController extends Controller {
      * List
      */
     public function list() {
+        $notification = [];
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
             // Release model
             if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $this->delete();
+            $status = $this->delete();
+            $process = 'delete';
+            $notification = $this->getNotification($process, $status);
         }
         // Get the records
         $records = $this->getModel()->select();
         // View
-        $this->getView()->list(['records' => $records]);
+        $this->getView()->list(['records' => $records, 'notification'   => $notification]);
     }
 
     /**
@@ -52,9 +55,12 @@ class ReleaseController extends Controller {
      * @param Integer $id Release id
      */
     public function view($id = 0) {
+        $notification = [];
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
+        $status = 0;
+        $process = '';
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
@@ -69,26 +75,42 @@ class ReleaseController extends Controller {
             ];
             if (isset($_POST['id'])) {
                 $id = sanitize_text_field($_POST['id']);
-                // Update record
-                $this->update($id, $_POST, $fields);
+                // Process
+                $process = 'update';
+                // Update record: -1, 0, 1, or false
+                $status = $this->update($id, $_POST, $fields);
             }
             else {
-                // Insert a new record
+                // Process
+                $process = 'insert';
+                // Insert a new record: -1, 0, record id, or false
                 $id = $this->insert($_POST, $fields);
+                $status = $id > 0 ? 1 : $id;
             }
         }
-        // Delete Button or Track
-        if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Track model
-            if ('track' === $_POST['model']) {
-                $this->setDeleteModel($trackModel);
+        else {
+            // Delete Button or Track
+            if (isset($_POST['delete']) && isset($_POST['model'])) {
+                $process = 'delete';
+                $deleteModel = null;
+                // Track model
+                if ('track' === $_POST['model']) {
+                    $deleteModel = $trackModel;
+                }
+                else {
+                    // Button model
+                    if ('button' === $_POST['model']) {
+                        $deleteModel = $buttonModel;
+                    }
+                }
+                if ($deleteModel) {
+                    $this->setDeleteModel($deleteModel);
+                    $status = $this->delete();
+                }
             }
-            // Button model
-            if ('button' === $_POST['model']) {
-                $this->setDeleteModel($buttonModel);
-            }
-            $this->delete();
         }
+        $notification = $this->getNotification($process, $status);
+
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related tracks
@@ -111,12 +133,13 @@ class ReleaseController extends Controller {
         // View
         $this->getView()->view([
             'src'       => $src,
-            'tracks'    => $tracks,
             'types'     => $types,
             'record'    => $record,
             'status'    => $status,
+            'tracks'    => $tracks,
             'buttons'   => $buttons,
             'platforms' => $platforms,
+            'notification'   => $notification,
         ]);
     }
 

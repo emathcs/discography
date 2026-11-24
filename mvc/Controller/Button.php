@@ -53,21 +53,26 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function view($id = 0) {
+        $notification = [];
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
+            $status = 0;
+            $process = '';
             if (isset($_POST['id'])) {
+                $process = 'update';
                 $id = sanitize_text_field($_POST['id']);
                 $i = 0;
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
                 // Update record
-                $this->update($id, $_POST, $fields);
+                $status = $this->update($id, $_POST, $fields);
             }
             else {
                 $i = 0;
+                $process = 'insert';
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
                 if (isset($_POST['track_id'])) {
                     $fields[$i++] = [ 'name' => 'track_id', 'format' => '%d' ];
@@ -78,14 +83,16 @@ class ButtonController extends Controller {
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
                 // Insert a new record
                 $id = $this->insert($_POST, $fields);
+                $status = $id > 0 ? 1 : $id;
             }
+            $notification = $this->getNotification($process, $status);
         }
         // Platforms
         $platforms = $this->getChildModel()->getListFormat();
         // Get the record
         $record = $this->getModel()->selectById($id);
         // View
-        $this->getView()->view(['record' => $record, 'platforms' => $platforms]);
+        $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'notification'   => $notification]);
     }
 
     /**

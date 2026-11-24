@@ -153,27 +153,30 @@ class ButtonView extends View {
     public function view($data = []) {
         $record = isset($data['record']) ? $data['record'] : [];
 
-        // Navigation
-        $goTo = '';
-        $goToLabel = '';
-        $parameters = '';
-        if ($record->release_id) {
-            $parameter = 'release';
-            $id = $record->release_id;
-            $goToLabel = 'Go to the Release';
-            $parameters = '&model=release&id=' . $record->release_id;
-            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
-        }
-        if ($record->track_id) {
-            $parameter = 'track';
-            $id = $record->track_id;
-            $goToLabel = 'Go to the Track';
-            $parameters = '&model=track&id=' . $record->track_id;
-            $goTo = '?page=discography-track-view&track=' . $record->track_id;
+        if ($record) {
+            // Navigation
+            $goTo = '';
+            $goToLabel = '';
+            $parameters = '';
+            if ($record->release_id) {
+                $parameter = 'release';
+                $id = $record->release_id;
+                $goToLabel = 'Go to the Release';
+                $parameters = '&model=release&id=' . $record->release_id;
+                $goTo = '?page=discography-release-view&release=' . $record->release_id ;
+            }
+            if ($record->track_id) {
+                $parameter = 'track';
+                $id = $record->track_id;
+                $goToLabel = 'Go to the Track';
+                $parameters = '&model=track&id=' . $record->track_id;
+                $goTo = '?page=discography-track-view&track=' . $record->track_id;
+            }
         }
 
         // Panel
         echo $this->panelOpen( 'View Button' );
+        echo $this->notification($data['notification']);
         if ($record) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
             echo '    <tbody>';
