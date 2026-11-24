@@ -45,6 +45,8 @@ class TrackController extends Controller {
      * @param Integer $id Track id
      */
     public function view($id = 0) {
+        $status = 0;
+        $process = '';
         $notification = [];
         // Button Model
         $buttonModel = new ButtonModel();
@@ -53,8 +55,6 @@ class TrackController extends Controller {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
                 wp_die( 'Security check failed. Please try again.' );
             }
-            $status = 0;
-            $process = '';
             if (isset($_POST['id'])) {
                 $process = 'update';
                 $id = sanitize_text_field($_POST['id']);
@@ -74,16 +74,19 @@ class TrackController extends Controller {
                 $id = $this->insert($_POST, $fields);
                 $status = $id > 0 ? 1 : $id;
             }
-            $notification = $this->getNotification($process, $status);
         }
-        // Delete Button
-        if (isset($_POST['delete']) && isset($_POST['model'])) {
-            // Track model
-            if ('button' === $_POST['model']) {
-                $this->setDeleteModel($buttonModel);
+        else {
+            // Delete Button
+            if (isset($_POST['delete']) && isset($_POST['model'])) {
+                // Track model
+                if ('button' === $_POST['model']) {
+                    $this->setDeleteModel($buttonModel);
+                }
+                $process = 'delete';
+                $status = $this->delete();
             }
-            $this->delete();
         }
+        $notification = $this->getNotification($process, $status);
         // Get the record
         $record = $this->getModel()->selectById($id);
         // Get the related buttons
