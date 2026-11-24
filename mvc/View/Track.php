@@ -118,7 +118,7 @@ class TrackView extends View {
 
         // Panel
         echo $this->panelOpen( 'View Track' );
-        echo $this->message($data['success']);
+        echo $this->notification($data['success']);
         if ($record) {
             // Get the Button view
             $buttonsTable = false;

@@ -31,19 +31,19 @@ class View {
     }
 
     /**
-     * Message section
+     * Notification section
      *
-     * @param Array $message Array with the message information
-     * @return String HTML code to generate the message section
+     * @param Array $data Array with the notification information
+     * @return String HTML code to generate the notification section
      */
-    public function message($message = []) {
+    public function notification($data = []) {
         $html = '';
-        if (count($message)) {
+        if (count($data)) {
             $alertClass = 'danger';
-            if ($message['status']) {
+            if ($data['status']) {
                 $alertClass = 'success';
             }
-            $html .= '<div class="alert alert-' . $alertClass . '" role="alert">' . $message['message'] . '</div>';
+            $html .= '<div class="alert alert-' . $alertClass . '" role="alert">' . $data['message'] . '</div>';
         }
         return $html;
     }

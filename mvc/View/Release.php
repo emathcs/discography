@@ -12,7 +12,7 @@ class ReleaseView extends View {
 
         // Panel
         echo $this->panelOpen('Releases');
-        echo $this->message($data['success']);
+        echo $this->notification($data['success']);
         echo '<div class="mb-3">';
         echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Release</a>';
         echo '</div>';
@@ -151,7 +151,7 @@ class ReleaseView extends View {
 
         // Panel
         echo $this->panelOpen( 'View Release' );
-        echo $this->message($data['success']);
+        echo $this->notification($data['success']);
         if ($record) {
             // Get the Button view
             $buttonsTable = false;
