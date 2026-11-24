@@ -26,7 +26,7 @@ class ReleaseController extends Controller {
             }
             $status = $this->delete();
             $process = 'delete';
-            $success = $this->getMessage($process, $status);
+            $success = $this->getNotification($process, $status);
         }
         // Get the records
         $records = $this->getModel()->select();
@@ -109,7 +109,7 @@ class ReleaseController extends Controller {
                 }
             }
         }
-        $success = $this->getMessage($process, $status);
+        $success = $this->getNotification($process, $status);
 
         // Get the record
         $record = $this->getModel()->selectById($id);

@@ -201,13 +201,13 @@ class Controller {
     }
 
     /**
-     * Get message after insert, update or delete a record
+     * Get notification after insert, update or delete a record
      *
      * @param String  $process Process: insert, update or delete
      * @param Integer $status Status of the process: -1, 0, 1 or false on error
      * @return Array [Message, Status]
      */
-    public function getMessage($process = '', $status = 0) {
+    public function getNotification($process = '', $status = 0) {
         $message = [];
         if (strlen($process)) {
             if ('update' === $process) {

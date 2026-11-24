@@ -74,7 +74,7 @@ class TrackController extends Controller {
                 $id = $this->insert($_POST, $fields);
                 $status = $id > 0 ? 1 : $id;
             }
-            $success = $this->getMessage($process, $status);
+            $success = $this->getNotification($process, $status);
         }
         // Delete Button
         if (isset($_POST['delete']) && isset($_POST['model'])) {

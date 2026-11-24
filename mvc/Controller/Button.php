@@ -85,7 +85,7 @@ class ButtonController extends Controller {
                 $id = $this->insert($_POST, $fields);
                 $status = $id > 0 ? 1 : $id;
             }
-            $success = $this->getMessage($process, $status);
+            $success = $this->getNotification($process, $status);
         }
         // Platforms
         $platforms = $this->getChildModel()->getListFormat();
