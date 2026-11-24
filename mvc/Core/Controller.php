@@ -199,4 +199,78 @@ class Controller {
             return $this->getDeleteModel()->deleteById($id);
         }
     }
+
+    /**
+     * Get message after insert, update or delete a record
+     *
+     * @param String  $process Process: insert, update or delete
+     * @param Integer $status Status of the process: -1, 0, 1 or false on error
+     * @return Array [Message, Status]
+     */
+    public function getMessage($process = '', $status = 0) {
+        $message = [];
+        if (strlen($process)) {
+            if ('update' === $process) {
+                $messages = [
+                    'The record was not updated, check the values have the right type.',
+                    'Action succeeded, but values were already identical.',
+                    'The record was updated.',
+                ];
+                if (false === $status) {
+                    $message = [
+                        'message' => 'There was an error when the program tried to update the record.',
+                        'status'  => 0,
+                    ];
+                }
+                else {
+                    $message = [
+                        'message' => $messages[(1 + $status)],
+                        'status'  => $status < 0 ? 0 : $status,
+                    ];
+                }
+            }
+            else {
+                if ('insert' === $process) {
+                    $messages = [
+                        'The record was not stored, check the values have the right type.',
+                        'The record was not stored, check the values have the right type.',
+                        'The record was stored.',
+                    ];
+                    if (false === $status) {
+                        $message = [
+                            'message' => 'There was an error when the program tried to store the record.',
+                            'status'  => 0,
+                        ];
+                    }
+                    else {
+                        $message = [
+                            'message' => $messages[(1 + $status)],
+                            'status'  => $status < 0 ? 0 : $status,
+                        ];
+                    }
+                }
+                else {
+                    if ('delete' === $process) {
+                        $messages = [
+                            'The record was not deleted.',
+                            'The record was deleted.',
+                        ];
+                        if (false === $status) {
+                            $message = [
+                                'message' => 'There was an error when the program tried to store the record.',
+                                'status'  => 0,
+                            ];
+                        }
+                        else {
+                            $message = [
+                                'message' => $messages[$status],
+                                'status'  => $status < 0 ? 0 : $status,
+                            ];
+                        }
+                    }
+                }
+            }
+        }
+        return $message;
+    }
 }
