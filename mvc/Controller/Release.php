@@ -17,18 +17,21 @@ class ReleaseController extends Controller {
      * List
      */
     public function list() {
+        $success = [];
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
             // Release model
             if ('release' === $_POST['model']) {
                 $this->setDeleteModel($this->getModel());
             }
-            $this->delete();
+            $status = $this->delete();
+            $process = 'delete';
+            $success = $this->getMessage($process, $status);
         }
         // Get the records
         $records = $this->getModel()->select();
         // View
-        $this->getView()->list(['records' => $records]);
+        $this->getView()->list(['records' => $records, 'success'   => $success]);
     }
 
     /**
