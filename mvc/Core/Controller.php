@@ -141,6 +141,17 @@ class Controller {
     }
 
     /**
+     * Security verification
+     *
+     * @param Array $form Form to validate
+     */
+    public function securityVerification($form = []) {
+        if ( ! isset( $form['custom_form_nonce'] ) || ! wp_verify_nonce( $form['custom_form_nonce'], 'save_custom_form_action' ) ) {
+            wp_die( 'Security check failed. Please try again.' );
+        }
+    }
+
+    /**
      * Insert into table
      *
      * @param Array $form   Data to insert
