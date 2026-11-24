@@ -221,6 +221,12 @@ class ReleaseView extends View {
                 echo $trackView->table($data['tracks']);
             }
         }
+        else {
+            echo '<div class="mb-3">';
+            echo '    <a href="?page=discography-release" class="btn btn-warning">Go to Releases</a>';
+            echo '    <a href="?page=discography-release-add" class="btn btn-primary">Add Release</a>';
+            echo '</div>';
+        }
         echo $this->panelClose();
     }
 
