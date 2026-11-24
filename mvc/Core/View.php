@@ -61,7 +61,7 @@ class View {
 
         // Form
         $html  = $form->init(['action' => "", 'method' => 'post']);
-        $html .= wp_nonce_field( 'delete_custom_form_action', 'custom_form_nonce', true, false );
+        $html .= wp_nonce_field( 'custom_form_action', 'custom_form_nonce', true, false );
         $html .= $input->setLabel('');
         $html .= $input->create([
             'type'  => 'hidden',
