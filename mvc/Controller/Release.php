@@ -17,7 +17,7 @@ class ReleaseController extends Controller {
      * List
      */
     public function list() {
-        $success = [];
+        $notification = [];
         // Delete
         if (isset($_POST['delete']) && isset($_POST['model'])) {
             // Release model
@@ -26,12 +26,12 @@ class ReleaseController extends Controller {
             }
             $status = $this->delete();
             $process = 'delete';
-            $success = $this->getNotification($process, $status);
+            $notification = $this->getNotification($process, $status);
         }
         // Get the records
         $records = $this->getModel()->select();
         // View
-        $this->getView()->list(['records' => $records, 'success'   => $success]);
+        $this->getView()->list(['records' => $records, 'notification'   => $notification]);
     }
 
     /**
@@ -55,7 +55,7 @@ class ReleaseController extends Controller {
      * @param Integer $id Release id
      */
     public function view($id = 0) {
-        $success = [];
+        $notification = [];
         // Children model
         $trackModel = new TrackModel();
         $buttonModel = new ButtonModel();
@@ -109,7 +109,7 @@ class ReleaseController extends Controller {
                 }
             }
         }
-        $success = $this->getNotification($process, $status);
+        $notification = $this->getNotification($process, $status);
 
         // Get the record
         $record = $this->getModel()->selectById($id);
@@ -133,13 +133,13 @@ class ReleaseController extends Controller {
         // View
         $this->getView()->view([
             'src'       => $src,
-            'tracks'    => $tracks,
             'types'     => $types,
             'record'    => $record,
             'status'    => $status,
+            'tracks'    => $tracks,
             'buttons'   => $buttons,
-            'success'   => $success,
             'platforms' => $platforms,
+            'notification'   => $notification,
         ]);
     }
 

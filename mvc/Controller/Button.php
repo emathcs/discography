@@ -53,7 +53,7 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function view($id = 0) {
-        $success = [];
+        $notification = [];
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
             if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
@@ -85,14 +85,14 @@ class ButtonController extends Controller {
                 $id = $this->insert($_POST, $fields);
                 $status = $id > 0 ? 1 : $id;
             }
-            $success = $this->getNotification($process, $status);
+            $notification = $this->getNotification($process, $status);
         }
         // Platforms
         $platforms = $this->getChildModel()->getListFormat();
         // Get the record
         $record = $this->getModel()->selectById($id);
         // View
-        $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'success'   => $success]);
+        $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'notification'   => $notification]);
     }
 
     /**

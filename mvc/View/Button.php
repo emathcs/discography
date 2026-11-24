@@ -176,7 +176,7 @@ class ButtonView extends View {
 
         // Panel
         echo $this->panelOpen( 'View Button' );
-        echo $this->notification($data['success']);
+        echo $this->notification($data['notification']);
         if ($record) {
             echo '<table class="table table-sm table-striped table-hover table-bordered">';
             echo '    <tbody>';
