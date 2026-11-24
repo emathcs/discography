@@ -47,6 +47,7 @@ class TrackController extends Controller {
     public function view($id = 0) {
         $status = 0;
         $process = '';
+        $navigation = [];
         $notification = [];
         // Button Model
         $buttonModel = new ButtonModel();
@@ -65,7 +66,15 @@ class TrackController extends Controller {
                 $status = $this->update($id, $_POST, $fields);
             }
             else {
-                $process = 'update';
+                $process = 'insert';
+
+                $release_id =  $_POST['release_id'];
+
+                $navigation['model']  = 'release';
+                $navigation['id']     = $release_id;
+                $navigation['backTo'] = '?page=discography-release-view&release=' . $release_id;
+                $navigation['backToLabel'] = 'Go to the Release';
+
                 $fields = [
                     [ 'name' => 'name',       'format' => '%s' ],
                     [ 'name' => 'release_id', 'format' => '%d' ],
@@ -95,7 +104,13 @@ class TrackController extends Controller {
         $platformModel = new PlatformModel();
         $platforms = $platformModel->getListFormat();
         // View
-        $this->getView()->view(['record' => $record, 'buttons' => $buttons, 'platforms' => $platforms, 'notification'   => $notification]);
+        $this->getView()->view([
+            'record' => $record,
+            'buttons' => $buttons,
+            'platforms' => $platforms,
+            'navigation' => $navigation,
+            'notification'   => $notification,
+        ]);
     }
 
     /**
