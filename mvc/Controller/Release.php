@@ -139,7 +139,7 @@ class ReleaseController extends Controller {
             'tracks'    => $tracks,
             'buttons'   => $buttons,
             'platforms' => $platforms,
-            'notification'   => $notification,
+            'notification' => $notification,
         ]);
     }
 
