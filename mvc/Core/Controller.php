@@ -148,6 +148,9 @@ class Controller {
      * @return Integer $id Record id, -1, 0 or false
      */
     public function insert($form = [], $fields = []) {
+        if ( ! isset( $form['custom_form_nonce'] ) || ! wp_verify_nonce( $form['custom_form_nonce'], 'save_custom_form_action' ) ) {
+            wp_die( 'Security check failed. Please try again.' );
+        }
         $id = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);
@@ -167,6 +170,9 @@ class Controller {
      * @return Integer $status -1, 0, 1 or false
      */
     public function update($id = 0, $form = [], $fields = []) {
+        if ( ! isset( $form['custom_form_nonce'] ) || ! wp_verify_nonce( $form['custom_form_nonce'], 'save_custom_form_action' ) ) {
+            wp_die( 'Security check failed. Please try again.' );
+        }
         $status = -1;
         if (count($fields)) {
             $dataFormats = $this->createDataAndFormats($form, $fields);

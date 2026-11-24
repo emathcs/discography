@@ -53,9 +53,6 @@ class TrackController extends Controller {
         $buttonModel = new ButtonModel();
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
-            if ( ! isset( $_POST['custom_form_nonce'] ) || ! wp_verify_nonce( $_POST['custom_form_nonce'], 'save_custom_form_action' ) ) {
-                wp_die( 'Security check failed. Please try again.' );
-            }
             if (isset($_POST['id'])) {
                 $process = 'update';
                 $id = sanitize_text_field($_POST['id']);
