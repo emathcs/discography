@@ -53,9 +53,7 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function view($id = 0) {
-        $navigation = [
-            'backTo' => ''
-        ];
+        $navigation = [];
         $notification = [];
         // This process has been added here to avoid the process to redirect to this page from add or edit page
         if (isset($_POST['submit'])) {
