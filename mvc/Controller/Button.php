@@ -41,10 +41,29 @@ class ButtonController extends Controller {
         $release_id = isset($_GET['release']) ? $_GET['release'] : 0;
         // Track id
         $track_id = isset($_GET['track']) ? $_GET['track'] : 0;
+
+        // Navigation
+        $navigation = [];
+        if ($release_id) {
+            $navigation = [
+                'label'      => 'Go to the Release',
+                'parameters' => '&model=release&id=' . $release_id,
+                'backTo'     => '?page=discography-release-view&release=' . $release_id,
+            ];
+        } else {
+            if ($track_id) {
+                $navigation = [
+                    'label'      => 'Go to the Track',
+                    'parameters' => '&model=track&id=' . $track_id,
+                    'backTo'     => '?page=discography-track-view&track=' . $track_id,
+                ];
+            }
+        }
+
         // Platforms
         $platforms = $this->getChildModel()->getOptionsFormat();
         // View
-        $this->getView()->add(['platforms' => $platforms, 'release_id' => $release_id, 'track_id' => $track_id]);
+        $this->getView()->add(['platforms' => $platforms, 'release_id' => $release_id, 'track_id' => $track_id, 'navigation' => $navigation]);
     }
 
     /**

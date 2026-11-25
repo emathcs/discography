@@ -50,24 +50,9 @@ class ButtonView extends View {
         $select->setLabelClass('form-label');
         $navigation = new Navigation('mb-3');
 
-        // Navigation
-        $goTo = '';
-        $goToLabel = '';
-        $parameters = '';
-        if (isset($data['release_id']) && $data['release_id']) {
-            $goToLabel = 'Go to the Release';
-            $parameters = '&model=release&id=' . $data['release_id'];
-            $goTo = '?page=discography-release-view&release=' . $data['release_id'] ;
-        }
-        if (isset($data['track_id']) && $data['track_id']) {
-            $goToLabel = 'Go to the Track';
-            $parameters = '&model=track&id=' . $data['track_id'];
-            $goTo = '?page=discography-track-view&track=' . $data['track_id'] ;
-        }
-
         // Panel
         echo $this->panelOpen('Add Button');
-        echo $form->init(['action' => 'admin.php?page=discography-button-view' . $parameters, 'method' => 'post']);
+        echo $form->init(['action' => 'admin.php?page=discography-button-view' . $data['navigation']['parameters'], 'method' => 'post']);
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
         // Release id
@@ -115,7 +100,7 @@ class ButtonView extends View {
         // Navigation buttons
         echo $input->setLabel('');
         echo $navigation->buttons(
-            ['href' =>  $goTo, 'label' => $goToLabel, 'class' => 'btn btn-warning'],
+            ['href' =>  $data['navigation']['backTo'], 'label' => $data['navigation']['label'], 'class' => 'btn btn-warning'],
             ['type' => 'submit', 'name' => 'submit', 'value' =>'Save Button', 'class' => 'btn btn-primary']
         );
         echo $form->end();
