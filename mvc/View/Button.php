@@ -115,27 +115,6 @@ class ButtonView extends View {
     public function view($data = []) {
         $record = isset($data['record']) ? $data['record'] : [];
 
-        if ($record) {
-            // Navigation
-            $goTo = '';
-            $goToLabel = '';
-            $parameters = '';
-            if ($record->release_id) {
-                $parameter = 'release';
-                $id = $record->release_id;
-                $goToLabel = 'Go to the Release';
-                $parameters = '&model=release&id=' . $record->release_id;
-                $goTo = '?page=discography-release-view&release=' . $record->release_id ;
-            }
-            if ($record->track_id) {
-                $parameter = 'track';
-                $id = $record->track_id;
-                $goToLabel = 'Go to the Track';
-                $parameters = '&model=track&id=' . $record->track_id;
-                $goTo = '?page=discography-track-view&track=' . $record->track_id;
-            }
-        }
-
         // Panel
         echo $this->panelOpen( 'View Button' );
         echo $this->notification($data['notification']);
@@ -154,15 +133,15 @@ class ButtonView extends View {
             echo '</table>';
             echo '<div class="mb-3">';
             // Navigation buttons
-            echo '<a href="' . $goTo .'" class="btn btn-warning">' . $goToLabel . '</a> ';
+            echo '<a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['label'] . '</a> ';
             echo '<a href="?page=discography-button-edit&button=' . $record->id .'" class="btn btn-secondary">Edit Button</a> ';
-            echo '<a href="?page=discography-button-add&' . $parameter . '=' . $id . '" class="btn btn-primary">Add Button</a>';
+            echo '<a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Button</a>';
             echo '</div>';
         }
         else {
             // Navigation buttons
             echo '<div class="mb-3">';
-            echo '    <a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['backToLabel'] . '</a> ';
+            echo '    <a href="' . $data['navigation']['backTo'] .'" class="btn btn-warning">' . $data['navigation']['label'] . '</a> ';
             echo '    <a href="?page=discography-button-add&' . $data['navigation']['model'] . '=' . $data['navigation']['id'] . '" class="btn btn-primary">Add Button</a>';
             echo '</div>';
         }
