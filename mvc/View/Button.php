@@ -183,21 +183,6 @@ class ButtonView extends View {
         $record = isset($data['record']) ? $data['record'] : [];
         $navigation = new Navigation('mb-3');
 
-        // Navigation
-        $goTo = '';
-        $goToLabel = '';
-        $parameters = '';
-        if ($record->release_id) {
-            $goToLabel = 'Go to the Release';
-            $parameters = '&model=release&id=' . $record->release_id;
-            $goTo = '?page=discography-release-view&release=' . $record->release_id ;
-        }
-        if ($record->track_id) {
-            $goToLabel = 'Go to the Track';
-            $parameters = '&model=track&id=' . $record->track_id;
-            $goTo = '?page=discography-track-view&track=' . $record->track_id;
-        }
-
         // Panel
         echo $this->panelOpen('Edit Button');
         if ($record) {
@@ -238,7 +223,7 @@ class ButtonView extends View {
             // Navigation buttons
             echo $input->setLabel('');
             echo $navigation->buttons(
-                ['href' =>  $goTo,   'label' => $goToLabel, 'class' => 'btn btn-warning'],
+                ['href' =>  $data['navigation']['backTo'], 'label' => $data['navigation']['label'], 'class' => 'btn btn-warning'],
                 ['type' => 'submit', 'name' => 'submit', 'value' =>'Update Button', 'class' => 'btn btn-primary']
             );
             echo $form->end();

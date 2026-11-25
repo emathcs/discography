@@ -133,11 +133,28 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function edit($id = 0) {
-        // Platforms
-        $platforms = $this->getChildModel()->getOptionsFormat();
         // Get the record
         $record = $this->getModel()->selectById($id);
+        // Navigation
+        $navigation = [];
+        if ($record->release_id) {
+            $navigation = [
+                'label'      => 'Go to the Release',
+                'backTo'     => '?page=discography-release-view&release=' . $record->release_id,
+            ];
+        } else {
+            if ($record->track_id) {
+                $navigation = [
+                    'label'      => 'Go to the Track',
+                    'backTo'     => '?page=discography-track-view&track=' . $record->track_id,
+                ];
+            }
+        }
+
+        // Platforms
+        $platforms = $this->getChildModel()->getOptionsFormat();
+
         // View
-        $this->getView()->edit(['record' => $record, 'platforms' => $platforms]);
+        $this->getView()->edit(['record' => $record, 'platforms' => $platforms, 'navigation' => $navigation]);
     }
 }
