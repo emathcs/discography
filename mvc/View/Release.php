@@ -276,18 +276,7 @@ class ReleaseView extends View {
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
             // Cover image
-            echo '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview">';
-            echo '    <img src="' . $data['src'] . '" id="discography-cover-img">';
-            echo '</div>';
-            echo '<div id="discography-image-gallery-item-upload" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview discography-admin-hide">';
-            echo '    <img src="' . $data['default_src'] . '" id="discography-admin">';
-            echo '</div>';
-            echo '<div class="mb-3">';
-            // Select
-            echo '    <button type="button" id="upload-btn" class="discography-upload-btn btn btn-secondary discography-admin-hide">Select an image</button> ';
-            // Remove
-            echo '    <button type="button" id="remove-btn" class="discography-remove-btn btn btn-warning">Remove image</button>';
-            echo '</div>';
+            echo $this->getImage('edit', $data['src'], $data['default_src']);
             // Id
             echo $input->create([
                 'type'     => 'hidden',
