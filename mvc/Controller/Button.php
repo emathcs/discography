@@ -41,10 +41,29 @@ class ButtonController extends Controller {
         $release_id = isset($_GET['release']) ? $_GET['release'] : 0;
         // Track id
         $track_id = isset($_GET['track']) ? $_GET['track'] : 0;
+
+        // Navigation
+        $navigation = [];
+        if ($release_id) {
+            $navigation = [
+                'label'      => 'Go to the Release',
+                'parameters' => '&model=release&id=' . $release_id,
+                'backTo'     => '?page=discography-release-view&release=' . $release_id,
+            ];
+        } else {
+            if ($track_id) {
+                $navigation = [
+                    'label'      => 'Go to the Track',
+                    'parameters' => '&model=track&id=' . $track_id,
+                    'backTo'     => '?page=discography-track-view&track=' . $track_id,
+                ];
+            }
+        }
+
         // Platforms
         $platforms = $this->getChildModel()->getOptionsFormat();
         // View
-        $this->getView()->add(['platforms' => $platforms, 'release_id' => $release_id, 'track_id' => $track_id]);
+        $this->getView()->add(['platforms' => $platforms, 'release_id' => $release_id, 'track_id' => $track_id, 'navigation' => $navigation]);
     }
 
     /**
@@ -73,23 +92,9 @@ class ButtonController extends Controller {
                 $process = 'insert';
                 $fields[$i++] = [ 'name' => 'link', 'format' => '%s' ];
                 if (isset($_POST['track_id'])) {
-                    $track_id = $_POST['track_id'];
-
-                    $navigation['model']  = 'track';
-                    $navigation['id']     = $track_id;
-                    $navigation['backTo'] = '?page=discography-track-view&track=' . $track_id;
-                    $navigation['backToLabel'] = 'Go to the Track';
-
                     $fields[$i++] = [ 'name' => 'track_id', 'format' => '%d' ];
                 }
                 if (isset($_POST['release_id'])) {
-                    $release_id =  $_POST['release_id'];
-
-                    $navigation['model']  = 'release';
-                    $navigation['id']     = $release_id;
-                    $navigation['backTo'] = '?page=discography-release-view&release=' . $release_id;
-                    $navigation['backToLabel'] = 'Go to the Release';
-
                     $fields[$i++] = [ 'name' => 'release_id', 'format' => '%d' ];
                 }
                 $fields[$i++] = [ 'name' => 'platform_id', 'format' => '%d' ];
@@ -104,6 +109,31 @@ class ButtonController extends Controller {
         $platforms = $this->getChildModel()->getListFormat();
         // Get the record
         $record = $this->getModel()->selectById($id);
+
+        // Navigation
+        $track_id   = isset($_POST['track_id']) ? $_POST['track_id'] : 0;
+        $release_id = isset($_POST['release_id']) ? $_POST['release_id'] : 0;
+        $navigation = [];
+        if ($release_id) {
+            $navigation = [
+                'id'         => $release_id,
+                'model'      => 'release',
+                'label'      => 'Go to the Release',
+                'parameters' => '&model=release&id=' . $release_id,
+                'backTo'     => '?page=discography-release-view&release=' . $release_id,
+            ];
+        } else {
+            if ($track_id) {
+                $navigation = [
+                    'id'         => $track_id,
+                    'model'      => 'track',
+                    'label'      => 'Go to the Track',
+                    'parameters' => '&model=track&id=' . $track_id,
+                    'backTo'     => '?page=discography-track-view&track=' . $track_id,
+                ];
+            }
+        }
+
         // View
         $this->getView()->view(['record' => $record, 'platforms' => $platforms, 'notification'   => $notification, 'navigation' => $navigation]);
     }
@@ -114,11 +144,28 @@ class ButtonController extends Controller {
      * @param Integer $id Button id
      */
     public function edit($id = 0) {
-        // Platforms
-        $platforms = $this->getChildModel()->getOptionsFormat();
         // Get the record
         $record = $this->getModel()->selectById($id);
+        // Navigation
+        $navigation = [];
+        if ($record->release_id) {
+            $navigation = [
+                'label'      => 'Go to the Release',
+                'backTo'     => '?page=discography-release-view&release=' . $record->release_id,
+            ];
+        } else {
+            if ($record->track_id) {
+                $navigation = [
+                    'label'      => 'Go to the Track',
+                    'backTo'     => '?page=discography-track-view&track=' . $record->track_id,
+                ];
+            }
+        }
+
+        // Platforms
+        $platforms = $this->getChildModel()->getOptionsFormat();
+
         // View
-        $this->getView()->edit(['record' => $record, 'platforms' => $platforms]);
+        $this->getView()->edit(['record' => $record, 'platforms' => $platforms, 'navigation' => $navigation]);
     }
 }
