@@ -48,6 +48,42 @@ class ReleaseView extends View {
     }
 
     /**
+     * Image section
+     *
+     * @param Array $data Data to render
+     * @return String $html HTML for the image section
+     */
+    public function getImage($action = 'add', $src = '', $default_src = '') {
+        $hideClass = [
+            'add' => [
+                'src'     => 'discography-upload-btn discography-image-gallery-item-preview discography-admin-hide',
+                'default' => 'discography-upload-btn discography-image-gallery-item-preview',
+                'select'  => '',
+                'remove'  => 'discography-admin-hide',
+            ],
+            'edit' => [
+                'src'     => 'discography-upload-btn discography-image-gallery-item-preview',
+                'default' => 'discography-upload-btn discography-image-gallery-item-preview discography-admin-hide',
+                'select'  => 'discography-admin-hide',
+                'remove'  => '',
+            ],
+        ];
+        $html = '';
+        if ('add' === $action || 'edit' === $action) {
+            $html .= '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 ' . $hideClass[$action]['src'] . '">';
+            $html .= '    <img src="' . $src . '" id="discography-cover-img">';
+            $html .= '</div>';
+            $html .= '<div id="discography-image-gallery-item-upload" class="mb-3 col-12 col-sm-4 ' . $hideClass[$action]['default'] . '">';
+            $html .= '    <img src="' . $default_src . '" id="discography-admin">';
+            $html .= '</div>';
+            $html .= '<div class="mb-3">';
+            $html .= '    <button type="button" id="upload-btn" class="discography-upload-btn btn btn-secondary ' . $hideClass[$action]['select'] . '">Select an image</button> ';
+            $html .= '    <button type="button" id="remove-btn" class="discography-remove-btn btn btn-warning ' . $hideClass[$action]['remove'] . '">Remove image</button>';
+            $html .= '</div>';
+        }
+        return $html;
+    }
+    /**
      * Add page
      *
      * @param Array $data Data to render
@@ -66,18 +102,7 @@ class ReleaseView extends View {
         // Security field: Nonce to prevent CSRF attacks
         wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
         // Cover image
-        echo '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview discography-admin-hide">';
-        echo '    <img src="" id="discography-cover-img">';
-        echo '</div>';
-        echo '<div id="discography-image-gallery-item-upload" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview">';
-        echo '    <img src="' . $data['default_src'] . '" id="discography-admin">';
-        echo '</div>';
-        echo '<div class="mb-3">';
-        // Select
-        echo '    <button type="button" id="upload-btn" class="discography-upload-btn btn btn-secondary">Select an image</button> ';
-        // Remove
-        echo '    <button type="button" id="remove-btn" class="discography-remove-btn btn btn-warning discography-admin-hide">Remove image</button>';
-        echo '</div>';
+        echo $this->getImage('add', '', $data['default_src']);
         // Image ID
         $input->setLabel('');
         echo $input->create([
@@ -251,18 +276,7 @@ class ReleaseView extends View {
             // Security field: Nonce to prevent CSRF attacks
             wp_nonce_field( 'custom_form_action', 'custom_form_nonce' );
             // Cover image
-            echo '<div id="discography-image-gallery-item-preview" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview">';
-            echo '    <img src="' . $data['src'] . '" id="discography-cover-img">';
-            echo '</div>';
-            echo '<div id="discography-image-gallery-item-upload" class="mb-3 col-12 col-sm-4 discography-upload-btn discography-image-gallery-item-preview discography-admin-hide">';
-            echo '    <img src="' . $data['default_src'] . '" id="discography-admin">';
-            echo '</div>';
-            echo '<div class="mb-3">';
-            // Select
-            echo '    <button type="button" id="upload-btn" class="discography-upload-btn btn btn-secondary discography-admin-hide">Select an image</button> ';
-            // Remove
-            echo '    <button type="button" id="remove-btn" class="discography-remove-btn btn btn-warning">Remove image</button>';
-            echo '</div>';
+            echo $this->getImage('edit', $data['src'], $data['default_src']);
             // Id
             echo $input->create([
                 'type'     => 'hidden',
