@@ -49,6 +49,27 @@ class View {
     }
 
     /**
+     * Action buttons section
+     *
+     * @param String  $model  Model name
+     * @param String  $target Modal id
+     * @param Integer $id Record id
+     * @return String HTML code to generate the action buttons section
+     */
+    public function actionButtons($model = '', $target = '', $id = 0) {
+        $html = '';
+        $class = 'btn btn-sm btn-danger delete-record';
+        $html .= '<td class="col-action"><a href="?page=discography-'. $model .'-view&' . $model . '=' . $id . '" class="btn btn-sm btn-success">View</a></td>';
+        $html .= '<td class="col-action"><a href="?page=discography-'. $model .'-edit&' . $model . '=' . $id . '" class="btn btn-sm btn-warning">Edit</a></td>';
+        $html .= '<td class="col-action">';
+        $html .= '    <button type="button" class="' . $class . '" data-bs-toggle="modal" data-bs-target="#' . $target . '" data-id="' . $id . '" data-model="' . $model . '">';
+        $html .= '        Delete';
+        $html .= '    </button>';
+        $html .= '</td>';
+        return $html;
+    }
+
+    /**
      * Delete form
      *
      * @param String $model       Model name
