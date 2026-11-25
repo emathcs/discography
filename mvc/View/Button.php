@@ -44,23 +44,6 @@ class ButtonView extends View {
     }
 
     /**
-     * List page
-     *
-     * @param Array $data Data to render
-     */
-    public function list($data = []) {
-        $records = isset($data['records']) ? $data['records'] : [];
-        $total = count($records);
-        // Panel
-        echo $this->panelOpen('Buttons');
-        echo '<div class="mb-3">';
-        echo '    <a href="?page=discography-button-add" class="btn btn-sm btn-primary">Add Button</a>';
-        echo '</div>';
-        echo $this->table($records, $data['platforms']);
-        echo $this->panelClose();
-    }
-
-    /**
      * Add page
      *
      * @param Array $data Data to render

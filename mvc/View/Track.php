@@ -42,23 +42,6 @@ class TrackView extends View {
     }
 
     /**
-     * List page
-     *
-     * @param Array $data Data to render
-     */
-    public function list($data = []) {
-        $records = isset($data['records']) ? $data['records'] : [];
-
-        // Panel
-        echo $this->panelOpen('Tracks');
-        echo '<div class="mb-3">';
-        echo '    <a href="?page=discography-track-add" class="btn btn-sm btn-primary">Add a new track</a>';
-        echo '</div>';
-        echo $this->table($records);
-        echo $this->panelClose();
-    }
-
-    /**
      * Add page
      *
      * @param Array $data Data to render
