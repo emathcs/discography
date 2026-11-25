@@ -30,13 +30,7 @@ class ReleaseView extends View {
                 echo '    <tr>';
                 echo '        <th scope="row">' . $records[$i]->id . '</th>';
                 echo '        <td>' . $records[$i]->name . '</td>';
-                echo '        <td class="col-action"><a href="?page=discography-release-view&release=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                echo '        <td class="col-action"><a href="?page=discography-release-edit&release=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
-                echo '        <td class="col-action">';
-                echo '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteRelease" data-id="' . $records[$i]->id . '" data-model="release">';
-                echo '                Delete';
-                echo '            </button>';
-                echo '        </td>';
+                echo          $this->actionButtons('release', 'deleteRelease', $records[$i]->id);
                 echo '    </tr>';
             }
             echo '    </tbody>';

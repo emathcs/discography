@@ -26,13 +26,7 @@ class ButtonView extends View {
                 $html .= '        <th scope="row">' . $records[$i]->id . '</th>';
                 $html .= '        <td>' . $platforms[$records[$i]->platform_id] . '</td>';
                 $html .= '        <td><a href="' . $records[$i]->link . '" target="_blank">' . $records[$i]->link . '</a></td>';
-                $html .= '        <td class="col-action"><a href="?page=discography-button-view&button=' . $records[$i]->id . '" class="btn btn-sm btn-success">View</a></td>';
-                $html .= '        <td class="col-action"><a href="?page=discography-button-edit&button=' . $records[$i]->id . '" class="btn btn-sm btn-warning">Edit</a></td>';
-                $html .= '        <td class="col-action">';
-                $html .= '            <button type="button" class="btn btn-sm btn-danger delete-record" data-bs-toggle="modal" data-bs-target="#deleteButton" data-id="' . $records[$i]->id . '" data-model="button">';
-                $html .= '                Delete';
-                $html .= '            </button>';
-                $html .= '        </td>';
+                $html .=          $this->actionButtons('button', 'deleteButton', $records[$i]->id);
                 $html .= '    </tr>';
             }
             $html .= '    </tbody>';
